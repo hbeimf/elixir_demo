@@ -67,3 +67,35 @@ mix xref              # Performs cross reference checks
 iex -S mix            # Starts IEx and runs the default task
 
 
+init =====================================================
+mix help phoenix.new
+
+mix phoenix.new hello_world
+
+We are all set! Run your Phoenix application:
+
+    $ cd hello_world
+    $ mix phoenix.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phoenix.server
+
+Before moving on, configure your database in config/dev.exs and run:
+
+    $ mix ecto.create
+
+
+Phoenix uses an optional assets build tool called brunch.io
+that requires node.js and npm. Installation instructions for
+node.js, which includes npm, can be found at http://nodejs.org.
+
+After npm is installed, install your brunch dependencies by
+running inside your app:
+
+    $ npm install
+
+If you don't want brunch.io, you can re-run this generator
+with the --no-brunch option.
+
+
