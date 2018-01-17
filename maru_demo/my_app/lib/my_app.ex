@@ -25,7 +25,7 @@ defmodule MyAPP.Router.Homepage do
     end
   end
 
-  defmodule MyAPP.API do
+defmodule MyAPP.API do
     use Maru.Router
 
     plug Plug.Parsers,
