@@ -12,7 +12,7 @@ defmodule DemoSup.Application do
     children = [
       # Starts a worker by calling: DemoSup.Worker.start_link(arg)
       # {DemoSup.Worker, arg},
-      worker(DemoSup.StackServer, [])
+      worker(DemoSup.DemoServer, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -2,7 +2,9 @@ defmodule DemoSup.DemoServer do
 	# See https://hexdocs.pm/elixir/GenServer.html#content
 
 	use GenServer
+	require Logger
 
+	@on_load :load_check
 	# Callbacks
 
 	def start_link do
@@ -24,6 +26,10 @@ defmodule DemoSup.DemoServer do
 
 	def handle_cast({:push, item}, state) do
 		{:noreply, [item | state]}
+	end
+
+	def load_check do
+		Logger.debug "Module #{__MODULE__} is loaded."
 	end
 end
 
