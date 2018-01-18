@@ -1,6 +1,7 @@
 defmodule DemoSup.MySupervisor do
 	use Supervisor
-
+	# https://elixir-lang.org/getting-started/mix-otp/dynamic-supervisor.html
+	
 	def start_link() do
 		Supervisor.start_link(__MODULE__, [], name: __MODULE__)  # 会调用 init 回调
 	end
