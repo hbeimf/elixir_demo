@@ -1,6 +1,7 @@
 defmodule DemoSup.Application do
   # See https://github.com/developerworks/distro
   # See https://hexdocs.pm/elixir/Application.html
+  # https://segmentfault.com/a/1190000007379204
   # for more information on OTP Applications
   @moduledoc false
 
@@ -13,7 +14,8 @@ defmodule DemoSup.Application do
       # Starts a worker by calling: DemoSup.Worker.start_link(arg)
       # {DemoSup.Worker, arg},
       worker(DemoSup.NameServer, []),
-      worker(DemoSup.UnnameServer, [])
+      worker(DemoSup.UnnameServer, []),
+      supervisor(DemoSup.MySupervisor, [])   # 这个 supervisor 也是子进程
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
