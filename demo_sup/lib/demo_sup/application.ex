@@ -1,4 +1,5 @@
 defmodule DemoSup.Application do
+  # See https://github.com/developerworks/distro
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
