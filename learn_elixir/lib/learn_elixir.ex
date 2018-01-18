@@ -13,6 +13,7 @@ defmodule LearnElixir do
 
   """
   def hello do
-    :world
+    # :world
+    IO.puts "hello Elixir"
   end
 end
