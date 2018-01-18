@@ -5,6 +5,19 @@ defmodule DemoSup.StackServer do
 
 	# Callbacks
 
+	def start_link do
+		GenServer.start_link(__MODULE__, [], name: {:global, __MODULE__})
+	end
+
+	def init([]) do
+		{:ok, [], 1000}
+	end
+
+	def handle_info(:timeout, state) do
+		# Logger.debug "timeout"
+		{:noreply, state, 1000}
+	end
+
 	def handle_call(:pop, _from, [h | t]) do
 		{:reply, h, t}
 	end
