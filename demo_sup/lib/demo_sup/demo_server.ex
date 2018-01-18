@@ -1,4 +1,4 @@
-defmodule DemoSup.StackServer do
+defmodule DemoSup.DemoServer do
 	# See https://hexdocs.pm/elixir/GenServer.html#content
 
 	use GenServer
