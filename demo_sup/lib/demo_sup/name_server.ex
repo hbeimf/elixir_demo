@@ -1,4 +1,4 @@
-defmodule DemoSup.DemoServer do
+defmodule DemoSup.NameServer do
 	# See https://hexdocs.pm/elixir/GenServer.html#content
 	# https://segmentfault.com/a/1190000007329521
 
