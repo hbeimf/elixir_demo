@@ -16,7 +16,7 @@ defmodule DemoSup.UnnameServer do
 		## 启动一个命名的进程 ， 进程名称是: Elixir.DemoSup.DemoServer
 		# GenServer.start_link(__MODULE__, [], name: __MODULE__)
 
-		## 启动未命名的进程
+		## 启动未命名的进程, simple_one_for_one 不能启动这种假命名了的gen_server
 		GenServer.start_link(__MODULE__, [], name: {:global, __MODULE__})
 	end
 
