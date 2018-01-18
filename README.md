@@ -99,3 +99,8 @@ If you don't want brunch.io, you can re-run this generator
 with the --no-brunch option.
 
 
+热更新参考：
+
+https://www.jianshu.com/p/98d5167cb7f1
+
+
