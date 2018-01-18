@@ -5,7 +5,7 @@ defmodule DemoSup.MySupervisor do
 		Supervisor.start_link(__MODULE__, [], name: __MODULE__)  # 会调用 init 回调
 	end
 
-
+	## DemoSup.MySupervisor.start_child
 	def start_child() do 
 		Supervisor.start_child(__MODULE__, [])
 	end
@@ -14,7 +14,7 @@ defmodule DemoSup.MySupervisor do
 		import Supervisor.Spec
 
 		children = [
-		 	worker(DemoSup.UnnameServer, [], restart: :temporary)
+		 	worker(DemoSup.MyWork, [], restart: :temporary)
 		]
 
 		supervise(children, strategy: :simple_one_for_one)
