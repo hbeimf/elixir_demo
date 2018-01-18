@@ -8,8 +8,16 @@ defmodule DemoSup.DemoServer do
 	@on_load :load_check
 	# Callbacks
 
+	# * nil
+	# * atom
+	# * {:global, term}
+	# * {:via, module, term}
 	def start_link do
-		GenServer.start_link(__MODULE__, [], name: {:global, __MODULE__})
+		## 启动一个命名的进程 ， 进程名称是: Elixir.DemoSup.DemoServer
+		GenServer.start_link(__MODULE__, [], name: __MODULE__)
+
+		## 启动未命名的进程
+		# GenServer.start_link(__MODULE__, [], name: {:global, __MODULE__})
 	end
 
 	# @callback init(args :: term) ::
