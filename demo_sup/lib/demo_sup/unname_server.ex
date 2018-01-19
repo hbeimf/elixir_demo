@@ -3,9 +3,9 @@ defmodule DemoSup.UnnameServer do
 	# https://segmentfault.com/a/1190000007329521
 
 	use GenServer
-	require Logger
+	# require Logger
 
-	@on_load :load_check
+	# @on_load :load_check
 	# Callbacks
 
 	# * nil
@@ -67,9 +67,9 @@ defmodule DemoSup.UnnameServer do
 	# {:ok, new_state :: term} |
 	# {:error, reason :: term} when old_vsn: term | {:down, term}
 
-	def load_check do
-		Logger.debug "Module #{__MODULE__} is loaded."
-	end
+	# def load_check do
+	# 	Logger.debug "Module #{__MODULE__} is loaded."
+	# end
 end
 
 # Start the server
