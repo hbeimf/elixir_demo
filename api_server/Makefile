@@ -1,8 +1,6 @@
 # https://hexdocs.pm/distillery/walkthrough.html#adding-distillery-to-your-project
 
 all: dev prod
-	# MIX_ENV=prod mix release --env=prod
-
 
 run:
 	iex -S mix
