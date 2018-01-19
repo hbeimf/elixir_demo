@@ -52,6 +52,7 @@ release :api_server do
     :runtime_tools,
     mysqlc: :permanent,
     redisc: :permanent,
+    proxy_server: :permanent,
     web_server: :permanent
   ]
 end

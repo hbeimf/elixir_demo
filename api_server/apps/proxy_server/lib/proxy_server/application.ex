@@ -6,6 +6,10 @@ defmodule ProxyServer.Application do
   use Application
 
   def start(_type, _args) do
+    # {ok, _} = ranch:start_listener(proxy_server, 10, ranch_tcp, [{port, Port}], tcp_handler, []),
+    {:ok, _} = :ranch.start_listener(:proxy_server, 10, :ranch_tcp, [{:port, 9999}], ProxyServer.TcpHandler, [])
+
+
     # List all child processes to be supervised
     children = [
       # Starts a worker by calling: ProxyServer.Worker.start_link(arg)
