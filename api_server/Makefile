@@ -3,6 +3,10 @@
 all: dev prod
 	# MIX_ENV=prod mix release --env=prod
 
+
+run:
+	iex -S mix
+
 dev:
 	mix release --verbose
 
