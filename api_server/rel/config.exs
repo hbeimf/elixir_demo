@@ -30,13 +30,13 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :"RqzN>cfFAbFy?A@0AU]L^s2)lM^u$Mer/1!(zNFI4r3c>YXh4$KP[tAhAPn^,i:A"
+  set cookie: :"*fAmA>04L(SiE^NJZEbD;N1>F6T9W7aK};f.0p`eZ=GgZ<B,{KWmZ}?k0A%0yCmd"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"IHsFsLs{O2G3=|cLA^`C@RYb{AReesg&5jJuzVIO<oKp_I)c~x?Qo)}8[ocDyxrB"
+  set cookie: :"zrY/QSYYve.KqMZ5Wn*aCI*^(?0(GV0hS:wtD2`As~7iv^E5<iGR3^ebCM~5vTNl"
 end
 
 # You may define one or more releases in this file.
@@ -44,17 +44,12 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :mysqlc do
-  set version: current_version(:mysqlc)
+release :api_server do
+  set version: "0.1.0"
   set applications: [
-    :runtime_tools
-  ]
-end
-
-release :redisc do
-  set version: current_version(:redisc)
-  set applications: [
-    :runtime_tools
+    :runtime_tools,
+    mysqlc: :permanent,
+    redisc: :permanent
   ]
 end
 
