@@ -1,4 +1,4 @@
-# ApiServer
+mix new api_server --umbrella
 
-**TODO: Add description**
+
 
