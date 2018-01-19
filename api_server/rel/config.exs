@@ -51,7 +51,8 @@ release :api_server do
   set applications: [
     :runtime_tools,
     mysqlc: :permanent,
-    redisc: :permanent
+    redisc: :permanent,
+    web_server: :permanent
   ]
 end
 
