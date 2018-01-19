@@ -3,9 +3,9 @@ defmodule DemoSup.NameServer do
 	# https://segmentfault.com/a/1190000007329521
 
 	use GenServer
-	# require Logger
+	require Logger
 
-	# @on_load :load_check
+	@on_load :load_check
 	# Callbacks
 
 	# * nil
@@ -26,6 +26,7 @@ defmodule DemoSup.NameServer do
 	# :ignore |
 	# {:stop, reason :: any} when state: any
 	def init([]) do
+		Logger.debug "Module #{__MODULE__} is loaded."
 		{:ok, [], 1000}
 	end
 
@@ -67,9 +68,13 @@ defmodule DemoSup.NameServer do
 	# {:ok, new_state :: term} |
 	# {:error, reason :: term} when old_vsn: term | {:down, term}
 
-	# def load_check do
-	# 	Logger.debug "Module #{__MODULE__} is loaded."
-	# end
+	# DemoSup.NameServer.load_check()
+	def load_check do
+		# 发布包运行时这行会报错，也许是加载与运行并不是一回事，加载的时候Logger应用也许尚未运行导制的，
+		# Logger.debug "Module #{__MODULE__} is loaded."
+		IO.puts "Module #{__MODULE__} is loaded."
+		:ok
+	end
 end
 
 # Start the server
