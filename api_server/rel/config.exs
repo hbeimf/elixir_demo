@@ -28,12 +28,14 @@ environment :dev do
   # It is recommended that you build with MIX_ENV=prod and pass
   # the --env flag to Distillery explicitly if you want to use
   # dev mode.
+  # set vm_args: "path/to/file"
   set dev_mode: true
   set include_erts: false
   set cookie: :"*fAmA>04L(SiE^NJZEbD;N1>F6T9W7aK};f.0p`eZ=GgZ<B,{KWmZ}?k0A%0yCmd"
 end
 
 environment :prod do
+  set vm_args: "config/vm.args"
   set include_erts: true
   set include_src: false
   set cookie: :"zrY/QSYYve.KqMZ5Wn*aCI*^(?0(GV0hS:wtD2`As~7iv^E5<iGR3^ebCM~5vTNl"
