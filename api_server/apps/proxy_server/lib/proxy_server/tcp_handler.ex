@@ -33,9 +33,9 @@ defmodule ProxyServer.TcpHandler do
 	# gen_server:enter_loop(?MODULE, [],
 	# 	#state{socket=Socket, transport=Transport, data= <<>>, islogin = false, userid=0, token=""},
 	# 	?TIMEOUT).
-	def init([ref, socket, transport, opts]) do
+	def init([ref, socket, transport, _opts]) do
 		:ok = :ranch.accept_ack(ref)
-		ok = transport.setopts(socket, [{:active, :once}])
+		:ok = transport.setopts(socket, [{:active, :once}])
 
 		{:ok, [], 1000}
 	end
