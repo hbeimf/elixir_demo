@@ -1,6 +1,7 @@
 -name <%= release_name %>@127.0.0.1
 
--setcookie ${NODE_COOKIE}
+## -setcookie ${NODE_COOKIE}
+-setcookie <%= release_name %>_cookie
 
 +K true
 +A30

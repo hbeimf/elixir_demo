@@ -35,10 +35,10 @@ environment :dev do
 end
 
 environment :prod do
-  set vm_args: "config/vm.args"
   set include_erts: true
   set include_src: false
   set cookie: :"zrY/QSYYve.KqMZ5Wn*aCI*^(?0(GV0hS:wtD2`As~7iv^E5<iGR3^ebCM~5vTNl"
+  set vm_args: "config/vm.args"
 end
 
 # You may define one or more releases in this file.
