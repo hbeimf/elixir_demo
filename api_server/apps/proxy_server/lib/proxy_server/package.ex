@@ -10,7 +10,15 @@ defmodule ProxyServer.Package do
 		len = 4 + byte_size(bin)
 		# unsigned-little-integer
 		# 如何表达小端字节序列
-		<<len::size(16), protocol_id::size(16), bin::binary>>
+		# https://hexdocs.pm/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1
+		# <<102::integer-native, rest::binary>>
+		# <<102::native-integer, rest::binary>>
+		# <<102::unsigned-big-integer, rest::binary>>
+		# <<102::unsigned-big-integer-size(8), rest::binary>>
+		# <<102::unsigned-big-integer-8, rest::binary>>
+		# <<102::8-integer-big-unsigned, rest::binary>>
+		# <<102, rest::binary>>
+		<<len::unsigned-little-integer-size(16), protocol_id::unsigned-little-integer-size(16), bin::binary>>
 	end
 
 	def unpackage() do
