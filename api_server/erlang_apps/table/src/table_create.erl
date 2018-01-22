@@ -8,6 +8,7 @@
 
 %% 初始化mnesia表结构
 init() ->
+	mnesia:stop(),
     	case mnesia:create_schema([node()]) of
     		ok -> 
 			    mnesia:start(),
