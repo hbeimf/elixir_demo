@@ -17,6 +17,7 @@ defmodule ApiServer.Mixfile do
   defp deps do
     [
         {:distillery, "~> 1.5.2", runtime: false}
+        # {:mnesia,  path: "/usr/local/erlang/lib/erlang/lib/mnesia-4.13.3", compile: false}
     ]
   end
 end
