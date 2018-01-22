@@ -21,7 +21,7 @@ defmodule ProxyServer.Package do
 	end
 
 	def unpackage(bin) when byte_size(bin) >= 2 do 
-		:io.format("binary: ~p~n", [bin])
+		# :io.format("binary: ~p~n", [bin])
 		case parse_head(bin) do
 			{:ok, package_len} ->
 				parse_body(package_len, bin)
@@ -54,7 +54,10 @@ defmodule ProxyServer.Package do
 
 	# ProxyServer.Package.test()
 	def test() do
-		package(10001, <<"hello world!">>)
+		b = package(10001, <<"hello world!">>)
+		# IO.puts b
+		:io.format("binary: ~p~n", [b])
+		unpackage(b)
 	end
 
 end
