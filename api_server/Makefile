@@ -4,7 +4,8 @@
 all: dev prod
 
 run:
-	iex -S mix
+	# iex -S mix
+	iex --name "api_server@127.0.0.1" --cookie "api_server_cookie" -S mix
 
 dev:
 	mix release --verbose
