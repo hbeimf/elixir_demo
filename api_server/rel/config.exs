@@ -50,6 +50,7 @@ release :api_server do
   set version: "0.1.0"
   set applications: [
     :runtime_tools,
+    mysql_poolboy: :permanent,
     mysqlc: :permanent,
     redisc: :permanent,
     proxy_server: :permanent,
