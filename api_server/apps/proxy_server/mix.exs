@@ -32,7 +32,8 @@ defmodule ProxyServer.Mixfile do
       {:ranch, "~> 1.3.2"},
       {:mysqlc, in_umbrella: true},
       {:redisc, in_umbrella: true},
-      {:table, path: "../../erlang_apps/table"}
+      {:table, path: "../../erlang_apps/table"},
+      {:sync, "~> 0.1.3"}
     ]
   end
 end
