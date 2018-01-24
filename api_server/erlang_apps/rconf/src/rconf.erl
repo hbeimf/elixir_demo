@@ -2,11 +2,29 @@
 -compile(export_all).
 
 
-test() -> 
-	read_config().
+% test() -> 
+% 	read_config().
 
-read_config() -> 
-	read_config(mysql).
+% read_config() -> 
+% 	read_config(mysql).
+
+read_config() ->
+	case read_config_file() of
+		{ok, Config} -> 
+			Config;
+		_ -> 
+			ok
+	end.
+
+read_config(node) -> 
+	case read_config_file() of
+		{ok, Config} -> 
+			{_, {node, Node}, _ } = lists:keytake(node, 1, Config),
+			{_, {role, Role}, _} = lists:keytake(role, 1, Node),
+			{role, Role};
+		_ -> 
+			ok
+	end;
 
 read_config(hub_server) -> 
 	case read_config_file() of
@@ -46,16 +64,16 @@ read_config(redis) ->
 	end;
 
 
-read_config(user_center) -> 
-	case read_config_file() of
-		{ok, Config} -> 
-			{_, {user_center, UserCenter}, _ } = lists:keytake(user_center, 1, Config),
-			{_, {host, Host}, _} = lists:keytake(host, 1, UserCenter),
-			{_, {port, Port}, _} = lists:keytake(port, 1, UserCenter),
-			{Host, to_integer(Port)};
-		_ -> 
-			ok
-	end;
+% read_config(user_center) -> 
+% 	case read_config_file() of
+% 		{ok, Config} -> 
+% 			{_, {user_center, UserCenter}, _ } = lists:keytake(user_center, 1, Config),
+% 			{_, {host, Host}, _} = lists:keytake(host, 1, UserCenter),
+% 			{_, {port, Port}, _} = lists:keytake(port, 1, UserCenter),
+% 			{Host, to_integer(Port)};
+% 		_ -> 
+% 			ok
+% 	end;
 
 read_config(mysql) -> 
 	case read_config_file() of
@@ -77,6 +95,9 @@ read_config(mysql) ->
 		_ -> 
 			ok
 	end.
+
+
+
 
 read_config_file() -> 
 	ConfigFile = root_dir() ++ "config.ini",
