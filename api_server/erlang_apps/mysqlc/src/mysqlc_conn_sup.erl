@@ -32,7 +32,6 @@ start_link() ->
 
 init([]) ->
     PoolOptions  = [{size, 10}, {max_overflow, 20}],
-    % Pools  = rconf:read_config(mysql),
     Pools = get_pools(),
 
     ChildSpecs = lists:foldl(fun({Pool, MySqlOptions}, Reply) -> 
