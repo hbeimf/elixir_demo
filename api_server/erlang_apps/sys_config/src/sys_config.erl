@@ -16,37 +16,25 @@
 -export([start_link/0]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
-% -record(state, {}).
-
 % --------------------------------------------------------------------
 % External API
 % --------------------------------------------------------------------
-% -export([doit/2]).
+-export([get_config/1]).
+-define(ETS_OPTS,[set, public ,named_table , {keypos,2}, {heir,none}, {write_concurrency,true}, {read_concurrency,false}]).
 
-% doit(Code, DataTuple) ->
-%     gen_server:cast(?MODULE, {doit, Code, DataTuple}).
+-define(SYS_CONFIG, sys_config).
+-record(sys_config, {
+	key,
+	val
+}).
 
-
-
-% -export([start_goroutine/0, info/0, stop_goroutine/1, send_cast/2]).
-
-% info() ->
-%     gen_server:call(?MODULE, info).
-
-% start_goroutine() ->
-%     gen_server:call(?MODULE, start_goroutine).
-
-% stop_goroutine(GoMBox) ->
-%     gen_server:call(?MODULE, {stop_goroutine, GoMBox}).
-
-% send_cast(GoMBox, Msg) ->
-%     gen_server:cast(?MODULE, {send_cast, GoMBox, Msg}).
-
-% get_gombox() ->
-%     gen_server:call(?MODULE, get_gombox).
-
-% start_link() ->
-%     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+% sys_config:get_config(mysql).
+% :sys_config.get_config(:mysql)
+get_config(Key) -> 
+	case ets:match_object(?SYS_CONFIG, #sys_config{key = Key,_='_'}) of
+		[Val] -> {ok, Val};
+		[] ->{error,not_exist}
+	end.
 
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
@@ -61,10 +49,19 @@ start_link() ->
 %          {stop, Reason}
 % --------------------------------------------------------------------
 init([]) ->
-	?MODULE = ets:new(?MODULE, [set, protected,
-		named_table, {read_concurrency, true}]),
-    % _TRef = erlang:send_after(100, self(), update),
-    {ok, []}.
+	?MODULE = ets:new(?SYS_CONFIG, ?ETS_OPTS),
+
+    	case read_config_file() of
+		{ok, ConfigList} -> 
+			lists:foreach(fun({Key, Val}) -> 
+				ets:insert(?SYS_CONFIG, #sys_config{key=Key, val=Val})
+			end, ConfigList),
+			ok;
+		_ -> 
+			ok
+	end,
+
+    	{ok, []}.
 
 % --------------------------------------------------------------------
 % Function: handle_call/3
@@ -76,15 +73,6 @@ init([]) ->
 %          {stop, Reason, Reply, State}   | (terminate/2 is called)
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-
-% handle_call({doit, FromPid}, _From, State) ->
-%     io:format("doit  !! ============== ~n~n"),
-
-%     lists:foreach(fun(_I) ->
-%         FromPid ! {from_doit, <<"haha">>}
-%     end, lists:seq(1, 100)),
-
-%     {reply, [], State};
 handle_call(_Request, _From, State) ->
     Reply = ok,
     {reply, Reply, State}.
@@ -96,15 +84,6 @@ handle_call(_Request, _From, State) ->
 %          {noreply, State, Timeout} |
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-% handle_cast({send_cast, GoMBox, Msg}, State) ->
-%     io:format("send cast !! ============== ~n~n"),
-%     % {ok, GoMBox} = application:get_env(go, go_mailbox),
-%     % io:format("message ~p!! ============== ~n~n", [GoMBox]),
-%     gen_server:cast(GoMBox, {Msg, self()}),
-%     {noreply, State};
-% handle_cast({doit, Code, DataTuple}, State) ->
-%     % io:format("doit  !! ============== ~n~p~n~n", [{Code, DataTuple}]),
-%     {noreply, [{Code, DataTuple}|State]};
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
@@ -114,34 +93,6 @@ handle_cast(_Msg, State) ->
 % Returns: {noreply, State}           %          {noreply, State, Timeout} |
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-% handle_info(update, State) ->
-%     % io:format("update  ================== ~n~p~n", [State]),
-
-%     % DROP INDEX IDX_code_time ON gp_history;
-%     % CREATE UNIQUE INDEX IDX_code_time ON gp_history(code, str_time);
-
-%     % 每一秒钟将数据写入数据库，减轻关系数据库的压力
-%     case length(State) > 0 of
-%         true ->
-%             Sql = "INSERT IGNORE INTO gp_history(openPrice, closePrice, highPrice, lowerPrice, time, str_time, code) VALUES ",
-%             Sql1 = lists:foldl(fun({Code, Data}, ReplySql) ->
-%                 {_, _, LowerPrice, ClosePrice, HighPrice, OpenPrice, StrTime} = Data,
-%                 Time = go:strtotime(StrTime),
-%                 ReplySql ++ "("++go_lib:to_str(OpenPrice)++", "
-%                     ++go_lib:to_str(ClosePrice)++", "++go_lib:to_str(HighPrice)++", "
-%                     ++go_lib:to_str(LowerPrice)++", "++go_lib:to_str(Time)++", "
-%                     ++"'" ++go_lib:to_str(StrTime)++"', '"++go_lib:to_str(Code)++"'),"
-%             end, Sql, State),
-%             Sql2 = go:rtrim(Sql1, ","),
-%             io:format("~n=======================~n ~p~n~n", [Sql2]),
-%             mysql:query_sql(Sql2),
-%             ok;
-%         _ ->
-%             ok
-%     end,
-
-%     _TRef = erlang:send_after(100, self(), update),
-%     {noreply, []};
 handle_info(_Info, State) ->
     {noreply, State}.
 
@@ -168,3 +119,37 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 % private functions
+
+read_config_file() -> 
+	ConfigFile = root_dir() ++ "config.ini",
+	case file_get_contents(ConfigFile) of
+		{ok, Config} -> 
+			zucchini:parse_string(Config);
+		_ -> 
+			ok
+	end.
+
+root_dir() ->
+	replace(os:cmd("pwd"), "\n", "/"). 
+
+file_get_contents(Dir) ->
+	case file:read_file(Dir) of
+		{ok, Bin} ->
+			% {ok, binary_to_list(Bin)};
+			{ok, Bin};
+		{error, Msg} ->
+			{error, Msg}
+	end.
+
+replace(Str, SubStr, NewStr) ->
+	case string:str(Str, SubStr) of
+		Pos when Pos == 0 ->
+			Str;
+		Pos when Pos == 1 ->
+			Tail = string:substr(Str, string:len(SubStr) + 1),
+			string:concat(NewStr, replace(Tail, SubStr, NewStr));
+		Pos ->
+			Head = string:substr(Str, 1, Pos - 1),
+			Tail = string:substr(Str, Pos + string:len(SubStr)),
+			string:concat(string:concat(Head, NewStr), replace(Tail, SubStr, NewStr))
+	end.
