@@ -7,7 +7,7 @@
    [kernel,
     stdlib,
     mnesia,
-    rconf
+    sys_config
    ]},
   {env,[]},
   {modules, []},

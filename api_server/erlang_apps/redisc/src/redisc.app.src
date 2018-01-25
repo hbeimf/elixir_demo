@@ -7,7 +7,8 @@
    [kernel,
     stdlib,
     poolboy,
-    eredis
+    eredis,
+    sys_config
    ]},
 {env, [
         {global_or_local, local}

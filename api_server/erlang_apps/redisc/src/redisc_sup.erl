@@ -25,7 +25,8 @@
 %% ===================================================================
 
 start_link() ->
-    Pools = rconf:read_config(redis),
+    % Pools = rconf:read_config(redis),
+    Pools = get_pools(),
     {ok, GlobalOrLocal} = application:get_env(redisc, global_or_local),
     start_link(Pools, GlobalOrLocal).
 
@@ -91,5 +92,34 @@ init([Pools, GlobalOrLocal]) ->
     {ok, {SupFlags, PoolSpecs}}.
 
 
+get_pools() -> 
+    case  sys_config:get_config(redis) of
+        {ok, Redis} -> 
+            % {_, {redis, Redis}, _ } = lists:keytake(redis, 1, Config),
+            {_, {host, Host}, _} = lists:keytake(host, 1, Redis),
+            {_, {port, Port}, _} = lists:keytake(port, 1, Redis),
+            % {_, {password, Password}, _} = lists:keytake(password, 1, Redis),
+            case lists:keytake(password, 1, Redis) of
+                {_, {password, Password}, _} -> 
+                    [{pool_redis,
+                        [{size,5},{max_overflow,20}], 
+                        [{host,Host},
+                            {port,to_integer(Port)},
+                            {password, Password},
+                            {reconnect_sleep,100}]}];
+                _ -> 
+                    [{pool_redis,
+                        [{size,5},{max_overflow,20}], 
+                        [{host,Host},
+                            {port,to_integer(Port)},
+                            {reconnect_sleep,100}]}]
+            end;
+            
+        _ -> 
+            ok
+    end.
 
-
+to_integer(X) when is_list(X) -> list_to_integer(X);
+to_integer(X) when is_binary(X) -> binary_to_integer(X);
+to_integer(X) when is_integer(X) -> X;
+to_integer(X) -> X.
