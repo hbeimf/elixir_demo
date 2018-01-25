@@ -1,0 +1,7 @@
+package framework.innermsg;
+
+message InnerRegistProxy {
+	required int32 id = 1; 
+	required string ip = 2;
+	required int32 port = 3;
+}
