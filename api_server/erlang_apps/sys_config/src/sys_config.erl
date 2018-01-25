@@ -32,7 +32,7 @@
 % :sys_config.get_config(:mysql)
 get_config(Key) -> 
 	case ets:match_object(?SYS_CONFIG, #sys_config{key = Key,_='_'}) of
-		[Val] -> {ok, Val};
+		[{?SYS_CONFIG, Key, Val}] -> {ok, Val};
 		[] ->{error,not_exist}
 	end.
 
