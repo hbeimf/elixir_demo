@@ -29,7 +29,7 @@ prod:
 master: 
 	MIX_ENV=master mix release --env=master --verbose
 	mkdir $(PROJECT_MASTER)
-	cp ./config.ini ./$(PROJECT_MASTER)/config.ini
+	cp ./config/config_master.ini ./$(PROJECT_MASTER)/config.ini
 	tar zxvf 	_build/master/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_MASTER)/
 	tar czvf  ./$(PROJECT_MASTER).release.tar.gz ./$(PROJECT_MASTER) 
 	rm -rf ./$(PROJECT_MASTER)
@@ -37,7 +37,7 @@ master:
 slave: 
 	MIX_ENV=slave mix release --env=slave --verbose
 	mkdir $(PROJECT_SLAVE)
-	cp ./config.ini ./$(PROJECT_SLAVE)/config.ini
+	cp ./config/config_slave.ini ./$(PROJECT_SLAVE)/config.ini
 	tar zxvf 	_build/slave/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_SLAVE)/
 	tar czvf  ./$(PROJECT_SLAVE).release.tar.gz ./$(PROJECT_SLAVE) 
 	rm -rf ./$(PROJECT_SLAVE)
