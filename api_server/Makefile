@@ -23,7 +23,7 @@ prod:
 	mkdir $(PROJECT_PROD)
 	cp ./config.ini ./$(PROJECT_PROD)/config.ini
 	tar zxvf 	_build/prod/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_PROD)/
-	tar czvf  ./tar/$(PROJECT_PROD).release.tar.gz ./$(PROJECT_PROD) 
+	tar czvf  ./tar/$(PROJECT_PROD).tar.gz ./$(PROJECT_PROD) 
 	rm -rf ./$(PROJECT_PROD)
 
 master: 
@@ -31,7 +31,7 @@ master:
 	mkdir $(PROJECT_MASTER)
 	cp ./config/config_master.ini ./$(PROJECT_MASTER)/config.ini
 	tar zxvf 	_build/master/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_MASTER)/
-	tar czvf  ./tar/$(PROJECT_MASTER).release.tar.gz ./$(PROJECT_MASTER) 
+	tar czvf  ./tar/$(PROJECT_MASTER).tar.gz ./$(PROJECT_MASTER) 
 	rm -rf ./$(PROJECT_MASTER)
 
 slave: 
@@ -39,7 +39,7 @@ slave:
 	mkdir $(PROJECT_SLAVE)
 	cp ./config/config_slave.ini ./$(PROJECT_SLAVE)/config.ini
 	tar zxvf 	_build/slave/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_SLAVE)/
-	tar czvf  ./tar/$(PROJECT_SLAVE).release.tar.gz ./$(PROJECT_SLAVE) 
+	tar czvf  ./tar/$(PROJECT_SLAVE).tar.gz ./$(PROJECT_SLAVE) 
 	rm -rf ./$(PROJECT_SLAVE)
 
 
