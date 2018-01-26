@@ -37,7 +37,7 @@ handle_function(call, TheMessageRecord) ->
     % _Id = TheMessageRecord#message.id,
     % _Msg = TheMessageRecord#message.text,
 
-    io:format("answer: ~p ~n ", [TheMessageRecord]),
+    io:format("request : ~p ~n ", [TheMessageRecord]),
 
     %% at this point you probably want to talk to a pool of gen_servers
     %% or something like that.
