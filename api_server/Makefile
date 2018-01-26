@@ -1,12 +1,15 @@
 # https://hexdocs.pm/distillery/walkthrough.html#adding-distillery-to-your-project
 # https://hexdocs.pm/distillery/getting-started.html
 
-PROJECT := release_api_server
+PROJECT_PROD := release_prod_api_server
+PROJECT_MASTER := release_master_api_server
+PROJECT_SLAVE := release_slave_api_server
+
 NODENAME := api_server
 VERSION := 0.1.0
 
 
-all: dev prod
+all: master slave
 
 run:
 	# iex -S mix
@@ -17,11 +20,28 @@ dev:
 
 prod: 
 	MIX_ENV=prod mix release --env=prod --verbose
-	mkdir $(PROJECT)
-	cp ./config.ini ./$(PROJECT)/config.ini
-	tar zxvf 	_build/prod/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT)/
-	tar czvf  ./$(NODENAME).release.tar.gz ./$(PROJECT) 
-	rm -rf ./$(PROJECT)
+	mkdir $(PROJECT_PROD)
+	cp ./config.ini ./$(PROJECT_PROD)/config.ini
+	tar zxvf 	_build/prod/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_PROD)/
+	tar czvf  ./$(PROJECT_PROD).release.tar.gz ./$(PROJECT_PROD) 
+	rm -rf ./$(PROJECT_PROD)
+
+master: 
+	MIX_ENV=master mix release --env=master --verbose
+	mkdir $(PROJECT_MASTER)
+	cp ./config.ini ./$(PROJECT_MASTER)/config.ini
+	tar zxvf 	_build/master/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_MASTER)/
+	tar czvf  ./$(PROJECT_MASTER).release.tar.gz ./$(PROJECT_MASTER) 
+	rm -rf ./$(PROJECT_MASTER)
+
+slave: 
+	MIX_ENV=slave mix release --env=slave --verbose
+	mkdir $(PROJECT_SLAVE)
+	cp ./config.ini ./$(PROJECT_SLAVE)/config.ini
+	tar zxvf 	_build/slave/rel/$(NODENAME)/releases/$(VERSION)/$(NODENAME).tar.gz -C ./$(PROJECT_SLAVE)/
+	tar czvf  ./$(PROJECT_SLAVE).release.tar.gz ./$(PROJECT_SLAVE) 
+	rm -rf ./$(PROJECT_SLAVE)
+
 
 release_init:
 	mix deps.get
