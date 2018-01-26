@@ -5,5 +5,5 @@
 %%
 
 
--include("example_types.hrl").
+-include("rpc_types.hrl").
 
