@@ -1,12 +1,12 @@
-{application, proxy,
+{application, sys_config,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { proxy_app, []}},
+  {mod, { sys_config_app, []}},
   {applications,
    [kernel,
     stdlib,
-    tcpc
+    zucchini
    ]},
   {env,[]},
   {modules, []},
