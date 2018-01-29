@@ -1,0 +1,6 @@
+-sname proxy
+
+-setcookie proxy_cookie
+
++K true
++A30
