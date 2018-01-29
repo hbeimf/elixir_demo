@@ -5,7 +5,8 @@
   {mod, { glib_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    esnowflake
    ]},
   {env,[]},
   {modules, []},

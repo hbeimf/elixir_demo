@@ -1,5 +1,6 @@
 {"1.1.0",
 [{<<"eredis">>,{pkg,<<"eredis">>,<<"1.0.8">>},0},
+ {<<"esnowflake">>,{pkg,<<"esnowflake">>,<<"0.2.0">>},0},
  {<<"jsx">>,
   {git,"git://github.com/talentdeficit/jsx.git",
        {ref,"45ffea21a6863c58fb7da1f937e868916ff68b27"}},
@@ -26,5 +27,6 @@
   0}]}.
 [
 {pkg_hash,[
- {<<"eredis">>, <<"AB4FDA1C4BA7FBE6C19C26C249DC13DA916D762502C4B4FA2DF401A8D51C5364">>}]}
+ {<<"eredis">>, <<"AB4FDA1C4BA7FBE6C19C26C249DC13DA916D762502C4B4FA2DF401A8D51C5364">>},
+ {<<"esnowflake">>, <<"083BB3EBAA4F7DB24E935D70EF5CE33C84817A484B28DAED8292E29253E19642">>}]}
 ].

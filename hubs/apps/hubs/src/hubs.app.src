@@ -6,6 +6,7 @@
   {applications,
    [kernel,
     stdlib,
+    glib,
     mysqlc,
     pb,
     redisc,
