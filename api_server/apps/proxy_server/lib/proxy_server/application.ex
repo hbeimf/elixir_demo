@@ -7,7 +7,12 @@ defmodule ProxyServer.Application do
 
   def start(_type, _args) do
     # {ok, _} = ranch:start_listener(proxy_server, 10, ranch_tcp, [{port, Port}], tcp_handler, []),
-    # {:ok, _} = :ranch.start_listener(:proxy_server, 10, :ranch_tcp, [{:port, 9999}], ProxyServer.TcpHandler, [])
+
+    {:ok, config} = :sys_config.get_config(:tcp)
+    # :io.format("~p~n", [config])
+    {_, {:port, port}, _} = :lists.keytake(:port, 1, config)
+    # :io.format("~p~n", [port])
+    {:ok, _} = :ranch.start_listener(:proxy_server, 10, :ranch_tcp, [{:port, port}], ProxyServer.TcpHandler, [])
 
 
     # List all child processes to be supervised
