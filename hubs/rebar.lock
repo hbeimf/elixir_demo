@@ -1,0 +1,30 @@
+{"1.1.0",
+[{<<"eredis">>,{pkg,<<"eredis">>,<<"1.0.8">>},0},
+ {<<"jsx">>,
+  {git,"git://github.com/talentdeficit/jsx.git",
+       {ref,"45ffea21a6863c58fb7da1f937e868916ff68b27"}},
+  1},
+ {<<"mysql">>,
+  {git,"https://github.com/mysql-otp/mysql-otp.git",
+       {ref,"5ad838fd1cfe11f0a7eb4e25d94f438c19c62630"}},
+  1},
+ {<<"mysql_poolboy">>,
+  {git,"https://github.com/mysql-otp/mysql-otp-poolboy",
+       {ref,"46f2325fe8e766a5446653c23a55d9e9537e0faf"}},
+  0},
+ {<<"poolboy">>,
+  {git,"https://github.com/devinus/poolboy.git",
+       {ref,"3bb48a893ff5598f7c73731ac17545206d259fac"}},
+  0},
+ {<<"thrift">>,
+  {git,"https://github.com/j14159/thrift",
+       {ref,"1e04570a702b782df600c31537105f46ce0813f2"}},
+  0},
+ {<<"zucchini">>,
+  {git,"https://github.com/devinus/zucchini.git",
+       {ref,"429c9e0f9f67911c1825fbebff7d0fdc59e56b90"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"eredis">>, <<"AB4FDA1C4BA7FBE6C19C26C249DC13DA916D762502C4B4FA2DF401A8D51C5364">>}]}
+].

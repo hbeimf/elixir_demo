@@ -5,7 +5,12 @@
   {mod, { hubs_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    mysqlc,
+    pb,
+    redisc,
+    table,
+    thrifts
    ]},
   {env,[]},
   {modules, []},
