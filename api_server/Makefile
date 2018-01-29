@@ -27,6 +27,7 @@ prod:
 	rm -rf ./$(PROJECT_PROD)
 
 master: 
+	rm -rf ./tar/*
 	MIX_ENV=master mix release --env=master --verbose
 	mkdir $(PROJECT_MASTER)
 	cp ./config/config_master.ini ./$(PROJECT_MASTER)/config.ini

@@ -67,6 +67,10 @@ release :api_server do
     mysql_poolboy: :permanent,
     mysqlc: :permanent,
     redisc: :permanent,
+    pb: :permanent,
+    sys_config: :permanent,
+    table: :permanent,
+    thrift: :permanent,
     proxy_server: :permanent,
     web_server: :permanent
   ]
