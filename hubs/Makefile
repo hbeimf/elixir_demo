@@ -3,15 +3,18 @@ NODENAME := hubs
 VERSION := 0.1.0
 
 
-all:
+all: master
+	
+
+master: 
 	rebar3 compile
 	rebar3 release
 	rebar3 tar
-	mkdir $(PROJECT)
-	cp ./config.ini ./$(PROJECT)/config.ini
-	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./$(PROJECT)/
-	tar czvf  ./$(NODENAME).release.tar.gz ./$(PROJECT) 
-	rm -rf ./$(PROJECT)
+	mkdir ./tar/$(PROJECT)
+	cp ./config/config_master.ini ./tar/$(PROJECT)/config.ini
+	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./tar/$(PROJECT)/
+	tar czvf  ./$(NODENAME).release.tar.gz ./tar/$(PROJECT) 
+	rm -rf ./tar/$(PROJECT)
 
 run:
 	rebar3 shell --name $(NODENAME)@127.0.0.1 --setcookie $(NODENAME)_cookie 
