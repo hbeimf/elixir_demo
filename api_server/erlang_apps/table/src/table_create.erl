@@ -29,7 +29,7 @@ dynamic_db_init(true) ->
 % 从结点启动
 dynamic_db_init(_) ->
 	[MasterNode|_] = erlang:nodes(),
-	net_adm:ping(MasterNode),
+	% net_adm:ping(MasterNode),
 	case mnesia:change_config(extra_db_nodes, [MasterNode]) of
 	    {ok, [MasterNode]} ->
 	        % 复制 表
