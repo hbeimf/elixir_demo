@@ -10,10 +10,9 @@
 
 %% 初始化mnesia表结构
 init() -> 
-	IsMasterNode = is_master_node(),
-	dynamic_db_init(IsMasterNode).
+	dynamic_db_init(is_first_node()).
 
-% 如果是主结点
+% 如果是第一个启动的节点
 dynamic_db_init(true) ->
 	mnesia:stop(),
 	mnesia:delete_schema([node()]),
@@ -34,7 +33,8 @@ dynamic_db_init(_) ->
 	% mnesia:create_schema([node()]),
 	% mnesia:start(),
 
-	MasterNode = get_master_node(),
+	% MasterNode = get_master_node(),
+	[MasterNode|_] = erlang:nodes(),
 	net_adm:ping(MasterNode),
 	case mnesia:change_config(extra_db_nodes, [MasterNode]) of
 	    {ok, [MasterNode]} ->
@@ -50,21 +50,41 @@ dynamic_db_init(_) ->
 
 
 % private function  =======================================
-is_master_node() -> 
-	case sys_config:get_config(node) of
-		{ok, Node} -> 
-			{_, {role, Role}, _} = lists:keytake(role, 1, Node),
-			case Role of 
-				"master" -> 
-					true;
-				_ -> 
-					false
-			end; 
+% table_create:is_first_node().
+is_first_node() -> 
+	case erlang:length(erlang:nodes()) > 0 of 
+		true -> 
+			false;
 		_ -> 
-			false 
-	end. 
+			{ok, NodeList} = sys_config:get_config(node),
+			lists:foreach(fun({_, Node}) -> 
+				net_adm:ping(Node)
+			end, NodeList),
+			case erlang:length(erlang:nodes()) > 0 of 
+				true -> 
+					false;
+				_ -> 
+					true
+			end
+	end.
+
+
+% is_master_node() -> 
+% 	true.
+	% case sys_config:get_config(node) of
+	% 	{ok, Node} -> 
+	% 		{_, {role, Role}, _} = lists:keytake(role, 1, Node),
+	% 		case Role of 
+	% 			"master" -> 
+	% 				true;
+	% 			_ -> 
+	% 				false
+	% 		end; 
+	% 	_ -> 
+	% 		false 
+	% end. 
 
 
 
-get_master_node() -> 
-	'api_server@127.0.0.1'.
+% get_master_node() -> 
+% 	'api_server@127.0.0.1'.
