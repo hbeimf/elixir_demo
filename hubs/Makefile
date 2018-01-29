@@ -10,11 +10,12 @@ master:
 	rebar3 compile
 	rebar3 release
 	rebar3 tar
-	mkdir ./tar/$(PROJECT)
-	cp ./config/config_master.ini ./tar/$(PROJECT)/config.ini
-	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./tar/$(PROJECT)/
-	tar czvf  ./tar/$(NODENAME).release.tar.gz ./tar/$(PROJECT) 
-	rm -rf ./tar/$(PROJECT)
+	mkdir ./$(PROJECT)
+	cp ./config/config_master.ini ./$(PROJECT)/config.ini
+	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./$(PROJECT)/
+	tar czvf  $(NODENAME).release.tar.gz ./$(PROJECT) 
+	mv ./$(NODENAME).release.tar.gz ./tar/$(NODENAME).release.tar.gz
+	rm -rf ./$(PROJECT)
 
 run:
 	rebar3 shell --name $(NODENAME)@127.0.0.1 --setcookie $(NODENAME)_cookie 
