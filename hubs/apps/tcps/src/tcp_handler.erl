@@ -115,12 +115,18 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal functions
 %% ====================================================================
 parse_package(Bin, State) ->
-	case tcp_package:unpackage(Bin) of
+	case glib:unpackage(Bin) of
 		{ok, waitmore}  -> {ok, waitmore, Bin};
 		{ok,{Type, ValueBin},LefBin} ->
-			ctrl_handler:action(Type, ValueBin, State),
+			action(Type, ValueBin, State),
 			parse_package(LefBin, State);
 		_ ->
 			error		
 	end.
 
+
+action(_Type, _DataBin, _State) ->
+	% P = tcp_package:package(Type+1, DataBin),
+	% self() ! {tcp_send, P},
+	% io:format("~n ================================= ~ntype:~p, bin: ~p ~n ", [Type, DataBin]). 
+	ok.
