@@ -18,7 +18,9 @@
         ]).
 
 start() -> 
-	start(9009).
+	{ok, Val} = sys_config:get_config(rpc),
+	{_, {port, Port}, _} = lists:keytake(port, 1, Val),
+	start(Port).
 start(Port) ->
     thrift_socket_server:start([{handler, ?MODULE},  % this module
                                 {port, Port},

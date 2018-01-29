@@ -5,7 +5,8 @@
   {mod, { thrifts_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    sys_config
    ]},
   {env,[]},
   {modules, []},
