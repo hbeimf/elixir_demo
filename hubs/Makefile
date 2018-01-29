@@ -14,7 +14,6 @@ master:
 	cp ./config/config_master.ini ./$(PROJECT)/config.ini
 	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./$(PROJECT)/
 	tar czvf  $(NODENAME).release.tar.gz ./$(PROJECT) 
-	#mv ./$(NODENAME).release.tar.gz ./tar/$(NODENAME).release.tar.gz
 	rm -rf ./$(PROJECT)
 
 run:
