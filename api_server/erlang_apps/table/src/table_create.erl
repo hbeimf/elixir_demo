@@ -28,12 +28,6 @@ dynamic_db_init(true) ->
 	 end;
 % 从结点启动
 dynamic_db_init(_) ->
-	% mnesia:stop(),
-	% mnesia:delete_schema([node()]),
-	% mnesia:create_schema([node()]),
-	% mnesia:start(),
-
-	% MasterNode = get_master_node(),
 	[MasterNode|_] = erlang:nodes(),
 	net_adm:ping(MasterNode),
 	case mnesia:change_config(extra_db_nodes, [MasterNode]) of
