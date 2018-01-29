@@ -18,7 +18,7 @@ start(_StartType, _StartArgs) ->
 	{ok, Config} = sys_config:get_config(tcp),
 	{_, {port, Port}, _} = lists:keytake(port, 1, Config),
 
-	{ok, _} = ranch:start_listener(tcp_server, 10, ranch_tcp, [{port, Port}], tcp_handler, []),
+	{ok, _} = ranch:start_listener(tcp_server, 10, ranch_tcp, [{port, Port}], tcps_handler, []),
     tcps_sup:start_link().
 
 %%--------------------------------------------------------------------

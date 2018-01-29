@@ -1,4 +1,4 @@
--module(tcp_handler).
+-module(tcps_handler).
 -behaviour(gen_server).
 -behaviour(ranch_protocol).
 
