@@ -61,24 +61,3 @@ is_first_node() ->
 					true
 			end
 	end.
-
-
-% is_master_node() -> 
-% 	true.
-	% case sys_config:get_config(node) of
-	% 	{ok, Node} -> 
-	% 		{_, {role, Role}, _} = lists:keytake(role, 1, Node),
-	% 		case Role of 
-	% 			"master" -> 
-	% 				true;
-	% 			_ -> 
-	% 				false
-	% 		end; 
-	% 	_ -> 
-	% 		false 
-	% end. 
-
-
-
-% get_master_node() -> 
-% 	'api_server@127.0.0.1'.
