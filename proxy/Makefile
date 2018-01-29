@@ -1,5 +1,5 @@
-PROJECT := release_hubs
-NODENAME := hubs
+PROJECT := release_proxy
+NODENAME := proxy
 VERSION := 0.1.0
 
 
