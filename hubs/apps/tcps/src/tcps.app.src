@@ -6,6 +6,7 @@
   {applications,
    [kernel,
     stdlib,
+    sys_config,
     ranch
    ]},
   {env,[]},
