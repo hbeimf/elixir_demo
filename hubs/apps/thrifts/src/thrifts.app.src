@@ -1,0 +1,17 @@
+{application, thrifts,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { thrifts_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    sys_config
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
