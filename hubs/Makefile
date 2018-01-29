@@ -13,7 +13,7 @@ master:
 	mkdir ./tar/$(PROJECT)
 	cp ./config/config_master.ini ./tar/$(PROJECT)/config.ini
 	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./tar/$(PROJECT)/
-	tar czvf  ./$(NODENAME).release.tar.gz ./tar/$(PROJECT) 
+	tar czvf  ./tar/$(NODENAME).release.tar.gz ./tar/$(PROJECT) 
 	rm -rf ./tar/$(PROJECT)
 
 run:
