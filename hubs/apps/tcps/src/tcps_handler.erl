@@ -89,7 +89,7 @@ handle_info({tcp_send, Package}, #state{transport = Transport,socket=Socket} = S
 handle_info({tcp_closed, _Socket}, State) ->
 	io:format("~p:~p  tcp closed  !!!!!! ~n~n", [?MODULE, ?LINE]),
 	%% 当代理连接断开时，要清理代理相关的数据
-	table_proxy_server_list:delete(self()),
+	% table_proxy_server_list:delete(self()),
 	{stop, normal, State};
 handle_info({tcp_error, _, Reason}, State) ->
 	{stop, Reason, State};
@@ -120,13 +120,14 @@ parse_package(Bin, State) ->
 		{ok,{Type, ValueBin},LefBin} ->
 			action(Type, ValueBin, State),
 			parse_package(LefBin, State);
-		_ ->
+		Any ->
+			io:format("XXXXXXXXXX unpack error: ~p ~n ", [{?MODULE, ?LINE, Bin, Any}]),
 			error		
 	end.
 
 
-action(_Type, _DataBin, _State) ->
+action(Type, DataBin, _State) ->
 	% P = tcp_package:package(Type+1, DataBin),
 	% self() ! {tcp_send, P},
-	% io:format("~n ================================= ~ntype:~p, bin: ~p ~n ", [Type, DataBin]). 
+	io:format("~n ================================= ~ntype:~p, bin: ~p ~n ", [Type, DataBin]),
 	ok.
