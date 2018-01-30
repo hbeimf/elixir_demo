@@ -3,17 +3,30 @@ NODENAME := hubs
 VERSION := 0.1.0
 
 
-all: master
+all: default_node other_node
 	
 
-master: 
+default_node: 
 	rebar3 compile
 	rebar3 release
 	rebar3 tar
 	mkdir ./$(PROJECT)
-	cp ./config/config_master.ini ./$(PROJECT)/config.ini
 	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./$(PROJECT)/
-	tar czvf  $(NODENAME).release.tar.gz ./$(PROJECT) 
+	cp ./config/config_master.ini ./$(PROJECT)/config.ini
+	tar czvf  $(NODENAME).master.release.tar.gz ./$(PROJECT) 
+	# mv ./$(NODENAME).release.tar.gz ./tar/$(NODENAME).master.release.tar.gz
+	rm -rf ./$(PROJECT)
+
+other_node:
+	rebar3 compile
+	rebar3 release
+	rebar3 tar
+	mkdir ./$(PROJECT)
+	tar zxvf ./_build/default/rel/$(NODENAME)/$(NODENAME)-$(VERSION).tar.gz -C ./$(PROJECT)/
+	## 主要是配置文件不同
+	cp ./config/config_slave.ini ./$(PROJECT)/config.ini
+	cp ./config/vm_slave.args ./$(PROJECT)/releases/$(VERSION)/vm.args
+	tar czvf  $(NODENAME).slave.release.tar.gz ./$(PROJECT) 
 	rm -rf ./$(PROJECT)
 
 run:
