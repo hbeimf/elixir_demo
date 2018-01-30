@@ -110,8 +110,26 @@ action(1, DataBin, _State) ->
 	{ProxyId, Ip, Port} = binary_to_term(DataBin),
 	table_proxy_server_list:add(ProxyId, Ip, Port, self()),
 	ok;
+
+%% 注册 client 
+action(2, Bin, _State) ->
+	{UserId, ProxyId, Token} = binary_to_term(Bin),
+	%% 单点登录在此处处理
+	let_other_client_logout(UserId),
+	table_client_list:add(UserId, ProxyId, Token),
+	ok;
+
+%% 注消 client 
+action(3, Bin, _State) ->
+	{UserId, _ProxyId, Token} = binary_to_term(Bin),
+	table_client_list:delete(UserId, Token),
+	ok;
+
 action(Cmd, DataBin, _State) ->
-	% P = tcp_package:package(Cmd+1, DataBin),
-	% self() ! {tcp_send, P},
 	io:format("~n ================================= ~nCmd:~p, bin: ~p ~n ", [Cmd, DataBin]),
 	ok.
+
+%% 单点登录在此处处理
+let_other_client_logout(UserId) ->
+	table_client_list:select(UserId),
+	ok. 
