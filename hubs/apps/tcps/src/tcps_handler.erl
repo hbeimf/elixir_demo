@@ -82,6 +82,7 @@ handle_cast(_Msg, State) ->
 	{noreply, State}.
 
 terminate(_Reason, _State) ->
+	table_proxy_server_list:delete(self()),
 	ok.
 
 code_change(_OldVsn, State, _Extra) ->

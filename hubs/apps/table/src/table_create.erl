@@ -20,8 +20,12 @@ dynamic_db_init(true) ->
     		ok -> 
 			    mnesia:start(),
 			    mnesia:create_table(client_list, [{attributes,record_info(fields,client_list)}]),
-			    mnesia:create_table(proxy_server_list, [{attributes,record_info(fields,proxy_server_list)}]),
+			    % Type值为set、ordered_set或bag，默认为set 
+			    % bag可以一个key对应多条record，而set和ordered_set只能一个key对应一条record 
+			    % Mnesia表中不会出现重复的record（同样的key和content） 
+			    mnesia:create_table(proxy_server_list, [{type, bag}, {attributes,record_info(fields,proxy_server_list)}]),
 			    
+			    % mnesia:create_table(funky, [{disc_copies, [N1, N2]}, {index, [y]}, {type, bag}, {attributes, record_info(fields, funky)}]).  
 			    ok;
 		  _ -> 
 		  	mnesia:start()
