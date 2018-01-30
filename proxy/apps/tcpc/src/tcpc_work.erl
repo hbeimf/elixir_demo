@@ -140,8 +140,10 @@ handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
 	% 注册代理 
 	% Bin = client_package:regist_proxy(),
 	ProxyId = 1,
-	Bin = term_to_binary({regist, ProxyId}),
-	Bin1 = glib:package(100, Bin),
+	Ip = "127.0.0.1",
+	Port = 9999,
+	Bin = term_to_binary({ProxyId, Ip, Port}),
+	Bin1 = glib:package(1, Bin),
 	ranch_tcp:send(Socket, Bin1),
 	% 同步客户信息
 	% sync_client(),
