@@ -78,7 +78,7 @@ init(_Args) ->
 	case ranch_tcp:connect(Ip, Port,[],3000) of
 		{ok,Socket} ->
 	        ok = ranch_tcp:setopts(Socket, [{active, once}]),
-			% erlang:start_timer(1000, self(), {regist}),
+			erlang:start_timer(1000, self(), {regist}),
 			{ok, #state{socket = Socket, transport = ranch_tcp, data = <<>>, ip = Ip, port = Port} };
 		{error,econnrefused} -> 
 			erlang:start_timer(3000, self(), {reconnect,{Ip,Port}}),
@@ -139,7 +139,10 @@ handle_info({tcp, Socket, CurrentPackage}, State=#state{
 handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
 	% 注册代理 
 	% Bin = client_package:regist_proxy(),
-	% ranch_tcp:send(Socket, Bin),
+	ProxyId = 1,
+	Bin = term_to_binary({regist, ProxyId}),
+	Bin1 = glib:package(100, Bin),
+	ranch_tcp:send(Socket, Bin1),
 	% 同步客户信息
 	% sync_client(),
 	{noreply, State};
