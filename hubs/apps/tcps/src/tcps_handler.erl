@@ -103,6 +103,10 @@ parse_package(Bin, State) ->
 	end.
 
 
+action(1, DataBin, _State) -> 
+	{ProxyId, Ip, Port} = binary_to_term(DataBin),
+	table_proxy_server_list:add(ProxyId, Ip, Port, self()),
+	ok;
 action(Cmd, DataBin, _State) ->
 	% P = tcp_package:package(Cmd+1, DataBin),
 	% self() ! {tcp_send, P},

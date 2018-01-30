@@ -57,8 +57,8 @@ get_proxy_pid(Proxy, port) ->
 %% 增加一行
 % add(_UserId, undefined, undefined, undefined) ->
 %     ok;
-add(Id, Ip, Port, Pid) ->
-    Row = #?TABLE{id = Id, ip = Ip, port = Port, pid = Pid},
+add(ProxyId, Ip, Port, Pid) ->
+    Row = #?TABLE{id = ProxyId, ip = Ip, port = Port, pid = Pid},
     F = fun() ->
             mnesia:write(Row)
     end,
