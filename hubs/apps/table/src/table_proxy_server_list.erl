@@ -42,8 +42,15 @@ select(ProxyId) ->
                 X#?TABLE.id =:= ProxyId
             ])).
 
-get_proxy_pid(Proxy) -> 
-        Proxy#?TABLE.pid.
+get_proxy_pid(Proxy, pid) -> 
+        Proxy#?TABLE.pid;
+get_proxy_pid(Proxy, id) -> 
+        Proxy#?TABLE.id;
+get_proxy_pid(Proxy, ip) -> 
+        Proxy#?TABLE.ip;
+get_proxy_pid(Proxy, port) -> 
+        Proxy#?TABLE.port.
+  
 
 %% == 数据操作 ===============================================
 
