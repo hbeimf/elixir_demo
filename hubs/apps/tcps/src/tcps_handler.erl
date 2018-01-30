@@ -51,40 +51,17 @@ init({Ref, Socket, Transport, _Opts = []}) ->
 		#state{socket=Socket, transport=Transport, data= <<>>},
 		?TIMEOUT).
 
-handle_info({tcp, Socket, CurrentPackage}, State=#state{
-		socket=Socket, transport=Transport, data=LastPackage}) -> 
-		% when byte_size(Data) > 1 ->
+handle_info({tcp, Socket, CurrentPackage}, State=#state{ socket=Socket, transport=Transport, data=LastPackage}) -> 
 	Transport:setopts(Socket, [{active, once}]),
 	PackageBin = <<LastPackage/binary, CurrentPackage/binary>>,
-
-	% io:format("package ========== ~p~n ", [PackageBin]),
-
-	% case tcp_package:unpackage(PackageBin) of
-	% 	{ok, waitmore} -> 
-	% 		% io:format("wait more ===========~n~n"),
-	% 		{noreply, State#state{data = PackageBin}};
-	% 	{ok, {Type, ValueBin}, NextPageckage} -> 
-	% 		tcp_controller:action(Type, ValueBin),
-	% 		{noreply, State#state{data = NextPageckage}};			
-	% 	_ -> 
-	% 		{stop, stop_noreason,State}
-	% end;
-
 	case parse_package(PackageBin, State) of
 		{ok, waitmore, Bin} -> 
 			{noreply, State#state{data = Bin}};
 		_ -> 
 			{stop, stop_noreason,State}
 	end;	
-
-	% Transport:send(Socket, reverse_binary(Data)),
-	% {noreply, State, ?TIMEOUT};
-
 handle_info({tcp_send, Package}, #state{transport = Transport,socket=Socket} = State) ->
-	% io:format("send data ---------------------------------------"),
-	% ok = Transport:send(Socket,Data),
 	Transport:send(Socket, Package),
-	
 	{noreply, State};
 handle_info({tcp_closed, _Socket}, State) ->
 	io:format("~p:~p  tcp closed  !!!!!! ~n~n", [?MODULE, ?LINE]),
@@ -117,17 +94,17 @@ code_change(_OldVsn, State, _Extra) ->
 parse_package(Bin, State) ->
 	case glib:unpackage(Bin) of
 		{ok, waitmore}  -> {ok, waitmore, Bin};
-		{ok,{Type, ValueBin},LefBin} ->
-			action(Type, ValueBin, State),
+		{ok,{Cmd, ValueBin},LefBin} ->
+			action(Cmd, ValueBin, State),
 			parse_package(LefBin, State);
-		Any ->
-			io:format("XXXXXXXXXX unpack error: ~p ~n ", [{?MODULE, ?LINE, Bin, Any}]),
+		_Any ->
+			% io:format("XXXXXXXXXX unpack error: ~p ~n ", [{?MODULE, ?LINE, Bin, Any}]),
 			error		
 	end.
 
 
-action(Type, DataBin, _State) ->
-	% P = tcp_package:package(Type+1, DataBin),
+action(Cmd, DataBin, _State) ->
+	% P = tcp_package:package(Cmd+1, DataBin),
 	% self() ! {tcp_send, P},
-	io:format("~n ================================= ~ntype:~p, bin: ~p ~n ", [Type, DataBin]),
+	io:format("~n ================================= ~nCmd:~p, bin: ~p ~n ", [Cmd, DataBin]),
 	ok.
