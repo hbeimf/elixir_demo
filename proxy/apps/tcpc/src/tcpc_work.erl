@@ -16,6 +16,14 @@
 -export([start_link/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
+-record(state, {
+	socket, 
+	transport, 
+	data,
+	ip,
+	port}).
+
+
 % --------------------------------------------------------------------
 % External API
 % --------------------------------------------------------------------
@@ -63,7 +71,22 @@ init(_Args) ->
 	% 		ok
 	% end,
 
-    	{ok, []}.
+    	% {ok, []}.
+
+    	% {Ip, Port} = rconf:read_config(hub_server),
+    	{Ip, Port} = {"127.0.0.1",  9999},
+	case ranch_tcp:connect(Ip, Port,[],3000) of
+		{ok,Socket} ->
+	        ok = ranch_tcp:setopts(Socket, [{active, once}]),
+			% erlang:start_timer(1000, self(), {regist}),
+			{ok, #state{socket = Socket, transport = ranch_tcp, data = <<>>, ip = Ip, port = Port} };
+		{error,econnrefused} -> 
+			erlang:start_timer(3000, self(), {reconnect,{Ip,Port}}),
+			{ok,#state{socket = econnrefused, transport = ranch_tcp, data = <<>>,ip = Ip, port = Port}};
+
+		{error,Reason} ->
+			{stop,Reason}
+	end.
 
 % --------------------------------------------------------------------
 % Function: handle_call/3
@@ -75,8 +98,7 @@ init(_Args) ->
 %          {stop, Reason, Reply, State}   | (terminate/2 is called)
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-handle_call(Request, _From, State) ->
-	io:format("call req: ~p~n", [{?MODULE, ?LINE, Request}]),
+handle_call(_Request, _From, State) ->
     Reply = ok,
     {reply, Reply, State}.
 
@@ -87,18 +109,67 @@ handle_call(Request, _From, State) ->
 %          {noreply, State, Timeout} |
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-handle_cast(Msg, State) ->
-	io:format("cast req: ~p~n", [{?MODULE, ?LINE, Msg}]),
+handle_cast({send, Package}, State=#state{socket=Socket, transport=_Transport, data=_LastPackage}) ->
+    ranch_tcp:send(Socket, Package),
+    {noreply, State};
+handle_cast(_Msg, State) ->
     {noreply, State}.
 
 % --------------------------------------------------------------------
 % Function: handle_info/2
 % Description: Handling all non call/cast messages
-% Returns: {noreply, State}           %          {noreply, State, Timeout} |
+% Returns: {noreply, State}          |
+%          {noreply, State, Timeout} |
 %          {stop, Reason, State}            (terminate/2 is called)
 % --------------------------------------------------------------------
-handle_info(_Info, State) ->
-    {noreply, State}.
+% handle_info(_Info, State) ->
+%     {noreply, State}.
+handle_info({tcp, Socket, CurrentPackage}, State=#state{
+		socket=Socket, transport=Transport, data=LastPackage}) -> 
+		% when byte_size(Data) > 1 ->
+	Transport:setopts(Socket, [{active, once}]),
+	PackageBin = <<LastPackage/binary, CurrentPackage/binary>>,
+
+	case parse_package(PackageBin, State) of
+		{ok, waitmore, Bin} -> 
+			{noreply, State#state{data = Bin}};
+		_ -> 
+			{stop, stop_noreason,State}
+	end;
+handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
+	% 注册代理 
+	% Bin = client_package:regist_proxy(),
+	% ranch_tcp:send(Socket, Bin),
+	% 同步客户信息
+	% sync_client(),
+	{noreply, State};
+handle_info({timeout,_,{reconnect,{Ip,Port}}}, #state{transport = Transport} = State) ->
+	io:format("reconnect ip:[~p],port:[~p] ~n",[Ip,Port]),
+	case Transport:connect(Ip,Port,[],3000) of
+		{ok,Socket} ->
+	        ok = Transport:setopts(Socket, [{active, once}]),
+			erlang:start_timer(1000, self(), {regist}),
+			{noreply,State#state{socket = Socket}};
+		{error,Reason} ->
+			io:format("==============Res:[~p]~n",[Reason]),
+			erlang:start_timer(3000, self(), {reconnect,{Ip,Port}}),
+			{noreply, State}
+	end;
+handle_info({tcp_closed, _Socket}, #state{ip = Ip, port = Port} = State) ->
+	io:format("~p:~p  tcp closed  !!!!!! ~n~n", [?MODULE, ?LINE]),
+	% {stop, normal, State};
+	erlang:start_timer(3000, self(), {reconnect,{Ip,Port}}),
+	{noreply, State#state{socket = undefined ,data = <<>>}};
+handle_info({tcp_error, _, _Reason}, #state{ip = Ip, port = Port} = State) ->
+	erlang:start_timer(3000, self(), {reconnect,{Ip,Port}}),
+	{noreply, State#state{socket = undefined ,data = <<>>}};
+	% {stop, Reason, State};
+handle_info(timeout, State) ->
+	% {stop, normal, State};
+	{noreply, State};
+handle_info(_Info, State) -> 
+	% {stop, normal, State}.
+	{noreply, State}.
 
 % handle_info(Info, State) ->
 %     % 接收来自go 发过来的异步消息
@@ -123,6 +194,22 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 % private functions
+
+parse_package(Bin, State) ->
+	case glib:unpackage(Bin) of
+		{ok, waitmore}  -> {ok, waitmore, Bin};
+		{ok,{Cmd, ValueBin},LefBin} ->
+			action(Cmd, ValueBin, State),
+			parse_package(LefBin, State);
+		_ ->
+			error		
+	end.
+
+action(_Cmd, _DataBin, _State) ->
+	% io:format("mod:~p, line:~p, param:~p~n", [?MODULE, ?LINE, {UserId, ErrorType, Msg}]),
+	% io:format("~n client receive reply here =============== ~ntype:~p, bin: ~p ~n ", [Cmd, DataBin]). 
+	ok.
+
 
 % read_config_file() -> 
 % 	ConfigFile = root_dir() ++ "config.ini",
