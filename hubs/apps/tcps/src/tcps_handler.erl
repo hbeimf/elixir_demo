@@ -103,8 +103,8 @@ parse_package(Bin, State) ->
 			error		
 	end.
 
-
-
+action(Cmd, DataBin, _State) when Cmd > 1000 ->
+	controller:action(Cmd, DataBin); 
 %% 注册proxy
 action(1, DataBin, #state{ socket=Socket, transport=_Transport, data=_LastPackage}) -> 
 	{ProxyId, Port} = binary_to_term(DataBin),
