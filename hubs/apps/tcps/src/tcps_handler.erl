@@ -106,8 +106,19 @@ parse_package(Bin, State) ->
 
 
 %% 注册proxy
-action(1, DataBin, _State) -> 
-	{ProxyId, Ip, Port} = binary_to_term(DataBin),
+action(1, DataBin, #state{ socket=Socket, transport=_Transport, data=_LastPackage}) -> 
+	{ProxyId, Port} = binary_to_term(DataBin),
+	% Ip = "127.0.0.12",
+	Ip  =  case ranch_tcp:peername(Socket) of 
+                        {ok, {TupleIp, _Port}} ->
+                            ListIp = tuple_to_list(TupleIp),
+                            ListIp1 = lists:map(fun(X)-> glib:to_str(X) end, ListIp),
+                            IpStr = string:join(ListIp1, "."),
+                            glib:to_binary(IpStr);
+                        _ -> 
+                            <<"">>
+             end,
+
 	table_proxy_server_list:add(ProxyId, Ip, Port, self()),
 	ok;
 
