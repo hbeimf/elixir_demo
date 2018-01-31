@@ -74,7 +74,7 @@ init(_Args) ->
     	% {ok, []}.
 
     	% {Ip, Port} = rconf:read_config(hub_server),
-    	{Ip, Port} = {"127.0.0.1",  9910},
+    	{Ip, Port} = {"127.0.0.1",  9999},
 	case ranch_tcp:connect(Ip, Port,[],3000) of
 		{ok,Socket} ->
 	        ok = ranch_tcp:setopts(Socket, [{active, once}]),
