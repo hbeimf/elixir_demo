@@ -1,13 +1,13 @@
-{application, proxy,
+{application, tcps,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { proxy_app, []}},
+  {mod, { tcps_app, []}},
   {applications,
    [kernel,
     stdlib,
-    tcpc,
-    tcps
+    sys_config,
+    ranch
    ]},
   {env,[]},
   {modules, []},

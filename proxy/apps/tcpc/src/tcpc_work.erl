@@ -130,8 +130,11 @@ handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
 	% Bin = client_package:regist_proxy(),
 	{ok, Config} = sys_config:get_config(proxy),
 	% {_, {host, Ip}, _} = lists:keytake(host, 1, Config),
-	{_, {port, Port}, _} = lists:keytake(port, 1, Config),
+	% {_, {port, Port}, _} = lists:keytake(port, 1, Config),
 	{_, {proxy_id, ProxyId}, _} = lists:keytake(proxy_id, 1, Config),
+
+	{ok, Config1} = sys_config:get_config(tcp),
+	{_, {port, Port}, _} = lists:keytake(port, 1, Config1),
 	% Ip = "127.0.0.1",
 	% Port = 9999,
 	% ProxyId = 1,
