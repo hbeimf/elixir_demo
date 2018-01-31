@@ -129,13 +129,13 @@ handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
 	% 注册代理 
 	% Bin = client_package:regist_proxy(),
 	{ok, Config} = sys_config:get_config(proxy),
-	{_, {host, Ip}, _} = lists:keytake(host, 1, Config),
+	% {_, {host, Ip}, _} = lists:keytake(host, 1, Config),
 	{_, {port, Port}, _} = lists:keytake(port, 1, Config),
 	{_, {proxy_id, ProxyId}, _} = lists:keytake(proxy_id, 1, Config),
 	% Ip = "127.0.0.1",
 	% Port = 9999,
 	% ProxyId = 1,
-	Bin = term_to_binary({ProxyId, Ip, Port}),
+	Bin = term_to_binary({ProxyId, Port}),
 	Bin1 = glib:package(1, Bin),
 	ranch_tcp:send(Socket, Bin1),
 	% 同步客户信息
