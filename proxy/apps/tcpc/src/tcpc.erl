@@ -16,4 +16,6 @@ cast(PoolName, Request) ->
         gen_server:cast(Worker, {req, Request})
     end).
 
+send(Package) -> 
+	cast(pool1, {send, Package}).
 

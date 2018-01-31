@@ -103,44 +103,9 @@ parse_package(Bin, State) ->
 			error		
 	end.
 
-% action(Cmd, DataBin, _State) when Cmd > 1000 ->
-% 	controller:action(Cmd, DataBin); 
-%% 注册proxy
-% action(1, DataBin, #state{ socket=Socket, transport=_Transport, data=_LastPackage}) -> 
-% 	{ProxyId, Port} = binary_to_term(DataBin),
-% 	% Ip = "127.0.0.12",
-% 	Ip  =  case ranch_tcp:peername(Socket) of 
-%                         {ok, {TupleIp, _Port}} ->
-%                             ListIp = tuple_to_list(TupleIp),
-%                             ListIp1 = lists:map(fun(X)-> glib:to_str(X) end, ListIp),
-%                             IpStr = string:join(ListIp1, "."),
-%                             glib:to_binary(IpStr);
-%                         _ -> 
-%                             <<"">>
-%              end,
-
-% 	table_proxy_server_list:add(ProxyId, Ip, Port, self()),
-% 	ok;
-
-% %% 注册 client 
-% action(2, Bin, _State) ->
-% 	{UserId, ProxyId, Token} = binary_to_term(Bin),
-% 	%% 单点登录在此处处理
-% 	let_other_client_logout(UserId),
-% 	table_client_list:add(UserId, ProxyId, Token),
-% 	ok;
-
-% %% 注消 client 
-% action(3, Bin, _State) ->
-% 	{UserId, _ProxyId, Token} = binary_to_term(Bin),
-% 	table_client_list:delete(UserId, Token),
-% 	ok;
-
 action(Cmd, DataBin, _State) ->
-	io:format("~n ================================= ~nCmd:~p, bin: ~p ~n ", [Cmd, DataBin]),
+	DataBin1 = term_to_binary({self(), DataBin}),
+	% io:format("~n ================================= ~nCmd:~p, bin: ~p ~n ", [Cmd, DataBin]),
+	Package = glib:package(Cmd, DataBin1),
+	tcpc:send(Package),
 	ok.
-
-%% 单点登录在此处处理
-% let_other_client_logout(UserId) ->
-% 	table_client_list:select(UserId),
-% 	ok. 
