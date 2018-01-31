@@ -209,6 +209,7 @@ parse_package(Bin, State) ->
 action(1, DataBin, _State) -> 
 	{From, Bin} = binary_to_term(DataBin),
 	From ! {tcp_send, Bin},
+	ok;
 action(_Cmd, _DataBin, _State) ->
 	% io:format("mod:~p, line:~p, param:~p~n", [?MODULE, ?LINE, {UserId, ErrorType, Msg}]),
 	% io:format("~n client receive reply here =============== ~ntype:~p, bin: ~p ~n ", [Cmd, DataBin]). 
