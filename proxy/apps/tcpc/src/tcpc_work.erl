@@ -206,42 +206,11 @@ parse_package(Bin, State) ->
 			error		
 	end.
 
+action(1, DataBin, _State) -> 
+	{From, Bin} = binary_to_term(DataBin),
+	From ! {tcp_send, Bin},
 action(_Cmd, _DataBin, _State) ->
 	% io:format("mod:~p, line:~p, param:~p~n", [?MODULE, ?LINE, {UserId, ErrorType, Msg}]),
 	% io:format("~n client receive reply here =============== ~ntype:~p, bin: ~p ~n ", [Cmd, DataBin]). 
 	ok.
 
-
-% read_config_file() -> 
-% 	ConfigFile = root_dir() ++ "config.ini",
-% 	case file_get_contents(ConfigFile) of
-% 		{ok, Config} -> 
-% 			zucchini:parse_string(Config);
-% 		_ -> 
-% 			ok
-% 	end.
-
-% root_dir() ->
-% 	replace(os:cmd("pwd"), "\n", "/"). 
-
-% file_get_contents(Dir) ->
-% 	case file:read_file(Dir) of
-% 		{ok, Bin} ->
-% 			% {ok, binary_to_list(Bin)};
-% 			{ok, Bin};
-% 		{error, Msg} ->
-% 			{error, Msg}
-% 	end.
-
-% replace(Str, SubStr, NewStr) ->
-% 	case string:str(Str, SubStr) of
-% 		Pos when Pos == 0 ->
-% 			Str;
-% 		Pos when Pos == 1 ->
-% 			Tail = string:substr(Str, string:len(SubStr) + 1),
-% 			string:concat(NewStr, replace(Tail, SubStr, NewStr));
-% 		Pos ->
-% 			Head = string:substr(Str, 1, Pos - 1),
-% 			Tail = string:substr(Str, Pos + string:len(SubStr)),
-% 			string:concat(string:concat(Head, NewStr), replace(Tail, SubStr, NewStr))
-% 	end.
