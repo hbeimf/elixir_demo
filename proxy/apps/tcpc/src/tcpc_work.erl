@@ -59,22 +59,11 @@ start_link(Args) ->
 %          {stop, Reason}
 % --------------------------------------------------------------------
 init(_Args) ->
-	% ?MODULE = ets:new(?SYS_CONFIG, ?ETS_OPTS),
+	{ok, Config} = sys_config:get_config(hubs),
+	{_, {host, Ip}, _} = lists:keytake(host, 1, Config),
+	{_, {port, Port}, _} = lists:keytake(port, 1, Config),
 
- %    	case read_config_file() of
-	% 	{ok, ConfigList} -> 
-	% 		lists:foreach(fun({Key, Val}) -> 
-	% 			ets:insert(?SYS_CONFIG, #sys_config{key=Key, val=Val})
-	% 		end, ConfigList),
-	% 		ok;
-	% 	_ -> 
-	% 		ok
-	% end,
-
-    	% {ok, []}.
-
-    	% {Ip, Port} = rconf:read_config(hub_server),
-    	{Ip, Port} = {"127.0.0.1",  9999},
+    	% {Ip, Port} = {"127.0.0.1",  9999},
 	case ranch_tcp:connect(Ip, Port,[],3000) of
 		{ok,Socket} ->
 	        ok = ranch_tcp:setopts(Socket, [{active, once}]),
@@ -139,9 +128,13 @@ handle_info({tcp, Socket, CurrentPackage}, State=#state{
 handle_info({timeout,_,{regist}}, State=#state{socket=Socket}) ->
 	% 注册代理 
 	% Bin = client_package:regist_proxy(),
-	ProxyId = 1,
-	Ip = "127.0.0.1",
-	Port = 9999,
+	{ok, Config} = sys_config:get_config(proxy),
+	{_, {host, Ip}, _} = lists:keytake(host, 1, Config),
+	{_, {port, Port}, _} = lists:keytake(port, 1, Config),
+	{_, {proxy_id, ProxyId}, _} = lists:keytake(proxy_id, 1, Config),
+	% Ip = "127.0.0.1",
+	% Port = 9999,
+	% ProxyId = 1,
 	Bin = term_to_binary({ProxyId, Ip, Port}),
 	Bin1 = glib:package(1, Bin),
 	ranch_tcp:send(Socket, Bin1),
