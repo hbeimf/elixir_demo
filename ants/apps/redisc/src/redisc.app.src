@@ -1,17 +1,21 @@
-{application, ants,
+{application, redisc,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { ants_app, []}},
+  {mod, { redisc_app, []}},
   {applications,
    [kernel,
-   sys_config,
-   glib,
-   mysqlc,
-   redisc,
-    stdlib
+    stdlib,
+    poolboy,
+    eredis,
+    sys_config
    ]},
-  {env,[]},
+{env, [
+        {global_or_local, local}
+  ]},
+
+
+
   {modules, []},
 
   {maintainers, []},
