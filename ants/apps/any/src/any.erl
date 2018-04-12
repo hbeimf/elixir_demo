@@ -19,9 +19,6 @@ test1()->
 	 get_datas(List),
 	ok.
 
-
-
-
 get_datas([]) -> 
 	ok;
 get_datas(List) -> 
@@ -52,22 +49,6 @@ body(Body) ->
 % -- 4：”27.55″，今日最高价；
 % -- 5：”26.20″，今日最低价；
 
-% CREATE TABLE `m_history` (
-%   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-%   `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
-%   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
-%   ` today_open_price` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '今日开盘价',
-%   `yesterday_closing_price` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '昨日收盘价',
-%   ` current_price` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '当前价格',
-%   ` today_top_price` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '今日最高价',
-%   ` today_bottom_price` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '今日最低价',
-%   `original_str` varchar(300) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '原始内容',
-%   `created_at` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-%   `updated_at` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-%   PRIMARY KEY (`id`),
-%   UNIQUE KEY `code_time` (`code`,`timer`)
-% ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='history'
-% today_open_price
 
 get_data(Code) -> 
 	Url = lists:concat([url(), glib:to_str(Code)]),
