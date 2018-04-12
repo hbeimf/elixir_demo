@@ -168,8 +168,14 @@ explode(Str, SubStr, List) ->
 implode(List, Str) ->
 	string:join(List, Str).
 
+% three(Num) ->
+%     hd(io_lib:format("~.3f",[Num])).
+
+three(Num) when is_float(Num)->
+    hd(io_lib:format("~.3f",[Num]));
 three(Num) ->
-    hd(io_lib:format("~.3f",[Num])).
+	three(to_float(Num)).
+
 
 to_str(X) when is_list(X) -> X;
 to_str(X) when is_atom(X) -> atom_to_list(X);
@@ -188,6 +194,9 @@ to_integer(X) when is_list(X) -> list_to_integer(X);
 to_integer(X) when is_binary(X) -> binary_to_integer(X);
 to_integer(X) when is_integer(X) -> X;
 to_integer(X) -> X.	
+
+to_float(Str) ->
+	list_to_float(Str). 
 
 trim(Str) ->
 	string:strip(Str).
