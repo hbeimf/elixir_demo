@@ -136,6 +136,13 @@ replace(Result, Str, SubStr, NewStr) ->
 			replace(string:concat(Result, string:concat(Head, NewStr)), Tail, SubStr, NewStr)
 	end.
 
+has_str(Str, SubStr) -> 
+	case string:str(Str, SubStr) of
+		Pos when Pos == 0 ->
+			false;
+		Pos ->
+			true
+	end.
 
 explode(Str, SubStr) ->
     case string:len(Str) of
