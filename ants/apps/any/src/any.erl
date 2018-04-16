@@ -31,7 +31,7 @@ run() ->
 
 code() -> 
 	CodeList = code_list(),
-	split_code(CodeList, [], 10).
+	split_code(CodeList, [], 100).
 
 split_code([], Res, _Size) ->
 	Res;
