@@ -10,6 +10,7 @@
    mysqlc,
    redisc,
    any,
+   rtime,
     stdlib
    ]},
   {env,[]},

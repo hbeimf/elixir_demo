@@ -5,6 +5,7 @@
   {mod, { rtime_app, []}},
   {applications,
    [kernel,
+   mysqlc,
     stdlib
    ]},
   {env,[]},
