@@ -3,32 +3,38 @@ $loader = require './vendor/autoload.php';
 
 // use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
-function _initDatabaseEloquent($database_config) {
-	$capsule = new DB;
-	$capsule->addConnection($database_config);
-	$capsule->setAsGlobal();
-	$capsule->bootEloquent();
-	$capsule::connection()->enableQueryLog();
+
+class get_data {
+	public function run() {
+		$data = DB::table('m_gp_list')->first();
+		print_r($data);
+	}
+	public function __construct() {
+		$this->_initDatabaseEloquent();
+	}
+
+	private function _initDatabaseEloquent() {
+		$db = new DB;
+		$db->addConnection($this->database_config);
+		$db->setAsGlobal();
+		$db->bootEloquent();
+		$db::connection()->enableQueryLog();
+	}
+
+	private $database_config = [
+		'driver' => 'mysql',
+		'host' => '127.0.0.1',
+		'database' => 'ants',
+		'username' => 'root',
+		'password' => '123456',
+		'port' => 3306,
+		'charset' => 'utf8',
+		'collation' => 'utf8_unicode_ci',
+		'prefix' => "",
+	];
 }
 
-$database_config = [
-	'driver' => 'mysql',
-	'host' => '127.0.0.1',
-	// 'read.0.host' => '127.0.0.1',
-	// 'write.0.host' => '127.0.0.1',
-	'database' => 'ants',
-	'username' => 'root',
-	'password' => '123456',
-	'port' => 3306,
-	'charset' => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix' => "",
-];
-
-_initDatabaseEloquent($database_config);
-
-$data = DB::table('m_gp_list')->first();
-
-print_r($data);
+$obj = new get_data();
+$obj->run();
 
 ?>
