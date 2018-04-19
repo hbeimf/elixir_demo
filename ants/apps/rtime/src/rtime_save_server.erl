@@ -19,6 +19,9 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
 % -record(state, {}).
+% download
+% rest
+% analyse
 
 % --------------------------------------------------------------------
 % External API
@@ -90,7 +93,7 @@ handle_info(save, State) ->
     % run(Hour, Min, Seconds),
 
     get_datas(State),
-    _TRef = erlang:send_after(500, self(), save),
+    _TRef = erlang:send_after(3000, self(), save),
     {noreply, State};
 handle_info(_Info, State) ->
     {noreply, State}.

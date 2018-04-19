@@ -51,4 +51,3 @@ parse_res({ok, KeyList, DataList}) ->
 parse_res(_Error) ->  
 	{ok, []}.	
 
-	
