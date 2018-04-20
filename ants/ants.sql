@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `m_all`
+--
+
+DROP TABLE IF EXISTS `m_all`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_all` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+  `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+  `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_time` (`code`,`timer`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `m_all`
+--
+
+LOCK TABLES `m_all` WRITE;
+/*!40000 ALTER TABLE `m_all` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_all` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `m_gp_list`
 --
 
@@ -83,4 +109,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-16 16:38:31
+-- Dump completed on 2018-04-20 16:04:11
