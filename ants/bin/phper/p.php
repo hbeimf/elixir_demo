@@ -5,53 +5,58 @@ $loader = require './vendor/autoload.php';
 // use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
 
+// CREATE TABLE `m_all` (
+//   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+//   `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+//   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+//   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+//   PRIMARY KEY (`id`),
+//   UNIQUE KEY `code_time` (`code`,`timer`)
+// ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
+
 class get_data {
 	public function run() {
 		$data = DB::table('m_gp_list')->get();
-		$i = 0;
+		$i = 1;
+		$all = count($data);
 		foreach ($data as $v) {
-			// echo $v['code'] . "\n";
-			// echo substr($v['code'], 2, 6) . "\n";
 			$code = '0' . substr($v['code'], 2, 6);
 			$code1 = '1' . substr($v['code'], 2, 6);
 
 			$this->download($code);
 			$this->download($code1);
-
-			// $code = '1002566';
-			// $code = '0600614';
-			// print_r($v);
-
-			// $today = date("Ymd", time());
-			// $link = $this->_url . "?code={$code}&start=20150101&end={$today}";
-			// // echo $link . "\n";
-			// $data = file_get_contents($link);
-			// echo iconv('GBK', 'utf-8', $data); //exit;
-			// file_put_contents("./csv/{$code}.csv", $data);
-
-			// if ($i >= 2) {
-			// 	break;
-			// }
-			// $i++;
+			echo "all: {$all}, current: {$i}, code:" . substr($v['code'], 2, 6) . "\n";
+			$i++;
 		}
 
 	}
 
 	public function download($code) {
-		$today = date("Ymd", time());
-		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
-		$link = $this->_url . "?code={$code}&start={$start}&end={$today}";
-		// echo $link . "\n";
-		$data = file_get_contents($link);
-		$data = iconv('GBK', 'utf-8', $data); //exit;
 
 		$dst = "./csv/{$code}.csv";
-		$size = file_put_contents($dst, $data);
-		echo $size;
-		if ($size < 200) {
-			unlink($dst);
+
+		if (file_exists($dst)) {
+			$arr = file($dst);
+			// print_r($arr);exit;
+
+			$vals = [];
+
+			for ($i = 1; $i < count($arr); $i++) {
+				# code...
+				// echo $arr[$i];
+				// echo "\n";
+				$list = explode(",", $arr[$i]);
+				$list = array_map("trim", $list);
+
+				$code = trim($list[1], "'");
+				$timer = $list[0];
+				$price = $list[3];
+				$vals[] = "('{$code}', '{$timer}', {$price})";
+			}
+
+			$sql = "INSERT IGNORE INTO m_all (code, timer, price) values " . implode(', ', $vals);
+			DB::insert($sql);
 		}
-		echo "\n";
 	}
 
 	public function __construct() {
