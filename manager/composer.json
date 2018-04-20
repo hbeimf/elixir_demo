@@ -1,0 +1,26 @@
+{
+    "require": {
+        "illuminate/database": "5.0.*",
+        "illuminate/events": "5.0.*",
+        "symfony/debug": "2.6.*",
+        "symfony/var-dumper": "2.6.*",
+        "elasticsearch/elasticsearch": "~2.0",
+        "leric/php-thrift": "0.9.*" 
+    },
+
+    "autoload" : {
+        "App\\Models\\": "application/models",
+        "classmap": [
+            "application/models",
+            "application/library",
+            "application/controllers",
+            "application/views",
+            "application/plugins",
+            "application/modules",
+            "vendor/leric/php-thrift/lib"
+        ]
+    }
+
+
+
+}
