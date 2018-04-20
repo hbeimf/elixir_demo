@@ -39,8 +39,7 @@ class get_data {
 
 	public function download($code) {
 		$today = date("Ymd", time());
-		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
-		$link = $this->_url . "?code={$code}&start={$start}&end={$today}";
+		$link = $this->_url . "?code={$code}&start=20000101&end={$today}";
 		// echo $link . "\n";
 		$data = file_get_contents($link);
 		$data = iconv('GBK', 'utf-8', $data); //exit;
