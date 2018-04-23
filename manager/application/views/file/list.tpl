@@ -78,12 +78,18 @@
                                 </a> -->
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/pic/list" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}-{{$r['name']}}">
-                                    <i class="fa fa-pencil"></i>弹窗
+                                data-link="/file/index/?from=iframe" data-id="window_{{$r['id']}}" data-title="柱状统计图demo">
+                                    <i class="fa fa-pencil"></i>柱状统计弹窗
+                                </a>
+
+                                <a class="btn gray window-iframe"  
+                                data-link="/file/timelist/?from=iframe" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
+                                    <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
                                 
+
                                 <a class="btn gray window-iframe"  
-                                data-link="/pic/list1" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}-{{$r['name']}}">
+                                data-link="/pic/list" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}-{{$r['name']}}">
                                     <i class="fa fa-pencil"></i>弹窗list demo
                                 </a>
 

@@ -4,6 +4,71 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class FileController extends AbstractController {
 
+	// 柱状统计图
+	public function indexAction() {
+		$params = [
+			'from' => $this->request->getQuery('from'),
+		];
+
+		$data = [
+			'js' => 'file_index',
+			'params' => $params,
+		];
+		$this->smarty->display('file/index.tpl', $data);
+	}
+
+	// 线状统计图demo
+	public function timelistAction() {
+		$params = [
+			'from' => $this->request->getQuery('from'),
+		];
+
+		$data = [
+			'js' => 'file_timelist',
+			'params' => $params,
+		];
+		$this->smarty->display('file/timelist.tpl', $data);
+	}
+
+	public function jsonAction() {
+		// $code = trim($this->request->getQuery('code'));
+		// $code = '600000';
+		$code = '000001';
+
+		$select = 'price, timer_int';
+		$obj = Table_Logic_Price::selectRaw($select);
+		$obj->where('code', '=', $code)->where('price', '!=', 0);
+
+		// $count = $account_obj->count();
+		$history = $obj->orderBy('timer_int', 'desc')->get();
+
+		$data = [];
+
+		foreach ($history as $h) {
+			$data[] = [
+				'name' => '',
+				'value' => [
+					date("Y/m/d", $h['timer_int']),
+					$h['price'],
+				],
+			];
+		}
+
+		// $table = new Table_Gp_List();
+		// $row = $table->findByCode($code);
+
+		$reply = [
+			'name' => 'test',
+			'code' => $code,
+			'data' => $data,
+		];
+
+		echo json_encode($reply);
+
+		exit;
+
+	}
+
 	public function listAction() {
 		$params = [
 			'name' => $this->request->getQuery('name'),
