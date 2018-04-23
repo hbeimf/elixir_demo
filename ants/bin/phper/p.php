@@ -14,6 +14,16 @@ use Illuminate\Database\Capsule\Manager as DB;
 //   UNIQUE KEY `code_time` (`code`,`timer`)
 // ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
 
+// CREATE TABLE `m_all` (
+//   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+//   `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+//   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+//   `timer_int` int(11)  NOT NULL DEFAULT '0' COMMENT '时间截',
+//   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+//   PRIMARY KEY (`id`),
+//   UNIQUE KEY `code_time` (`code`,`timer`)
+// ) ENGINE=InnoDB AUTO_INCREMENT=8864102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
+
 class get_data {
 	public function run() {
 		$data = DB::table('m_gp_list')->get();
@@ -51,10 +61,11 @@ class get_data {
 				$code = trim($list[1], "'");
 				$timer = $list[0];
 				$price = $list[3];
-				$vals[] = "('{$code}', '{$timer}', {$price})";
+				$timer_int = strtotime($timer);
+				$vals[] = "('{$code}', '{$timer}', {$timer_int}, {$price})";
 			}
 
-			$sql = "INSERT IGNORE INTO m_all (code, timer, price) values " . implode(', ', $vals);
+			$sql = "INSERT IGNORE INTO m_all (code, timer, timer_int, price) values " . implode(', ', $vals);
 			DB::insert($sql);
 		}
 	}

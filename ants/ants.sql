@@ -26,6 +26,7 @@ CREATE TABLE `m_all` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+  `timer_int` int(11) NOT NULL DEFAULT '0' COMMENT '时间截',
   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_time` (`code`,`timer`)
@@ -945,4 +946,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-20 16:50:01
+-- Dump completed on 2018-04-23 10:05:19
