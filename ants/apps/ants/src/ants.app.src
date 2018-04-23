@@ -11,6 +11,7 @@
    redisc,
    any,
    rtime,
+   parser,
     stdlib
    ]},
   {env,[]},
