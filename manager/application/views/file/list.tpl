@@ -43,11 +43,9 @@
                         <tr>
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
-                            <th class="hidden-480">名称</th>
-                            <th class="hidden-480">路径</th>
-                            <th class="hidden-480">文件是否存在</th>
-                            <th class="hidden-480">创建时间</th>
-                            <th class="hidden-480">更新时间</th>
+                            <th class="hidden-480">code</th>
+                            <th class="hidden-480">time</th>
+                            <th class="hidden-480">price</th>
                             <th class="hidden-480">编辑</th>
                         </tr>
                     </thead>
@@ -56,11 +54,9 @@
                         <tr class="odd gradeX">
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
+                            <td>{{$r['code']}}</td>
                             <td>{{$r['name']}}</td>
-                            <td>{{$r['dir']}}</td>
-                            <td>{{has_file dir=$r['dir']}}</td>
-                            <td>{{$r['created_at']}}</td>
-                            <td>{{$r['updated_at']}}</td>
+                            <td>{{$r['name']}}</td>
                             <td>
                                 <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/{{$r['id']}}/"
                                     class="btn grey">
@@ -83,13 +79,13 @@
                                 </a>
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/timelist/?from=iframe" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
+                                data-link="/file/timelist/?from=iframe&code={{$r['code']}}" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
                                 
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/pic/list" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}-{{$r['name']}}">
+                                data-link="/pic/list" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}">
                                     <i class="fa fa-pencil"></i>弹窗list demo
                                 </a>
 

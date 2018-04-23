@@ -21,6 +21,7 @@ class FileController extends AbstractController {
 	public function timelistAction() {
 		$params = [
 			'from' => $this->request->getQuery('from'),
+			'code' => $this->request->getQuery('code'),
 		];
 
 		$data = [
@@ -31,29 +32,33 @@ class FileController extends AbstractController {
 	}
 
 	public function jsonAction() {
-		// $code = trim($this->request->getQuery('code'));
+		$code = trim($this->request->getQuery('code'));
+		$code = substr($code, 2, 6);
 		// $code = '600000';
-		$code = '000001';
+		// $code = '000001';
+
+		// echo $code;exit;
 
 		$select = 'price, timer_int';
 		$obj = Table_Logic_Price::selectRaw($select);
-		$obj->where('code', '=', $code)->where('price', '!=', 0);
+		$obj->where('code', '=', $code)->where('price', '!=', 0)->orderBy('timer_int', 'desc');
 
 		// $count = $account_obj->count();
 		$history = $obj->orderBy('timer_int', 'desc')->get();
 
 		$data = [];
 
-		foreach ($history as $h) {
-			$data[] = [
-				'name' => '',
-				'value' => [
-					date("Y/m/d", $h['timer_int']),
-					$h['price'],
-				],
-			];
+		if (count($history) > 0) {
+			foreach ($history as $h) {
+				$data[] = [
+					'name' => '',
+					'value' => [
+						date("Y/m/d", $h['timer_int']),
+						$h['price'],
+					],
+				];
+			}
 		}
-
 		// $table = new Table_Gp_List();
 		// $row = $table->findByCode($code);
 
@@ -78,14 +83,16 @@ class FileController extends AbstractController {
 
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
-		$select = 'id, name, dir, url, created_at, updated_at';
+		// $select = 'id, name, dir, url, created_at, updated_at';
+		$select = '*';
+		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
-		$table_user = Table_Logic_Resource::selectRaw($select);
+		$table_user = Table_Logic_Code::selectRaw($select);
 
-		if (trim($params['name']) != '') {
-			$name = urldecode($params['name']);
-			$table_user->where('name', 'like', "%{$name}%");
-		}
+		// if (trim($params['name']) != '') {
+		// 	$name = urldecode($params['name']);
+		// 	$table_user->where('name', 'like', "%{$name}%");
+		// }
 		$count = $table_user->count();
 		$users = $table_user
 			->skip($skip)
@@ -106,8 +113,8 @@ class FileController extends AbstractController {
 		];
 
 		// $list = Table_Gp_List::find(1)->toArray();
-
-		$this->smarty->getSmarty()->registerPlugin("function", "has_file", "has_file");
+		// p($data);exit;
+		// $this->smarty->getSmarty()->registerPlugin("function", "has_file", "has_file");
 		$this->smarty->display('file/list.tpl', $data);
 
 	}

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-23 10:49:20
+<?php /* Smarty version Smarty-3.1.8, created on 2018-04-23 14:21:35
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1524451635,
+      1 => 1524464492,
       2 => 'file',
     ),
   ),
@@ -72,11 +72,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                         <tr>
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
-                            <th class="hidden-480">名称</th>
-                            <th class="hidden-480">路径</th>
-                            <th class="hidden-480">文件是否存在</th>
-                            <th class="hidden-480">创建时间</th>
-                            <th class="hidden-480">更新时间</th>
+                            <th class="hidden-480">code</th>
+                            <th class="hidden-480">time</th>
+                            <th class="hidden-480">price</th>
                             <th class="hidden-480">编辑</th>
                         </tr>
                     </thead>
@@ -91,15 +89,11 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
 " /></td> -->
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 </td>
+                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['code'];?>
+</td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['name'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['dir'];?>
-</td>
-                            <td><?php echo has_file(array('dir'=>$_smarty_tpl->tpl_vars['r']->value['dir']),$_smarty_tpl);?>
-</td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['created_at'];?>
-</td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['updated_at'];?>
+                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['name'];?>
 </td>
                             <td>
                                 <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
@@ -128,7 +122,8 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                 </a>
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/timelist/?from=iframe" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
+                                data-link="/file/timelist/?from=iframe&code=<?php echo $_smarty_tpl->tpl_vars['r']->value['code'];?>
+" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 " data-title="线状统计图demo">
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
@@ -137,7 +132,6 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                 <a class="btn gray window-iframe"  
                                 data-link="/pic/list" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 " data-title="<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
--<?php echo $_smarty_tpl->tpl_vars['r']->value['name'];?>
 ">
                                     <i class="fa fa-pencil"></i>弹窗list demo
                                 </a>

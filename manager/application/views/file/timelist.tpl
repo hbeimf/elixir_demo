@@ -3,6 +3,8 @@
 {{else}}
 {{include file="include/header.tpl"}}
 {{/if}}
+<input type="text" name="code" value="{{$params['code']}}">
+
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
                 <div id="dashboard">

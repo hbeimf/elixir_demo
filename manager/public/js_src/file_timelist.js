@@ -33,7 +33,8 @@ require([
 
 // console.log(randomData());
 	
-	$.get('/file/json/', function(res) {
+	var code = $('input[name="code"]').val();
+	$.get('/file/json/?code='+code, function(res) {
 		// console.log(res);
 		var reply = $.parseJSON(res);
 
