@@ -1,7 +1,6 @@
 #! /usr/bin
 
-# server="47.106.78.218"
-server="192.168.1.49"
+server="192.168.1.50"
 
 # sshpass -f /etc/test_password.txt scp -r -v /mnt/web/m.demo.com/application/controllers root@${server}:/mnt/web/m.demo.com/application
 # sshpass -f /etc/test_password.txt scp -r -v /mnt/web/m.demo.com/application/views root@${server}:/mnt/web/m.demo.com/application
