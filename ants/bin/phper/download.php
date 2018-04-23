@@ -17,11 +17,13 @@ class get_data {
 			$this->download($code1);
 		}
 
+		$this->run_parse();
 	}
 
 	public function download($code) {
 		$today = date("Ymd", time());
 		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
+		// $link = $this->_url . "?code={$code}&start=20000101&end={$today}";
 		$link = $this->_url . "?code={$code}&start={$start}&end={$today}";
 		// echo $link . "\n";
 		$data = file_get_contents($link);
@@ -34,6 +36,51 @@ class get_data {
 			unlink($dst);
 		}
 		echo "\n";
+	}
+
+	public function run_parse() {
+		$data = DB::table('m_gp_list')->get();
+		$i = 1;
+		$all = count($data);
+		foreach ($data as $v) {
+			$code = '0' . substr($v['code'], 2, 6);
+			$code1 = '1' . substr($v['code'], 2, 6);
+
+			$this->parse($code);
+			$this->parse($code1);
+			echo "all: {$all}, current: {$i}, code:" . substr($v['code'], 2, 6) . "\n";
+			$i++;
+		}
+
+	}
+
+	public function parse($code) {
+
+		$dst = "./csv/{$code}.csv";
+
+		if (file_exists($dst)) {
+			$arr = file($dst);
+			// print_r($arr);exit;
+
+			$vals = [];
+
+			for ($i = 1; $i < count($arr); $i++) {
+				# code...
+				// echo $arr[$i];
+				// echo "\n";
+				$list = explode(",", $arr[$i]);
+				$list = array_map("trim", $list);
+
+				$code = trim($list[1], "'");
+				$timer = $list[0];
+				$price = $list[3];
+				$timer_int = strtotime($timer);
+				$vals[] = "('{$code}', '{$timer}', {$timer_int}, {$price})";
+			}
+
+			$sql = "INSERT IGNORE INTO m_all (code, timer, timer_int, price) values " . implode(', ', $vals);
+			DB::insert($sql);
+		}
 	}
 
 	public function __construct() {
