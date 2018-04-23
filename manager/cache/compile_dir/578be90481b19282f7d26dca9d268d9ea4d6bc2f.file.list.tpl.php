@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-23 15:01:35
+<?php /* Smarty version Smarty-3.1.8, created on 2018-04-23 15:07:56
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1524466855,
+      1 => 1524467251,
       2 => 'file',
     ),
   ),
@@ -116,18 +116,17 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                 </a> -->
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/index/?from=iframe" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
-" data-title="柱状统计图demo">
-                                    <i class="fa fa-pencil"></i>柱状统计弹窗
-                                </a>
-
-                                <a class="btn gray window-iframe"  
                                 data-link="/file/timelist/?from=iframe&code=<?php echo $_smarty_tpl->tpl_vars['r']->value['code'];?>
 " data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 " data-title="线状统计图demo">
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
-                                
+
+                                <a class="btn gray window-iframe"  
+                                data-link="/file/index/?from=iframe" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
+" data-title="柱状统计图demo">
+                                    <i class="fa fa-pencil"></i>柱状统计弹窗
+                                </a>
 
                                 <a class="btn gray window-iframe"  
                                 data-link="/pic/list" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
