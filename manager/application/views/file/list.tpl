@@ -28,6 +28,8 @@
                                 &nbsp;&nbsp;
                             </label>
                             <label>名称: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>code: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
 
@@ -44,8 +46,7 @@
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">code</th>
-                            <th class="hidden-480">time</th>
-                            <th class="hidden-480">price</th>
+                            <th class="hidden-480">name</th>
                             <th class="hidden-480">编辑</th>
                         </tr>
                     </thead>
@@ -55,7 +56,6 @@
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
                             <td>{{$r['code']}}</td>
-                            <td>{{$r['name']}}</td>
                             <td>{{$r['name']}}</td>
                             <td>
                                 <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/{{$r['id']}}/"

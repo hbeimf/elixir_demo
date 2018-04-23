@@ -75,11 +75,12 @@ class FileController extends AbstractController {
 	}
 
 	public function listAction() {
-		$params = [
+		$params = array_map("trim", [
 			'name' => $this->request->getQuery('name'),
+			'code' => $this->request->getQuery('code'),
 			'page' => (!is_null($this->request->getQuery('page'))) ? $this->request->getQuery('page') : 1,
 			'page_size' => (!is_null($this->request->getQuery('page_size'))) ? $this->request->getQuery('page_size') : 10,
-		];
+		]);
 
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
@@ -89,10 +90,16 @@ class FileController extends AbstractController {
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select);
 
-		// if (trim($params['name']) != '') {
-		// 	$name = urldecode($params['name']);
-		// 	$table_user->where('name', 'like', "%{$name}%");
-		// }
+		if (trim($params['name']) != '') {
+			$name = urldecode($params['name']);
+			$table_user->where('name', 'like', "%{$name}%");
+		}
+
+		if (trim($params['code']) != '') {
+			$code = urldecode($params['code']);
+			$table_user->where('code', 'like', "%{$code}%");
+		}
+
 		$count = $table_user->count();
 		$users = $table_user
 			->skip($skip)
