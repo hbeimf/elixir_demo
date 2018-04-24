@@ -69,7 +69,7 @@ class FileController extends AbstractController {
 		$code = trim($this->request->getQuery('code'));
 		$code = substr($code, 2, 6);
 
-		$select = 'price, timer_int';
+		$select = 'price,name, timer_int';
 		$obj = Table_Logic_Price::selectRaw($select);
 		$obj->where('code', '=', $code)->where('price', '!=', 0)->orderBy('timer_int', 'desc');
 
@@ -106,6 +106,7 @@ class FileController extends AbstractController {
 
 		$data = [];
 
+		$name = '';
 		if (count($history) > 0) {
 			foreach ($history as $h) {
 				$data[] = [
@@ -115,13 +116,14 @@ class FileController extends AbstractController {
 						$h['price'],
 					],
 				];
+				$name = $h['name'];
 			}
 		}
 		// $table = new Table_Gp_List();
 		// $row = $table->findByCode($code);
 
 		$reply = [
-			'name' => 'test',
+			'name' => $name,
 			'code' => $code,
 			'data' => $data,
 		];
