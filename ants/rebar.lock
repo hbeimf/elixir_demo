@@ -1,6 +1,7 @@
 {"1.1.0",
 [{<<"eredis">>,{pkg,<<"eredis">>,<<"1.0.8">>},0},
  {<<"esnowflake">>,{pkg,<<"esnowflake">>,<<"0.2.0">>},0},
+ {<<"jsx">>,{pkg,<<"jsx">>,<<"2.9.0">>},0},
  {<<"mysql">>,
   {git,"https://github.com/mysql-otp/mysql-otp.git",
        {ref,"5ad838fd1cfe11f0a7eb4e25d94f438c19c62630"}},
@@ -20,5 +21,6 @@
 [
 {pkg_hash,[
  {<<"eredis">>, <<"AB4FDA1C4BA7FBE6C19C26C249DC13DA916D762502C4B4FA2DF401A8D51C5364">>},
- {<<"esnowflake">>, <<"083BB3EBAA4F7DB24E935D70EF5CE33C84817A484B28DAED8292E29253E19642">>}]}
+ {<<"esnowflake">>, <<"083BB3EBAA4F7DB24E935D70EF5CE33C84817A484B28DAED8292E29253E19642">>},
+ {<<"jsx">>, <<"D2F6E5F069C00266CAD52FB15D87C428579EA4D7D73A33669E12679E203329DD">>}]}
 ].

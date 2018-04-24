@@ -85,7 +85,21 @@ three(Num) ->
 %  ==============================================================================
 
 go() -> 
-    go("sh601229").
+    % go("sh601229").
+    Sql  = "select * from m_gp_list",
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, []),
+    case parse_res(Res) of 
+            {ok, []} -> 
+                ok;
+            {ok, List} ->
+                lists:foreach(fun(Row) -> 
+                    {_, Code} = lists:keyfind(<<"code">>, 1, Row),
+                    ?LOG(Code),
+                    go(Code),
+                    ok
+                end, List)
+    end, 
+    ok.
 go(FromCode) ->
     Sql = "SELECT code,name FROM m_gp_list where code = ?",
     % Rows = mysql:get_assoc(Sql),
@@ -102,16 +116,29 @@ go(FromCode) ->
                     Add = 0.05,
                     ParserRes = parse_list(List, Add),
                     ?LOG(ParserRes),
-                    % add_today(ParserRes),
+                    add_today(ParserRes, Code),
                     ok
     end,
     % end, Rows),
     ok.
 
+% `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+%   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+%   `timer_int` int(11) NOT NULL DEFAULT '0' COMMENT '时间截',
+%   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+%   `current_relative_price` int(11) NOT NULL DEFAULT '0' COMMENT '当前相对价位',
+%   `history_relative_price` varchar(800) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '历史相对价位',
 
-% add_today({{TimerInt, Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}) -> 
 
-%     ok.
+add_today({{TimerInt, Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
+    History = lists:foldl(fun({Id, Start, End, Num}, Res) -> 
+        [[{<<"id">>, Id}, {<<"start">>, Start}, {<<"end">>, End}, {<<"num">>, Num}]|Res]
+    end, [], HistoryRelativePrice),
+    Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, TimerInt, Price, CurrentRelativePrice, jsx:encode(History)]),
+    ?LOG(Res),
+    ?LOG(HistoryRelativePrice),
+    ok.
 
 
 
