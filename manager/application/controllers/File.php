@@ -47,6 +47,9 @@ class FileController extends AbstractController {
 
 	// http://echarts.baidu.com/examples/editor.html?c=bar-y-category
 	public function headjsonAction() {
+		$code = trim($this->request->getQuery('code'));
+		$code = substr($code, 2, 6);
+
 		$data = [
 			'title_text' => '世界人口总量1',
 			'title_subtext' => '数据来自网络1',

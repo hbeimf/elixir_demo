@@ -35,9 +35,9 @@ require([
 	
 	var code = $('input[name="code"]').val();
 	$.get('/file/headjson/?code='+code, function(res) {
-		console.log(res);
+		// console.log(res);
 		var reply = $.parseJSON(res);
-		console.log(reply);
+		// console.log(reply);
 		option = {
 			    title: {
 			        text: reply.title_text,
