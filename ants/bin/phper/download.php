@@ -8,34 +8,43 @@ use Illuminate\Database\Capsule\Manager as DB;
 class get_data {
 	public function run() {
 		$data = DB::table('m_gp_list')->get();
-		$i = 0;
+		$i = 1;
+		$total = count($data);
 		foreach ($data as $v) {
 			$code = '0' . substr($v['code'], 2, 6);
 			$code1 = '1' . substr($v['code'], 2, 6);
 
 			$this->download($code);
 			$this->download($code1);
+
+			echo "当前第 [{$i}] 条, 共:{$total} \n";
+			$i++;
 		}
 
 		$this->run_parse();
 	}
 
+	private function get_start() {
+
+	}
+
 	public function download($code) {
 		$today = date("Ymd", time());
-		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
+		// $start = date("Ymd", time() - 24 * 60 * 60 * 10);
 		// $link = $this->_url . "?code={$code}&start=20000101&end={$today}";
-		$link = $this->_url . "?code={$code}&start={$start}&end={$today}";
+		$link = $this->_url . "?code={$code}&start={$this->_start}&end={$today}";
+
 		// echo $link . "\n";
 		$data = file_get_contents($link);
 		$data = iconv('GBK', 'utf-8', $data); //exit;
 
 		$dst = "./csv/{$code}.csv";
 		$size = file_put_contents($dst, $data);
-		echo $size;
+		// echo $size;
 		if ($size < 200) {
 			unlink($dst);
 		}
-		echo "\n";
+		// echo "\n";
 	}
 
 	public function run_parse() {
@@ -85,6 +94,7 @@ class get_data {
 
 	public function __construct() {
 		$this->_initDatabaseEloquent();
+		$this->_set_start();
 	}
 
 	private function _initDatabaseEloquent() {
@@ -94,6 +104,23 @@ class get_data {
 		$db->bootEloquent();
 		$db::connection()->enableQueryLog();
 	}
+
+	// https://blog.csdn.net/qq_28018283/article/details/53113642
+	private function _set_start() {
+		// $sql = "select count(*) as a from m_all";
+		$sql = "select * from m_all limit 1";
+		$res = DB::select($sql, []);
+		// var_dump($res);exit;
+		if (count($res) > 0) {
+			$today = date("Ymd", time());
+			$this->_start = date("Ymd", time() - 24 * 60 * 60 * 10);
+		} else {
+			$this->_start = '20000101';
+		}
+		echo "start: " . $this->_start . "\n";
+	}
+
+	private $_start = '20000101';
 
 	private $database_config = [
 		'driver' => 'mysql',
