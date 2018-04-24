@@ -65,19 +65,44 @@ class FileController extends AbstractController {
 	}
 
 	public function jsonAction() {
+		$type = trim($this->request->getQuery('type'));
 		$code = trim($this->request->getQuery('code'));
 		$code = substr($code, 2, 6);
-		// $code = '600000';
-		// $code = '000001';
-
-		// echo $code;exit;
 
 		$select = 'price, timer_int';
 		$obj = Table_Logic_Price::selectRaw($select);
 		$obj->where('code', '=', $code)->where('price', '!=', 0)->orderBy('timer_int', 'desc');
 
-		// $count = $account_obj->count();
-		$history = $obj->orderBy('timer_int', 'desc')->get();
+		// ->offset($offset)->limit($limit)
+		if ($type == 1) {
+			//周
+			$offset = 0;
+			$limit = 10;
+			$obj->offset($offset)->limit($limit);
+		}
+
+		if ($type == 2) {
+			//月
+			$offset = 0;
+			$limit = 22;
+			$obj->offset($offset)->limit($limit);
+		}
+
+		if ($type == 3) {
+			//半年
+			$offset = 0;
+			$limit = 130;
+			$obj->offset($offset)->limit($limit);
+		}
+
+		if ($type == 4) {
+			//一年
+			$offset = 0;
+			$limit = 260;
+			$obj->offset($offset)->limit($limit);
+		}
+
+		$history = $obj->get();
 
 		$data = [];
 

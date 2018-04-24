@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-23 14:49:59
+<?php /* Smarty version Smarty-3.1.8, created on 2018-04-24 17:39:00
          compiled from "/erlang/elixir_demo/manager/application/views/file/timelist.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:12132360085add49e09b0743-88088751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfca36736cf9ddf57b08f659f303567c2ddd04f9' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/timelist.tpl',
-      1 => 1524466195,
+      1 => 1524562736,
       2 => 'file',
     ),
   ),
@@ -30,8 +30,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <?php echo $_smarty_tpl->getSubTemplate ("include/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
 <?php }?>
-<input type="text" name="code" value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
-">
+            <input type="text" name="code" value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
+" readonly="true">
+            <button class="btn red btn_search" data-type="1">一周7<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
+            <button class="btn red btn_search" data-type="2">一月22<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
+            <button class="btn red btn_search" data-type="3">半年130<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
+            <button class="btn red btn_search" data-type="4">一年260<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
+            <button class="btn red btn_search" data-type="5">全部<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
 
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
