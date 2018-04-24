@@ -83,11 +83,12 @@ class get_data {
 				$code = trim($list[1], "'");
 				$timer = $list[0];
 				$price = $list[3];
+				$name = $list[2];
 				$timer_int = strtotime($timer);
-				$vals[] = "('{$code}', '{$timer}', {$timer_int}, {$price})";
+				$vals[] = "('{$code}', '{$name}', '{$timer}', {$timer_int}, {$price})";
 			}
 
-			$sql = "INSERT IGNORE INTO m_all (code, timer, timer_int, price) values " . implode(', ', $vals);
+			$sql = "INSERT IGNORE INTO m_all (code, name, timer, timer_int, price) values " . implode(', ', $vals);
 			DB::insert($sql);
 		}
 	}
