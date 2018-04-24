@@ -110,7 +110,7 @@ abstract class AbstractController extends Yaf_Controller_Abstract {
 			'teacher' => ['qrcode'],
 			'curriculum' => ['musicinfo', 'pptinfo'],
 			'course' => ['teachers'],
-			'file' => ['timelist', 'json'], // 统计图示例
+			'file' => ['timelist', 'json', 'heap', 'headjson'], // 统计图示例
 		];
 
 		if (isset($wite_name_list[$controller])) {

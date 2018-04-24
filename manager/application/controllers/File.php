@@ -31,6 +31,36 @@ class FileController extends AbstractController {
 		$this->smarty->display('file/timelist.tpl', $data);
 	}
 
+	// 堆积图demo
+	public function heapAction() {
+		$params = [
+			'from' => $this->request->getQuery('from'),
+			'code' => $this->request->getQuery('code'),
+		];
+
+		$data = [
+			'js' => 'file_heap',
+			'params' => $params,
+		];
+		$this->smarty->display('file/heap.tpl', $data);
+	}
+
+	// http://echarts.baidu.com/examples/editor.html?c=bar-y-category
+	public function headjsonAction() {
+		$data = [
+			'title_text' => '世界人口总量1',
+			'title_subtext' => '数据来自网络1',
+			'legend_data' => ['2012年'],
+			'yAxis_data' => ['巴西1', '印尼1', '美国', '印度', '中国', '世界人口(万)'],
+			'series' => [
+				'name' => '2012年',
+				'data' => [19325, 23438, 31000, 121594, 134141, 681807],
+			],
+		];
+
+		echo json_encode($data);exit;
+	}
+
 	public function jsonAction() {
 		$code = trim($this->request->getQuery('code'));
 		$code = substr($code, 2, 6);
