@@ -9,7 +9,7 @@ class get_data {
 	public function run() {
 		// $this->run_download();
 		$this->run_parse();
-		// $this->parse('000009');
+		// $this->parse('0601229');
 	}
 
 	public function run_download() {
@@ -105,19 +105,23 @@ class get_data {
 
 				$code = trim($list[1], "'");
 				$timer = $list[0];
-				$close_price = is_float($list[3]) ? $list[3] : 0;
+				$close_price = is_numeric($list[3]) ? $list[3] : 0;
 				$name = $list[2];
 				$timer_int = strtotime($timer);
-				$open_price = is_float($list[6]) ? $list[6] : 0;
-				$yesterday_close_price = is_float($list[7]) ? $list[7] : 0;
-				$today_top_price = is_float($list[4]) ? $list[4] : 0;
-				$today_bottom_price = is_float($list[5]) ? $list[5] : 0;
+				$open_price = is_numeric($list[6]) ? $list[6] : 0;
+				$yesterday_close_price = is_numeric($list[7]) ? $list[7] : 0;
+				$today_top_price = is_numeric($list[4]) ? $list[4] : 0;
+				$today_bottom_price = is_numeric($list[5]) ? $list[5] : 0;
 
+				// print_r($list);
 				$vals[] = "('{$code}', '{$name}', '{$timer}', {$timer_int}, {$open_price}, {$yesterday_close_price}, {$close_price}, {$today_top_price}, {$today_bottom_price})";
+				// print_r($vals);
+				// exit;
 			}
 
 			try {
 				$sql = "INSERT IGNORE INTO m_all (code, name, timer, timer_int, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price) values " . implode(', ', $vals);
+				// echo $sql . "\n";
 				DB::insert($sql);
 			} catch (Except $e) {
 				echo $dst . "\n";

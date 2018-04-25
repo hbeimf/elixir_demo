@@ -69,9 +69,9 @@ class FileController extends AbstractController {
 		$code = trim($this->request->getQuery('code'));
 		$code = substr($code, 2, 6);
 
-		$select = 'price,name, timer_int';
+		$select = 'close_price,name, timer_int';
 		$obj = Table_Logic_Price::selectRaw($select);
-		$obj->where('code', '=', $code)->where('price', '!=', 0)->orderBy('timer_int', 'desc');
+		$obj->where('code', '=', $code)->where('close_price', '!=', 0)->orderBy('timer_int', 'desc');
 
 		// ->offset($offset)->limit($limit)
 		if ($type == 1) {
@@ -113,7 +113,7 @@ class FileController extends AbstractController {
 					'name' => '',
 					'value' => [
 						date("Y/m/d", $h['timer_int']),
-						$h['price'],
+						$h['close_price'],
 					],
 				];
 				$name = $h['name'];
