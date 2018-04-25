@@ -9,7 +9,7 @@ class get_data {
 	public function run() {
 		// $this->run_download();
 		$this->run_parse();
-		// $this->parse('0601229');
+		// $this->parse('sh900919');
 	}
 
 	public function run_download() {
@@ -20,19 +20,30 @@ class get_data {
 			$code = '0' . substr($v['code'], 2, 6);
 			$code1 = '1' . substr($v['code'], 2, 6);
 
-			$this->download($code);
-			$this->download($code1);
+			$this->download($v['code'], $code, $code1);
+			// $this->download($v['code'], $code1);
 
 			echo "当前第 [{$i}] 条, 共:{$total} \n";
 			$i++;
 		}
 	}
 
-	private function get_start() {
+	public function download($from_code, $code, $code1) {
+		$con = $this->http_get($code);
+		$con1 = $this->http_get($code1);
 
+		$data = (strlen($con) > strlen($con1)) ? $con : $con1;
+
+		$dst = "./csv/{$from_code}.csv";
+		$size = file_put_contents($dst, $data);
+		// echo $size;
+		// if ($size < 200) {
+		// 	unlink($dst);
+		// }
+		// echo "\n";
 	}
 
-	public function download($code) {
+	private function http_get($code) {
 		$today = date("Ymd", time());
 		// $start = date("Ymd", time() - 24 * 60 * 60 * 10);
 		// $link = $this->_url . "?code={$code}&start=20000101&end={$today}";
@@ -41,14 +52,7 @@ class get_data {
 		// echo $link . "\n";
 		$data = file_get_contents($link);
 		$data = iconv('GBK', 'utf-8', $data); //exit;
-
-		$dst = "./csv/{$code}.csv";
-		$size = file_put_contents($dst, $data);
-		// echo $size;
-		if ($size < 200) {
-			unlink($dst);
-		}
-		// echo "\n";
+		return $data;
 	}
 
 	public function run_parse() {
@@ -56,75 +60,83 @@ class get_data {
 		$i = 1;
 		$all = count($data);
 		foreach ($data as $v) {
-			$code = '0' . substr($v['code'], 2, 6);
-			$code1 = '1' . substr($v['code'], 2, 6);
+			// $code = '0' . substr($v['code'], 2, 6);
+			// $code1 = '1' . substr($v['code'], 2, 6);
 
-			echo "all: {$all}, current: {$i}, code:" . substr($v['code'], 2, 6) . "\n";
-			$this->parse($code);
-			$this->parse($code1);
+			echo "all: {$all}, current: {$i}, code:" . $v['code'] . "\n";
+			$this->parse($v['code']);
+			// $this->parse($code1);
 
 			$i++;
 		}
 
 	}
 
-	public function parse($code) {
+	public function parse($from_code) {
 
-		$dst = "./csv/{$code}.csv";
+		$dst = "./csv/{$from_code}.csv";
+		// echo $dst . "\n";
 
 		if (file_exists($dst)) {
 			$arr = file($dst);
 			// print_r($arr);exit;
 
 			$vals = [];
+			if (count($arr) > 3) {
+				for ($i = 1; $i < count($arr); $i++) {
+					// for ($i = 0; $i < 2; $i++) {
 
-			for ($i = 1; $i < count($arr); $i++) {
-				// for ($i = 0; $i < 2; $i++) {
+					# code...
+					// echo $arr[$i];
+					// echo "\n";
+					$list = explode(",", $arr[$i]);
+					$list = array_map("trim", $list);
+					// [0] => 日期
+					// [1] => 股票代码
+					// [2] => 名称
+					// [3] => 收盘价
+					// [4] => 最高价
+					// [5] => 最低价
+					// [6] => 开盘价
+					// [7] => 前收盘
+					// [8] => 涨跌额
+					// [9] => 涨跌幅
+					// [10] => 换手率
+					// [11] => 成交量
+					// [12] => 成交金额
+					// [13] => 总市值
+					// [14] => 流通市值
+					// [15] => 成交笔数
 
-				# code...
-				// echo $arr[$i];
-				// echo "\n";
-				$list = explode(",", $arr[$i]);
-				$list = array_map("trim", $list);
-				// [0] => 日期
-				// [1] => 股票代码
-				// [2] => 名称
-				// [3] => 收盘价
-				// [4] => 最高价
-				// [5] => 最低价
-				// [6] => 开盘价
-				// [7] => 前收盘
-				// [8] => 涨跌额
-				// [9] => 涨跌幅
-				// [10] => 换手率
-				// [11] => 成交量
-				// [12] => 成交金额
-				// [13] => 总市值
-				// [14] => 流通市值
-				// [15] => 成交笔数
+					$code = trim($list[1], "'");
+					$timer = $list[0];
+					$close_price = is_numeric($list[3]) ? $list[3] : 0;
+					$name = $list[2];
+					$timer_int = strtotime($timer);
+					$open_price = is_numeric($list[6]) ? $list[6] : 0;
+					$yesterday_close_price = is_numeric($list[7]) ? $list[7] : 0;
+					$today_top_price = is_numeric($list[4]) ? $list[4] : 0;
+					$today_bottom_price = is_numeric($list[5]) ? $list[5] : 0;
 
-				$code = trim($list[1], "'");
-				$timer = $list[0];
-				$close_price = is_numeric($list[3]) ? $list[3] : 0;
-				$name = $list[2];
-				$timer_int = strtotime($timer);
-				$open_price = is_numeric($list[6]) ? $list[6] : 0;
-				$yesterday_close_price = is_numeric($list[7]) ? $list[7] : 0;
-				$today_top_price = is_numeric($list[4]) ? $list[4] : 0;
-				$today_bottom_price = is_numeric($list[5]) ? $list[5] : 0;
+					// print_r($list);
+					if ($close_price == 0) {
 
-				// print_r($list);
-				$vals[] = "('{$code}', '{$name}', '{$timer}', {$timer_int}, {$open_price}, {$yesterday_close_price}, {$close_price}, {$today_top_price}, {$today_bottom_price})";
-				// print_r($vals);
-				// exit;
-			}
+					} else {
+						$vals[] = "('{$from_code}', '{$code}', '{$name}', '{$timer}', {$timer_int}, {$open_price}, {$yesterday_close_price}, {$close_price}, {$today_top_price}, {$today_bottom_price})";
+					}
+					// print_r($vals);
+					// exit;
+				}
+				// print_r($vals);exit;
 
-			try {
-				$sql = "INSERT IGNORE INTO m_all (code, name, timer, timer_int, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price) values " . implode(', ', $vals);
-				// echo $sql . "\n";
-				DB::insert($sql);
-			} catch (Except $e) {
-				echo $dst . "\n";
+				try {
+					$sql = "INSERT IGNORE INTO m_all (from_code, code, name, timer, timer_int, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price) values " . implode(', ', $vals);
+					// echo $sql . "\n";
+					DB::insert($sql);
+				} catch (\Exception $e) {
+					echo $dst . "\n";
+					// $this->_initDatabaseEloquent();
+				}
 			}
 		}
 	}
