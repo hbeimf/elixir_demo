@@ -48,18 +48,48 @@ class FileController extends AbstractController {
 	// http://echarts.baidu.com/examples/editor.html?c=bar-y-category
 	public function headjsonAction() {
 		$code = trim($this->request->getQuery('code'));
-		$code = substr($code, 2, 6);
+		// $code = substr($code, 2, 6);
 
-		$data = [
-			'title_text' => '世界人口总量1',
-			'title_subtext' => '数据来自网络1',
-			'legend_data' => ['2012年'],
-			'yAxis_data' => ['巴西1', '印尼1', '美国', '印度', '中国', '世界人口(万)'],
-			'series' => [
-				'name' => '2012年',
-				'data' => [19325, 23438, 31000, 121594, 134141, 681807],
-			],
-		];
+		$table = new Table_Logic_Today();
+		$obj = $table->where('code', '=', $code)->get();
+		if (!is_null($obj)) {
+			$rows = $obj->toArray();
+			// p($row);exit;
+			$row = $rows[0];
+
+			$json = json_decode($row['history_relative_price'], true);
+			// p($json);exit;
+
+			$yAxis_data = [];
+			$series_data = [];
+			foreach ($json as $j) {
+				# code...
+				$yAxis_data[] = $j['start'] . '-' . $j['end'] . '-' . $j['id'];
+				$series_data[] = $j['num'];
+			}
+			$data = [
+				'title_text' => $row['code'],
+				'title_subtext' => '数据来自网络-[' . $row['timer'] . ']-[' . $row['current_relative_price'] . ']-[' . $row['price'] . ']',
+				'legend_data' => [$row['code']],
+				'yAxis_data' => $yAxis_data,
+				'series' => [
+					'name' => $row['code'],
+					'data' => $series_data,
+				],
+			];
+
+		} else {
+			$data = [
+				'title_text' => '世界人口总量',
+				'title_subtext' => '数据来自网络,数据出错',
+				'legend_data' => ['2012年'],
+				'yAxis_data' => ['巴西1', '印尼1', '美国', '印度', '中国', '世界人口(万)'],
+				'series' => [
+					'name' => '2012年',
+					'data' => [19325, 23438, 31000, 121594, 134141, 681807],
+				],
+			];
+		}
 
 		echo json_encode($data);exit;
 	}
