@@ -96,7 +96,7 @@ go() ->
             {ok, List} ->
                 lists:foreach(fun(Row) -> 
                     {_, Code} = lists:keyfind(<<"code">>, 1, Row),
-                    ?LOG(Code),
+                    % ?LOG(Code),
                     go(Code),
                     ok
                 end, List)
@@ -113,14 +113,19 @@ go(FromCode) ->
             {ok, [Row]} -> 
                     {_, Code} = lists:keyfind(<<"code">>, 1, Row),
                     ?LOG(Code),
-                    <<_Head:16, C/binary>> = Code,
-                    List = get_list_by_code(C),
+                    % <<_Head:16, C/binary>> = Code,
+                    List = get_list_by_code(Code),
                     % ?LOG(List),
                     Add = 0.05,
-                    ParserRes = parse_list(List, Add),
-                    % ?LOG(ParserRes),
-                    add_today(ParserRes, Code),
-                    ok
+                    case parse_list(List, Add) of 
+                        {error, _} -> 
+                            ok;
+                        ParserRes -> 
+                            % ?LOG(ParserRes),
+                            add_today(ParserRes, Code),
+                            ok
+                    end,
+                    ok  
     end,
     % end, Rows),
     ok.
@@ -134,20 +139,35 @@ go(FromCode) ->
 
 
 add_today({{Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
+    ?LOG({<<"add:">>, Code}),
     History = lists:foldl(fun({Id, Start, End, Num}, Res) -> 
         [[{<<"id">>, Id}, {<<"start">>, Start}, {<<"end">>, End}, {<<"num">>, Num}]|Res]
     end, [], HistoryRelativePrice),
     Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
-    % ?LOG(Res),
+    ?LOG(Res),
     % ?LOG(HistoryRelativePrice),
     ok.
 
 
+% CREATE TABLE `m_today` (
+%   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+%   `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+%   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+%   `timer_int` int(11) NOT NULL DEFAULT '0' COMMENT '时间截',
+%   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+%   `current_relative_price` int(11) NOT NULL DEFAULT '0' COMMENT '当前相对价位',
+%   `history_relative_price` text COLLATE utf8_unicode_ci COMMENT '历史相对价位',
+%   PRIMARY KEY (`id`),
+%   UNIQUE KEY `index_from_code` (`code`)
+% ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';
+
+
+% CREATE UNIQUE INDEX index_from_code ON m_all (from_code);
 
 
 get_list_by_code(Code) ->
-    Sql = "select timer, close_price as price from m_all where code = ? and close_price > 0",
+    Sql = "select timer, close_price as price from m_all where from_code = ? and close_price > 0",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
             {ok, []} -> 

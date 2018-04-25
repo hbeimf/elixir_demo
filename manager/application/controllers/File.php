@@ -67,11 +67,11 @@ class FileController extends AbstractController {
 	public function jsonAction() {
 		$type = trim($this->request->getQuery('type'));
 		$code = trim($this->request->getQuery('code'));
-		$code = substr($code, 2, 6);
+		// $code = substr($code, 2, 6);
 
 		$select = 'close_price,name, timer_int';
 		$obj = Table_Logic_Price::selectRaw($select);
-		$obj->where('code', '=', $code)->where('close_price', '!=', 0)->orderBy('timer_int', 'desc');
+		$obj->where('from_code', '=', $code)->where('close_price', '!=', 0)->orderBy('timer_int', 'desc');
 
 		// ->offset($offset)->limit($limit)
 		if ($type == 1) {
