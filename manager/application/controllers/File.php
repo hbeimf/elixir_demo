@@ -97,9 +97,12 @@ class FileController extends AbstractController {
 	public function jsonAction() {
 		$type = trim($this->request->getQuery('type'));
 		$code = trim($this->request->getQuery('code'));
+		// var_dump(trim($this->request->getQuery('category')));exit;
+		$category = (trim($this->request->getQuery('category')) == "") ? 0 : trim($this->request->getQuery('category'));
+
 		// $code = substr($code, 2, 6);
 
-		$select = 'close_price,name, timer_int';
+		$select = 'close_price,name, timer_int, format(((close_price - yesterday_close_price) / yesterday_close_price)*100, 1) as per';
 		$obj = Table_Logic_Price::selectRaw($select);
 		$obj->where('from_code', '=', $code)->where('close_price', '!=', 0)->orderBy('timer_int', 'desc');
 
@@ -143,7 +146,8 @@ class FileController extends AbstractController {
 					'name' => '',
 					'value' => [
 						date("Y/m/d", $h['timer_int']),
-						$h['close_price'],
+						// $h['close_price'],
+						($category == 0) ? $h['close_price'] : $h['per'],
 					],
 				];
 				$name = $h['name'];
@@ -155,6 +159,7 @@ class FileController extends AbstractController {
 		$reply = [
 			'name' => $name,
 			'code' => $code,
+			'category' => $category,
 			'data' => $data,
 		];
 
@@ -195,7 +200,8 @@ class FileController extends AbstractController {
 		$users = $table_user
 			->skip($skip)
 			->limit($params['page_size'])
-			->orderBy('b.current_relative_price', 'desc')
+			->orderBy('b.current_relative_price', 'asc')
+			->orderBy('m_gp_list.id', 'desc')
 			->get();
 
 		$totalPage = ceil($count / $params['page_size']);
