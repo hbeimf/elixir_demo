@@ -29,10 +29,10 @@
 parse_list([], _) ->
     {error, "empty list"};
 parse_list(List, Add) ->
-    L1 = lists:keysort(3, List),
+    L1 = lists:keysort(2, List),
 
-    [{_, _, First}|_] = L1,
-    {_, _, Last} = lists:last(L1),
+    [{_, First}|_] = L1,
+    { _, Last} = lists:last(L1),
 
     Cut = cut(First, Last, Add),
 
@@ -42,7 +42,7 @@ parse_list(List, Add) ->
     {Current, current(Current, Cut), cut_list(Cut, List)}.
 
 
-current({_, _, Price} =  Current, [{N, Start, End}|T]) ->
+current({ _, Price} =  Current, [{N, Start, End}|T]) ->
     case Price >= Start andalso Price < End of
         true -> 
             N;
@@ -56,7 +56,7 @@ cut_list(Cut, List) ->
     end, [], Cut).
 
 get_num(Start, End, List) ->
-    lists:foldl(fun({_, _, P}, N) ->
+    lists:foldl(fun({ _, P}, N) ->
         case P >= Start andalso P < End of
             true ->
                 N + 1;
@@ -104,6 +104,7 @@ go(FromCode) ->
     Sql = "SELECT code,name FROM m_gp_list where code = ?",
     % Rows = mysql:get_assoc(Sql),
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
+    ?LOG(Res),
     case parse_res(Res) of 
             {ok, []} -> 
                 ok;
@@ -112,7 +113,7 @@ go(FromCode) ->
                     ?LOG(Code),
                     <<_Head:16, C/binary>> = Code,
                     List = get_list_by_code(C),
-                    % ?LOG(List),
+                    ?LOG(List),
                     Add = 0.05,
                     ParserRes = parse_list(List, Add),
                     ?LOG(ParserRes),
@@ -130,12 +131,12 @@ go(FromCode) ->
 %   `history_relative_price` varchar(800) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '历史相对价位',
 
 
-add_today({{TimerInt, Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
+add_today({{Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
     History = lists:foldl(fun({Id, Start, End, Num}, Res) -> 
         [[{<<"id">>, Id}, {<<"start">>, Start}, {<<"end">>, End}, {<<"num">>, Num}]|Res]
     end, [], HistoryRelativePrice),
     Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, TimerInt, Price, CurrentRelativePrice, jsx:encode(History)]),
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
     ?LOG(Res),
     ?LOG(HistoryRelativePrice),
     ok.
@@ -144,7 +145,7 @@ add_today({{TimerInt, Timer, Price}, CurrentRelativePrice , HistoryRelativePrice
 
 
 get_list_by_code(Code) ->
-    Sql = "select timer,timer_int, price from m_all where code = ?",
+    Sql = "select timer, price from m_all where code = ?",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
             {ok, []} -> 
@@ -158,10 +159,10 @@ get_list_by_code(Code) ->
 get_list_by_code_tolist(List) ->
     lists:foldl(fun(L, ReplyList) ->
         {_, Time} = lists:keyfind(<<"timer">>, 1, L),
-        {_, TimeInt} = lists:keyfind(<<"timer_int">>, 1, L),
+        % {_, TimeInt} = lists:keyfind(<<"timer_int">>, 1, L),
         {_, ClosePrice} = lists:keyfind(<<"price">>, 1, L),
 
-        [{TimeInt, Time, ClosePrice}|ReplyList]
+        [{Time, ClosePrice}|ReplyList]
     end, [], List).
 
 
