@@ -29,16 +29,17 @@
 parse_list([], _) ->
     {error, "empty list"};
 parse_list(List, Add) ->
+    % ?LOG(<<"parse list">>),
     L1 = lists:keysort(2, List),
-
+    % ?LOG(<<"parse list sort">>),
     [{_, First}|_] = L1,
     { _, Last} = lists:last(L1),
-
+    % ?LOG({<<"first last: ">>, First, Last}),
     Cut = cut(First, Last, Add),
 
     L2 = lists:keysort(1, List),
     Current = lists:last(L2),
-    ?LOG(Current),
+    % ?LOG(Current),
     {Current, current(Current, Cut), cut_list(Cut, List)}.
 
 
@@ -56,6 +57,7 @@ cut_list(Cut, List) ->
     end, [], Cut).
 
 get_num(Start, End, List) ->
+    % ?LOG({Start, End}),
     lists:foldl(fun({ _, P}, N) ->
         case P >= Start andalso P < End of
             true ->
@@ -104,7 +106,7 @@ go(FromCode) ->
     Sql = "SELECT code,name FROM m_gp_list where code = ?",
     % Rows = mysql:get_assoc(Sql),
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
-    ?LOG(Res),
+    % ?LOG(Res),
     case parse_res(Res) of 
             {ok, []} -> 
                 ok;
@@ -113,10 +115,10 @@ go(FromCode) ->
                     ?LOG(Code),
                     <<_Head:16, C/binary>> = Code,
                     List = get_list_by_code(C),
-                    ?LOG(List),
+                    % ?LOG(List),
                     Add = 0.05,
                     ParserRes = parse_list(List, Add),
-                    ?LOG(ParserRes),
+                    % ?LOG(ParserRes),
                     add_today(ParserRes, Code),
                     ok
     end,
@@ -137,15 +139,15 @@ add_today({{Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -
     end, [], HistoryRelativePrice),
     Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
-    ?LOG(Res),
-    ?LOG(HistoryRelativePrice),
+    % ?LOG(Res),
+    % ?LOG(HistoryRelativePrice),
     ok.
 
 
 
 
 get_list_by_code(Code) ->
-    Sql = "select timer, price from m_all where code = ?",
+    Sql = "select timer, close_price as price from m_all where code = ? and close_price > 0",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
             {ok, []} -> 
