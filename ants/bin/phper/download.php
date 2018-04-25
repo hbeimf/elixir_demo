@@ -7,6 +7,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class get_data {
 	public function run() {
+		// $this->run_download();
+		$this->run_parse();
+		// $this->parse('000009');
+	}
+
+	public function run_download() {
 		$data = DB::table('m_gp_list')->get();
 		$i = 1;
 		$total = count($data);
@@ -20,8 +26,6 @@ class get_data {
 			echo "当前第 [{$i}] 条, 共:{$total} \n";
 			$i++;
 		}
-
-		$this->run_parse();
 	}
 
 	private function get_start() {
@@ -55,9 +59,10 @@ class get_data {
 			$code = '0' . substr($v['code'], 2, 6);
 			$code1 = '1' . substr($v['code'], 2, 6);
 
+			echo "all: {$all}, current: {$i}, code:" . substr($v['code'], 2, 6) . "\n";
 			$this->parse($code);
 			$this->parse($code1);
-			echo "all: {$all}, current: {$i}, code:" . substr($v['code'], 2, 6) . "\n";
+
 			$i++;
 		}
 
@@ -74,22 +79,49 @@ class get_data {
 			$vals = [];
 
 			for ($i = 1; $i < count($arr); $i++) {
+				// for ($i = 0; $i < 2; $i++) {
+
 				# code...
 				// echo $arr[$i];
 				// echo "\n";
 				$list = explode(",", $arr[$i]);
 				$list = array_map("trim", $list);
+				// [0] => 日期
+				// [1] => 股票代码
+				// [2] => 名称
+				// [3] => 收盘价
+				// [4] => 最高价
+				// [5] => 最低价
+				// [6] => 开盘价
+				// [7] => 前收盘
+				// [8] => 涨跌额
+				// [9] => 涨跌幅
+				// [10] => 换手率
+				// [11] => 成交量
+				// [12] => 成交金额
+				// [13] => 总市值
+				// [14] => 流通市值
+				// [15] => 成交笔数
 
 				$code = trim($list[1], "'");
 				$timer = $list[0];
-				$price = $list[3];
+				$close_price = is_float($list[3]) ? $list[3] : 0;
 				$name = $list[2];
 				$timer_int = strtotime($timer);
-				$vals[] = "('{$code}', '{$name}', '{$timer}', {$timer_int}, {$price})";
+				$open_price = is_float($list[6]) ? $list[6] : 0;
+				$yesterday_close_price = is_float($list[7]) ? $list[7] : 0;
+				$today_top_price = is_float($list[4]) ? $list[4] : 0;
+				$today_bottom_price = is_float($list[5]) ? $list[5] : 0;
+
+				$vals[] = "('{$code}', '{$name}', '{$timer}', {$timer_int}, {$open_price}, {$yesterday_close_price}, {$close_price}, {$today_top_price}, {$today_bottom_price})";
 			}
 
-			$sql = "INSERT IGNORE INTO m_all (code, name, timer, timer_int, price) values " . implode(', ', $vals);
-			DB::insert($sql);
+			try {
+				$sql = "INSERT IGNORE INTO m_all (code, name, timer, timer_int, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price) values " . implode(', ', $vals);
+				DB::insert($sql);
+			} catch (Except $e) {
+				echo $dst . "\n";
+			}
 		}
 	}
 

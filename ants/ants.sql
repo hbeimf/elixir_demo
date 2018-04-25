@@ -28,7 +28,11 @@ CREATE TABLE `m_all` (
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'name',
   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
   `timer_int` int(11) NOT NULL DEFAULT '0' COMMENT '时间截',
-  `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+  `open_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日开盘价',
+  `yesterday_close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '昨日收盘价',
+  `close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '当前价格',
+  `today_top_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最高价',
+  `today_bottom_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最低价',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_time` (`code`,`timer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
@@ -119,7 +123,7 @@ CREATE TABLE `m_today` (
   `history_relative_price` varchar(800) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '历史相对价位',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_time` (`code`,`timer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +132,7 @@ CREATE TABLE `m_today` (
 
 LOCK TABLES `m_today` WRITE;
 /*!40000 ALTER TABLE `m_today` DISABLE KEYS */;
+INSERT INTO `m_today` VALUES (19,'sh601229','2018-04-24',0,15.090,2,'[{\"id\":16,\"start\":29.417,\"end\":30.888,\"num\":1},{\"id\":15,\"start\":28.016,\"end\":29.417,\"num\":4},{\"id\":14,\"start\":26.682,\"end\":28.016,\"num\":4},{\"id\":13,\"start\":25.411,\"end\":26.682,\"num\":21},{\"id\":12,\"start\":24.201,\"end\":25.411,\"num\":38},{\"id\":11,\"start\":23.049,\"end\":24.201,\"num\":58},{\"id\":10,\"start\":21.951,\"end\":23.049,\"num\":39},{\"id\":9,\"start\":20.906,\"end\":21.951,\"num\":0},{\"id\":8,\"start\":19.91,\"end\":20.906,\"num\":4},{\"id\":7,\"start\":18.962,\"end\":19.91,\"num\":14},{\"id\":6,\"start\":18.059,\"end\":18.962,\"num\":30},{\"id\":5,\"start\":17.199,\"end\":18.059,\"num\":28},{\"id\":4,\"start\":16.38,\"end\":17.199,\"num\":6},{\"id\":3,\"start\":15.6,\"end\":16.38,\"num\":18},{\"id\":2,\"start\":14.857,\"end\":15.6,\"num\":46},{\"id\":1,\"start\":14.15,\"end\":14.857,\"num\":40}]'),(20,'sh600919','2018-04-24',0,7.250,1,'[{\"id\":15,\"start\":14.157,\"end\":14.864,\"num\":2},{\"id\":14,\"start\":13.482,\"end\":14.157,\"num\":3},{\"id\":13,\"start\":12.84,\"end\":13.482,\"num\":3},{\"id\":12,\"start\":12.229,\"end\":12.84,\"num\":5},{\"id\":11,\"start\":11.647,\"end\":12.229,\"num\":9},{\"id\":10,\"start\":11.092,\"end\":11.647,\"num\":7},{\"id\":9,\"start\":10.564,\"end\":11.092,\"num\":24},{\"id\":8,\"start\":10.061,\"end\":10.564,\"num\":54},{\"id\":7,\"start\":9.582,\"end\":10.061,\"num\":52},{\"id\":6,\"start\":9.125,\"end\":9.582,\"num\":72},{\"id\":5,\"start\":8.691,\"end\":9.125,\"num\":35},{\"id\":4,\"start\":8.277,\"end\":8.691,\"num\":30},{\"id\":3,\"start\":7.883,\"end\":8.277,\"num\":38},{\"id\":2,\"start\":7.508,\"end\":7.883,\"num\":45},{\"id\":1,\"start\":7.15,\"end\":7.508,\"num\":41}]'),(21,'sh601881','2018-04-24',0,10.310,2,'[{\"id\":11,\"start\":15.931,\"end\":16.727,\"num\":1},{\"id\":10,\"start\":15.172,\"end\":15.931,\"num\":15},{\"id\":9,\"start\":14.45,\"end\":15.172,\"num\":18},{\"id\":8,\"start\":13.761,\"end\":14.45,\"num\":24},{\"id\":7,\"start\":13.106,\"end\":13.761,\"num\":27},{\"id\":6,\"start\":12.482,\"end\":13.106,\"num\":27},{\"id\":5,\"start\":11.888,\"end\":12.482,\"num\":69},{\"id\":4,\"start\":11.322,\"end\":11.888,\"num\":31},{\"id\":3,\"start\":10.782,\"end\":11.322,\"num\":29},{\"id\":2,\"start\":10.269,\"end\":10.782,\"num\":31},{\"id\":1,\"start\":9.78,\"end\":10.269,\"num\":32}]');
 /*!40000 ALTER TABLE `m_today` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -976,4 +981,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-24 17:51:52
+-- Dump completed on 2018-04-25  9:39:39
