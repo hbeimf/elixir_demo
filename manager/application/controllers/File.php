@@ -175,10 +175,11 @@ class FileController extends AbstractController {
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
-		$select = '*';
+		$select = 'm_gp_list.*, b.current_relative_price as hid';
 		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
-		$table_user = Table_Logic_Code::selectRaw($select);
+		$table_user = Table_Logic_Code::selectRaw($select)
+			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list.code');
 
 		if (trim($params['name']) != '') {
 			$name = urldecode($params['name']);
@@ -194,7 +195,7 @@ class FileController extends AbstractController {
 		$users = $table_user
 			->skip($skip)
 			->limit($params['page_size'])
-			->orderBy('id', 'desc')
+			->orderBy('b.current_relative_price', 'desc')
 			->get();
 
 		$totalPage = ceil($count / $params['page_size']);
