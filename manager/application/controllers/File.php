@@ -171,6 +171,7 @@ class FileController extends AbstractController {
 
 	public function listAction() {
 		$params = array_map("trim", [
+			'category' => $this->request->getQuery('category'),
 			'name' => $this->request->getQuery('name'),
 			'code' => $this->request->getQuery('code'),
 			'namesina' => $this->request->getQuery('namesina'),
@@ -178,7 +179,7 @@ class FileController extends AbstractController {
 			'page' => (!is_null($this->request->getQuery('page'))) ? $this->request->getQuery('page') : 1,
 			'page_size' => (!is_null($this->request->getQuery('page_size'))) ? $this->request->getQuery('page_size') : 10,
 		]);
-
+		// p($params);
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
@@ -187,6 +188,10 @@ class FileController extends AbstractController {
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select)
 			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list_163.code_sina');
+
+		if ($params['category'] == '1') {
+			$table_user->where('m_gp_list_163.category', '>', 0);
+		}
 
 		if (trim($params['name']) != '') {
 			$name = urldecode($params['name']);
