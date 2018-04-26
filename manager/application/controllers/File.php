@@ -269,4 +269,16 @@ class FileController extends AbstractController {
 		$this->ajax_success('目前未提供删除功能' . $id);
 	}
 
+	public function addcategoryAction() {
+		$id = $this->request->getParam('id');
+
+		$this->ajax_success('目前未提供删除功能' . $id);
+	}
+
+	public function minuscategoryAction() {
+		$id = $this->request->getParam('id');
+
+		$this->ajax_success('目前' . $id);
+	}
+
 }

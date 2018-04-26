@@ -53,6 +53,8 @@
                             <th class="hidden-480">code163</th>
                             <th class="hidden-480">name163</th>
                             <th class="hidden-480">cid</th>
+                            <th class="hidden-480">category</th>
+
                             <th class="hidden-480">time</th>
 
 
@@ -69,6 +71,8 @@
                             <td>{{$r['code_163']}}</td>
                             <td>{{$r['name_163']}}</td>
                             <td>{{$r['hid']}}</td>
+                            <td>{{$r['category']}}</td>
+
                             <td>{{$r['timer']}}</td>
 
                             <td>
@@ -77,11 +81,16 @@
                                     <i class="fa fa-pencil"></i>编辑
                                 </a>
 
-                                <a data-link="/file/delFile/id/{{$r['id']}}/"
-                                    class="btn red ajax-delete">
-                                    <i class="fa fa-pencil"></i>删除
+                                <a data-link="/file/addcategory/id/{{$r['id']}}/"
+                                    class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [++关注] 吗？">
+                                    <i class="fa fa-pencil"></i>+关注
+                                </a>
+                                <a data-link="/file/minuscategory/id/{{$r['id']}}/"
+                                    class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [--关注] 吗？">
+                                    <i class="fa fa-pencil"></i>-关注
                                 </a>
 
+                            
                                <!--  <a data-link="/curriculum/enable/id/{{$r['id']}}/"
                                     class="btn gray window-layer" data-id="{{$r['id']}}">
                                     <i class="fa fa-pencil"></i>弹层
