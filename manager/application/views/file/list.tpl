@@ -59,7 +59,7 @@
                         <tr class="odd gradeX">
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
-                            <td>{{$r['code']}}</td>
+                            <td>{{$r['code_163']}}</td>
                             <td>{{$r['name']}}</td>
                             <td>{{$r['hid']}}</td>
                             <td>{{$r['timer']}}</td>
@@ -81,12 +81,12 @@
                                 </a> -->
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/heap/?from=iframe&code={{$r['code']}}" data-id="window_{{$r['id']}}" data-title="堆积图demo">
+                                data-link="/file/heap/?from=iframe&code={{$r['code_sina']}}" data-id="window_{{$r['id']}}" data-title="堆积图demo">
                                     <i class="fa fa-pencil"></i>堆积图弹窗
                                 </a>
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/timelist/?from=iframe&code={{$r['code']}}" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
+                                data-link="/file/timelist/?from=iframe&code={{$r['code_sina']}}" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
 

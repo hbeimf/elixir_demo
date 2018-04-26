@@ -180,20 +180,20 @@ class FileController extends AbstractController {
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
-		$select = 'm_gp_list.*, b.current_relative_price as hid, b.timer';
+		$select = 'm_gp_list_163.*, b.current_relative_price as hid, b.timer';
 		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select)
-			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list.code');
+			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list_163.code_sina');
 
 		if (trim($params['name']) != '') {
 			$name = urldecode($params['name']);
-			$table_user->where('m_gp_list.name', 'like', "%{$name}%");
+			$table_user->where('m_gp_list_163.name', 'like', "%{$name}%");
 		}
 
 		if (trim($params['code']) != '') {
 			$code = urldecode($params['code']);
-			$table_user->where('m_gp_list.code', 'like', "%{$code}%");
+			$table_user->where('m_gp_list_163.code_163', 'like', "%{$code}%");
 		}
 
 		$count = $table_user->count();
@@ -201,7 +201,7 @@ class FileController extends AbstractController {
 			->skip($skip)
 			->limit($params['page_size'])
 			->orderBy('b.current_relative_price', 'desc')
-			->orderBy('m_gp_list.id', 'asc')
+			->orderBy('m_gp_list_163.id', 'asc')
 			->get();
 
 		$totalPage = ceil($count / $params['page_size']);
