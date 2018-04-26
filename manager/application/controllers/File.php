@@ -173,6 +173,8 @@ class FileController extends AbstractController {
 		$params = array_map("trim", [
 			'name' => $this->request->getQuery('name'),
 			'code' => $this->request->getQuery('code'),
+			'namesina' => $this->request->getQuery('namesina'),
+			'codesina' => $this->request->getQuery('codesina'),
 			'page' => (!is_null($this->request->getQuery('page'))) ? $this->request->getQuery('page') : 1,
 			'page_size' => (!is_null($this->request->getQuery('page_size'))) ? $this->request->getQuery('page_size') : 10,
 		]);
@@ -188,12 +190,22 @@ class FileController extends AbstractController {
 
 		if (trim($params['name']) != '') {
 			$name = urldecode($params['name']);
-			$table_user->where('m_gp_list_163.name', 'like', "%{$name}%");
+			$table_user->where('m_gp_list_163.name_163', 'like', "%{$name}%");
+		}
+
+		if (trim($params['namesina']) != '') {
+			$name = urldecode($params['namesina']);
+			$table_user->where('m_gp_list_163.name_sina', 'like', "%{$name}%");
 		}
 
 		if (trim($params['code']) != '') {
 			$code = urldecode($params['code']);
 			$table_user->where('m_gp_list_163.code_163', 'like', "%{$code}%");
+		}
+
+		if (trim($params['codesina']) != '') {
+			$code = urldecode($params['codesina']);
+			$table_user->where('m_gp_list_163.code_sina', 'like', "%{$code}%");
 		}
 
 		$count = $table_user->count();

@@ -27,8 +27,11 @@
                                 </select>
                                 &nbsp;&nbsp;
                             </label>
-                            <label>名称: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
-                            <label>code: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>namesina: <input value="{{$params['namesina']}}" name="namesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>codesina: <input value="{{$params['codesina']}}" name="codesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+
+                            <label>name163: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>code163: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
 
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
@@ -45,8 +48,10 @@
                         <tr>
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
-                            <th class="hidden-480">code</th>
-                            <th class="hidden-480">name</th>
+                            <th class="hidden-480">codesina</th>
+                            <th class="hidden-480">namesina</th>
+                            <th class="hidden-480">code163</th>
+                            <th class="hidden-480">name163</th>
                             <th class="hidden-480">cid</th>
                             <th class="hidden-480">time</th>
 
@@ -59,8 +64,10 @@
                         <tr class="odd gradeX">
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
+                            <td>{{$r['code_sina']}}</td>
+                            <td>{{$r['name_sina']}}</td>
                             <td>{{$r['code_163']}}</td>
-                            <td>{{$r['name']}}</td>
+                            <td>{{$r['name_163']}}</td>
                             <td>{{$r['hid']}}</td>
                             <td>{{$r['timer']}}</td>
 
