@@ -200,8 +200,8 @@ class FileController extends AbstractController {
 		$users = $table_user
 			->skip($skip)
 			->limit($params['page_size'])
-			->orderBy('b.current_relative_price', 'asc')
-			->orderBy('m_gp_list.id', 'desc')
+			->orderBy('b.current_relative_price', 'desc')
+			->orderBy('m_gp_list.id', 'asc')
 			->get();
 
 		$totalPage = ceil($count / $params['page_size']);
