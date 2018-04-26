@@ -180,7 +180,7 @@ class FileController extends AbstractController {
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
-		$select = 'm_gp_list.*, b.current_relative_price as hid';
+		$select = 'm_gp_list.*, b.current_relative_price as hid, b.timer';
 		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select)
@@ -188,12 +188,12 @@ class FileController extends AbstractController {
 
 		if (trim($params['name']) != '') {
 			$name = urldecode($params['name']);
-			$table_user->where('name', 'like', "%{$name}%");
+			$table_user->where('m_gp_list.name', 'like', "%{$name}%");
 		}
 
 		if (trim($params['code']) != '') {
 			$code = urldecode($params['code']);
-			$table_user->where('code', 'like', "%{$code}%");
+			$table_user->where('m_gp_list.code', 'like', "%{$code}%");
 		}
 
 		$count = $table_user->count();

@@ -102,17 +102,17 @@ go() ->
                 end, List)
     end, 
     ok.
-go(FromCode) ->
-    Sql = "SELECT code,name FROM m_gp_list where code = ?",
-    % Rows = mysql:get_assoc(Sql),
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
-    % ?LOG(Res),
-    case parse_res(Res) of 
-            {ok, []} -> 
-                ok;
-            {ok, [Row]} -> 
-                    {_, Code} = lists:keyfind(<<"code">>, 1, Row),
-                    ?LOG(Code),
+go(Code) ->
+    % Sql = "SELECT code,name FROM m_gp_list where code = ?",
+    % % Rows = mysql:get_assoc(Sql),
+    % Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
+    % % ?LOG(Res),
+    % case parse_res(Res) of 
+    %         {ok, []} -> 
+    %             ok;
+    %         {ok, [Row]} -> 
+    %                 {_, Code} = lists:keyfind(<<"code">>, 1, Row),
+    %                 ?LOG(Code),
                     % <<_Head:16, C/binary>> = Code,
                     List = get_list_by_code(Code),
                     % ?LOG(List),
@@ -125,10 +125,10 @@ go(FromCode) ->
                             add_today(ParserRes, Code),
                             ok
                     end,
-                    ok  
-    end,
-    % end, Rows),
-    ok.
+                    ok.  
+    % end,
+    % % end, Rows),
+    % ok.
 
 % `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
 %   `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
@@ -167,7 +167,7 @@ add_today({{Timer, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -
 
 
 get_list_by_code(Code) ->
-    Sql = "select timer, close_price as price from m_all where from_code = ? and close_price > 0",
+    Sql = "select timer, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
             {ok, []} -> 

@@ -47,7 +47,9 @@
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">code</th>
                             <th class="hidden-480">name</th>
-                            <th class="hidden-480">hid</th>
+                            <th class="hidden-480">cid</th>
+                            <th class="hidden-480">time</th>
+
 
                             <th class="hidden-480">编辑</th>
                         </tr>
@@ -60,6 +62,8 @@
                             <td>{{$r['code']}}</td>
                             <td>{{$r['name']}}</td>
                             <td>{{$r['hid']}}</td>
+                            <td>{{$r['timer']}}</td>
+
                             <td>
                                 <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/{{$r['id']}}/"
                                     class="btn grey">

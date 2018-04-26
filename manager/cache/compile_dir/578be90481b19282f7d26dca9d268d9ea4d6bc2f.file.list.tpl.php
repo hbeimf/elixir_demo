@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-25 17:42:36
+<?php /* Smarty version Smarty-3.1.8, created on 2018-04-26 09:39:03
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1524649313,
+      1 => 1524706741,
       2 => 'file',
     ),
   ),
@@ -77,7 +77,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">code</th>
                             <th class="hidden-480">name</th>
-                            <th class="hidden-480">hid</th>
+                            <th class="hidden-480">cid</th>
+                            <th class="hidden-480">time</th>
+
 
                             <th class="hidden-480">编辑</th>
                         </tr>
@@ -99,6 +101,9 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
 </td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['hid'];?>
 </td>
+                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['timer'];?>
+</td>
+
                             <td>
                                 <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 /"
