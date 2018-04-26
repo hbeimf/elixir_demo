@@ -19,7 +19,7 @@
                     <form>
                         <div id="sample_1_length" class="dataTables_length">
                             <label>每页显示:
-                                <select size="1" name="page_size" aria-controls="sample_1" class="m-wrap small">
+                                <select name="page_size"  class="small">
                                     <option value="10" {{if $params['page_size'] == 10}}selected="selected"{{/if}}>10</option>
                                     <option value="15" {{if $params['page_size'] == 15}}selected="selected"{{/if}}>15</option>
                                     <option value="20" {{if $params['page_size'] == 20}}selected="selected"{{/if}}>20</option>
