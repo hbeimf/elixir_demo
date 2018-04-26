@@ -162,7 +162,7 @@ class get_data {
 		// var_dump($res);exit;
 		if (count($res) > 0) {
 			$today = date("Ymd", time());
-			$this->_start = date("Ymd", time() - 24 * 60 * 60 * 2);
+			$this->_start = date("Ymd", time() - 24 * 60 * 60 * 10);
 		} else {
 			$this->_start = '20000101';
 		}
