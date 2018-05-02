@@ -23,7 +23,6 @@ https://www.metatrader4.com/zh/download
 
 平台入口：
 https://secure.tickmill.com/trader/index.php
-163
 
 
 有的，如果有护照的话建议注册杜高斯贝银行，注册文档： http://blog.sina.cn/dpool/blog/s/blog_629c40e00101ibvl.html?type=-1
