@@ -15,4 +15,8 @@ http://quotes.money.163.com/service/chddata.html?code=1002566&start=20150104&end
 
 
 
+mt4 平台：
+
+http://blog.sina.com.cn/s/blog_629c40e00102xtup.html
+
 
