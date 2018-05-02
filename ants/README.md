@@ -19,4 +19,4 @@ mt4 平台：
 
 http://blog.sina.com.cn/s/blog_629c40e00102xtup.html
 
-
+https://www.metatrader4.com/zh/download
