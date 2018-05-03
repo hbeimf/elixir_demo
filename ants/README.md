@@ -33,3 +33,8 @@ https://secure.tickmill.com/trader/index.php
 
 
 巨汇ggfx
+
+如：etoro （英国监管 FCA 583263；中国平安入股 ）详情介绍：丫丫丫.com/
+etoroforex （英国监管 FCA 113942：老牌上市公司 ）详情介绍：丫丫丫.com/
+forexthink智汇（澳洲ASIC：424700 ；低点差成本低）详情介绍：丫丫丫.com/thinkmarkets
+
