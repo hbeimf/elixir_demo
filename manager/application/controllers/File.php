@@ -192,7 +192,7 @@ class FileController extends AbstractController {
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
-		$select = 'm_gp_list_163.*, b.current_relative_price as hid, b.timer';
+		$select = 'm_gp_list_163.*, b.current_relative_price as hid, b.timer, b.price';
 		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select)
