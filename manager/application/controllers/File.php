@@ -230,6 +230,10 @@ class FileController extends AbstractController {
 			$table_user->orderBy('b.current_relative_price', $params['order_by']);
 		}
 
+		if ($params['order_field'] == 'price' && $params['order_by'] != '') {
+			$table_user->orderBy('b.price', $params['order_by']);
+		}
+
 		$count = $table_user->count();
 		$users = $table_user
 			->skip($skip)

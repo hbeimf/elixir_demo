@@ -55,9 +55,8 @@
                             <th class="hidden-480">名称163</th>
                             <th class="hidden-480">{{order_link order_field="cid" order_by=$params['order_by'] title="cid"}}</th>
                             <th class="hidden-480">{{order_link order_field="category" order_by=$params['order_by'] title="关注"}}</th>
+                            <th class="hidden-480">{{order_link order_field="price" order_by=$params['order_by'] title="价格"}}</th>
 
-
-                            <th class="hidden-480">价格</th>
                             <th class="hidden-480">time</th>
 
 
