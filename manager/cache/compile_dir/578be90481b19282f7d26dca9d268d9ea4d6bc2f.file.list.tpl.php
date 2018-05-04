@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 18:03:57
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 18:14:55
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525428234,
+      1 => 1525428892,
       2 => 'file',
     ),
   ),
@@ -55,16 +55,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                 </select>
                                 &nbsp;&nbsp;
                             </label>
-                            <label>namesina: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['namesina'];?>
+                            <label>名称sina: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['namesina'];?>
 " name="namesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>codesina: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['codesina'];?>
 " name="codesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
 
-                            <label>name163: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
+                            <label>名称163: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
 " name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>code163: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
 " name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
-                            <label>category: <input <?php if ($_smarty_tpl->tpl_vars['params']->value['category']==1){?>checked<?php }?> value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
+                            <label>关注: <input <?php if ($_smarty_tpl->tpl_vars['params']->value['category']==1){?>checked<?php }?> value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
 
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
@@ -82,12 +82,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">codesina</th>
-                            <th class="hidden-480">namesina</th>
+                            <th class="hidden-480">名称sina</th>
                             <th class="hidden-480">code163</th>
-                            <th class="hidden-480">name163</th>
+                            <th class="hidden-480">名称163</th>
                             <th class="hidden-480"><?php echo order_link(array('order_field'=>"cid",'order_by'=>$_smarty_tpl->tpl_vars['params']->value['order_by'],'title'=>"cid"),$_smarty_tpl);?>
 </th>
-                            <th class="hidden-480"><?php echo order_link(array('order_field'=>"category",'order_by'=>$_smarty_tpl->tpl_vars['params']->value['order_by'],'title'=>"category"),$_smarty_tpl);?>
+                            <th class="hidden-480"><?php echo order_link(array('order_field'=>"category",'order_by'=>$_smarty_tpl->tpl_vars['params']->value['order_by'],'title'=>"关注"),$_smarty_tpl);?>
 </th>
 
                             <th class="hidden-480">time</th>

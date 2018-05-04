@@ -27,12 +27,12 @@
                                 </select>
                                 &nbsp;&nbsp;
                             </label>
-                            <label>namesina: <input value="{{$params['namesina']}}" name="namesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>名称sina: <input value="{{$params['namesina']}}" name="namesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>codesina: <input value="{{$params['codesina']}}" name="codesina" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
 
-                            <label>name163: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
+                            <label>名称163: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>code163: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
-                            <label>category: <input {{if $params['category'] == 1}}checked{{/if}} value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
+                            <label>关注: <input {{if $params['category'] == 1}}checked{{/if}} value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
 
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
@@ -50,11 +50,11 @@
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">codesina</th>
-                            <th class="hidden-480">namesina</th>
+                            <th class="hidden-480">名称sina</th>
                             <th class="hidden-480">code163</th>
-                            <th class="hidden-480">name163</th>
+                            <th class="hidden-480">名称163</th>
                             <th class="hidden-480">{{order_link order_field="cid" order_by=$params['order_by'] title="cid"}}</th>
-                            <th class="hidden-480">{{order_link order_field="category" order_by=$params['order_by'] title="category"}}</th>
+                            <th class="hidden-480">{{order_link order_field="category" order_by=$params['order_by'] title="关注"}}</th>
 
                             <th class="hidden-480">time</th>
 
