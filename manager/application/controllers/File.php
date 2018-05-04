@@ -185,6 +185,8 @@ class FileController extends AbstractController {
 			'codesina' => $this->request->getQuery('codesina'),
 			'page' => (!is_null($this->request->getQuery('page'))) ? $this->request->getQuery('page') : 1,
 			'page_size' => (!is_null($this->request->getQuery('page_size'))) ? $this->request->getQuery('page_size') : 10,
+			'order_field' => $this->request->getQuery('order_field'),
+			'order_by' => $this->request->getQuery('order_by'),
 		]);
 		// p($params);
 		$skip = ($params['page'] - 1) * $params['page_size'];
@@ -220,12 +222,20 @@ class FileController extends AbstractController {
 			$table_user->where('m_gp_list_163.code_sina', 'like', "%{$code}%");
 		}
 
+		if ($params['order_field'] == 'category' && $params['order_by'] != '') {
+			$table_user->orderBy('m_gp_list_163.category', $params['order_by']);
+		}
+
+		if ($params['order_field'] == 'cid' && $params['order_by'] != '') {
+			$table_user->orderBy('b.current_relative_price', $params['order_by']);
+		}
+
 		$count = $table_user->count();
 		$users = $table_user
 			->skip($skip)
 			->limit($params['page_size'])
-			->orderBy('b.current_relative_price', 'desc')
-			->orderBy('m_gp_list_163.id', 'asc')
+			// ->orderBy('b.current_relative_price', 'desc')
+			// ->orderBy('m_gp_list_163.id', 'asc')
 			->get();
 
 		$totalPage = ceil($count / $params['page_size']);

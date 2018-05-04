@@ -53,8 +53,8 @@
                             <th class="hidden-480">namesina</th>
                             <th class="hidden-480">code163</th>
                             <th class="hidden-480">name163</th>
-                            <th class="hidden-480">cid</th>
-                            <th class="hidden-480">category</th>
+                            <th class="hidden-480">{{order_link order_field="cid" order_by=$params['order_by'] title="cid"}}</th>
+                            <th class="hidden-480">{{order_link order_field="category" order_by=$params['order_by'] title="category"}}</th>
 
                             <th class="hidden-480">time</th>
 

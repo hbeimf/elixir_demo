@@ -2,6 +2,34 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
+function order_link($params) {
+	$current_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+	$pure_urls = explode('?', $current_url);
+	$pure_url = $pure_urls[0];
+
+	$urls = parse_url($current_url);
+
+	$querys = [];
+	if (isset($urls['query'])) {
+		$p = explode('&', $urls['query']);
+		foreach ($p as $val) {
+			$kv = explode('=', $val);
+			$querys[$kv[0]] = isset($kv[1]) ? urldecode($kv[1]) : '';
+		}
+	}
+
+	if (isset($params['order_field'])) {
+		$querys['order_field'] = $params['order_field'];
+		$querys['order_by'] = ($params['order_by'] == 'desc') ? 'asc' : 'desc';
+	}
+
+	$url = $pure_url . '?' . http_build_query($querys);
+
+	$title = $params['title'];
+	echo "<a href=\"{$url}\">{$title}</a>";
+}
+
 // sql 查询记录
 function queryLog($params) {
 	$queryLog = DB::getQueryLog();

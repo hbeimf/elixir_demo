@@ -22,6 +22,7 @@ class View {
 
 		$this->_smarty->registerPlugin("function", "page", "page");
 		$this->_smarty->registerPlugin("function", "queryLog", "queryLog");
+		$this->_smarty->registerPlugin("function", "order_link", "order_link");
 
 	}
 

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 17:21:12
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 18:03:57
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525425670,
+      1 => 1525428234,
       2 => 'file',
     ),
   ),
@@ -85,8 +85,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                             <th class="hidden-480">namesina</th>
                             <th class="hidden-480">code163</th>
                             <th class="hidden-480">name163</th>
-                            <th class="hidden-480">cid</th>
-                            <th class="hidden-480">category</th>
+                            <th class="hidden-480"><?php echo order_link(array('order_field'=>"cid",'order_by'=>$_smarty_tpl->tpl_vars['params']->value['order_by'],'title'=>"cid"),$_smarty_tpl);?>
+</th>
+                            <th class="hidden-480"><?php echo order_link(array('order_field'=>"category",'order_by'=>$_smarty_tpl->tpl_vars['params']->value['order_by'],'title'=>"category"),$_smarty_tpl);?>
+</th>
 
                             <th class="hidden-480">time</th>
 
