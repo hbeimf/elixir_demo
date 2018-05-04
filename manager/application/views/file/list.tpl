@@ -68,7 +68,7 @@
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
                             <td>{{$r['code_sina']}}</td>
-                            <td>{{$r['name_sina']}}</td>
+                            <td><a href="https://www.baidu.com/s?wd={{$r['name_sina']}}" target="blank">{{$r['name_sina']}}</a></td>
                             <td>{{$r['code_163']}}</td>
                             <td><a href="https://www.baidu.com/s?wd={{$r['name_163']}}" target="blank">{{$r['name_163']}}</a></td>
                             <td>{{$r['hid']}}</td>
