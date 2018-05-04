@@ -135,6 +135,13 @@ class FileController extends AbstractController {
 			$obj->offset($offset)->limit($limit);
 		}
 
+		if ($type == 6) {
+			//两年
+			$offset = 0;
+			$limit = 520;
+			$obj->offset($offset)->limit($limit);
+		}
+
 		$history = $obj->get();
 
 		$data = [];

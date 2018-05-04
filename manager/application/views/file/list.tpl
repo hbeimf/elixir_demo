@@ -70,7 +70,7 @@
                             <td>{{$r['code_sina']}}</td>
                             <td>{{$r['name_sina']}}</td>
                             <td>{{$r['code_163']}}</td>
-                            <td>{{$r['name_163']}}</td>
+                            <td><a href="https://www.baidu.com/s?wd={{$r['name_163']}}" target="blank">{{$r['name_163']}}</a></td>
                             <td>{{$r['hid']}}</td>
                             <td>{{$r['category']}}</td>
 

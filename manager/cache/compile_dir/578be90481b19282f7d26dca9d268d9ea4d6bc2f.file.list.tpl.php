@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-26 17:34:45
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 17:07:29
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1524735281,
+      1 => 1525424847,
       2 => 'file',
     ),
   ),
@@ -111,8 +111,9 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
 </td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['code_163'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['r']->value['name_163'];?>
-</td>
+                            <td><a href="https://www.baidu.com/s?wd=<?php echo $_smarty_tpl->tpl_vars['r']->value['name_163'];?>
+" target="blank"><?php echo $_smarty_tpl->tpl_vars['r']->value['name_163'];?>
+</a></td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['hid'];?>
 </td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['category'];?>
