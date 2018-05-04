@@ -38,3 +38,28 @@ https://secure.tickmill.com/trader/index.php
 etoroforex （英国监管 FCA 113942：老牌上市公司 ）详情介绍：丫丫丫.com/
 forexthink智汇（澳洲ASIC：424700 ；低点差成本低）详情介绍：丫丫丫.com/thinkmarkets
 
+=============================================
+Valutrades
+
+
+尊敬的外汇110网用户：
+您好，valutrades受英国FCA监管，登记的网站为www.valutrades.com。
+感谢您对外汇110网站的支持与信任！
+
+http://www.waihuifanliwang.com/article-1441-1.html
+
+==============================================
+fxcm
+
+================================================
+
+https://www.zhihu.com/question/19573763
+https://www.zhihu.com/question/19573763
+比如Dukascopy银行和盛宝银行。
+有，央行下属的中国外汇交易中心。
+目前已经有了 ，国泰君安拿到了全国第一个外汇牌照
+
+
+联达外汇
+
+
