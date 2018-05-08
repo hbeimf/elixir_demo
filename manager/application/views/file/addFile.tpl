@@ -6,39 +6,28 @@
     </div>
     <div class="modal-body">
 
-
-
 <div class="control-group">
-    <label class="control-label">图片</label>
+    <label class="control-label"><span style="color: red;">*</span>机构名称</label>
     <div class="controls">
-        <div class="span6 fileupload fileupload-new" data-provides="fileupload">
-            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                <img src="{{if isset($role['dir'])}}{{$role['dir']}}{{else}}/image/AAAAAA&amp;text=no+image{{/if}}" alt="" />
-            </div>
-            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-            <div>
-                <span class="btn btn-file"><span class="fileupload-new">Select image</span>
-                <span class="fileupload-exists">Change</span>
-                <input name="img" type="file" class="default" /></span>
-                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-            </div>
-        </div>
-        <!-- <span class="label label-important">NOTE!</span>
-        <span>
-        Attached image thumbnail is
-        supported in Latest Firefox, Chrome, Opera, 
-        Safari and Internet Explorer 10 only
-        </span> -->
+        <input value="{{if isset($role['name_sina'])}}{{$role['name_sina']}}{{/if}}"
+            name="name" type="text" placeholder="" class="m-wrap span6" />
+        <!-- <span class="help-inline">This is inline help</span> -->
     </div>
 </div>
 
-
-
-
-
+<div class="control-group">
+    <label class="control-label">类型</label>
+    <div class="controls">
+        <select name="category" class="span6 m-wrap select2" placeholder="请选择学校...">
+            <option value="0">请选择类型...</option>
+            {{foreach from=$school_type item=m}}
+                <option {{if isset($role['category']) && $role['category'] == $m['id']}}selected{{/if}} value="{{$m['id']}}">{{$m['name']}}</option>
+            {{/foreach}}
+        </select>
+    </div>
+</div>
 
 <!-- END FORM-->
-
 
     </div>
     <div class="modal-footer">

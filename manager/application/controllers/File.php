@@ -192,14 +192,15 @@ class FileController extends AbstractController {
 		$skip = ($params['page'] - 1) * $params['page_size'];
 
 		// $select = 'id, name, dir, url, created_at, updated_at';
-		$select = 'm_gp_list_163.*, b.current_relative_price as hid, b.timer, b.price';
+		$select = 'm_gp_list_163.*, b.current_relative_price as hid, b.timer, b.price, c.name as category';
 		// Table_Logic_Price
 		// $table_user = Table_Logic_Fileresource::selectRaw($select);
 		$table_user = Table_Logic_Code::selectRaw($select)
-			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list_163.code_sina');
+			->leftJoin('m_today as b', 'b.code', '=', 'm_gp_list_163.code_sina')
+			->leftJoin('t_school_type as c', 'c.id', '=', 'm_gp_list_163.category');
 
-		if ($params['category'] == '1') {
-			$table_user->where('m_gp_list_163.category', '>', 0);
+		if ($params['category'] > 0) {
+			$table_user->where('m_gp_list_163.category', '=', $params['category']);
 		}
 
 		if (trim($params['name']) != '') {
@@ -257,34 +258,41 @@ class FileController extends AbstractController {
 		// $list = Table_Gp_List::find(1)->toArray();
 		// p($data);exit;
 		// $this->smarty->getSmarty()->registerPlugin("function", "has_file", "has_file");
+
+		//类型
+		$school_type = Table_Logic_Schooltype::all()->toArray();
+		$this->smarty->assign('school_type', $school_type);
+
 		$this->smarty->display('file/list.tpl', $data);
 
 	}
 
 	public function addFileAction() {
 		if ($this->request->isPost()) {
-			$table_resource = new Table_Logic_Resource();
-			$r = $table_resource->upload('img');
+			$data = array_map("trim", [
+				'category' => $this->request->getPost('category'),
+			]);
 
-			if ($r['flg']) {
-				// var_dump($r);exit;
-				if ($r['from'] == 'old') {
-					return $this->ajax_error('文件己存在，不要重复上传！');
-				}
-				return $this->ajax_success('添加成功！');
+			$id = $this->request->getPost('id');
+
+			if ($id == '') {
+				return $this->ajax_error('error！');
+			} else {
+				Table_Logic_Code::where('id', $id)->update($data);
+				return $this->ajax_success('更新成功！');
 			}
-
-			return $this->ajax_error('添加失败！');
 		}
 
 		//初始化 modal
 		if (!is_null($this->request->getParam('id'))) {
 			$id = $this->request->getParam('id');
-			$role = DB::table('t_resource')->where('id', $id)->first();
-			// $role['menu_ids'] = explode(',', $role['menu_ids']);
-
+			$role = DB::table('m_gp_list_163')->where('id', $id)->first();
 			$this->smarty->assign('role', $role);
 		}
+
+		//类型
+		$school_type = Table_Logic_Schooltype::all()->toArray();
+		$this->smarty->assign('school_type', $school_type);
 
 		$this->smarty->display('file/addFile.tpl');
 	}

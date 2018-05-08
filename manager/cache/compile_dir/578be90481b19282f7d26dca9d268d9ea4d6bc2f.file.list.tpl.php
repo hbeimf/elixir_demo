@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-04 18:37:12
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 15:51:23
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525430193,
+      1 => 1525765881,
       2 => 'file',
     ),
   ),
@@ -20,6 +20,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'variables' => 
   array (
     'params' => 0,
+    'school_type' => 0,
+    'm' => 0,
     'users' => 0,
     'r' => 0,
   ),
@@ -64,7 +66,24 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 " name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>code163: <input value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
 " name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
-                            <label>关注: <input <?php if ($_smarty_tpl->tpl_vars['params']->value['category']==1){?>checked<?php }?> value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
+                            <!-- <label>关注: <input <?php if ($_smarty_tpl->tpl_vars['params']->value['category']==1){?>checked<?php }?> value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label> -->
+
+                            <label>类型:&nbsp;&nbsp;</label>
+                                <label>
+                                <select id="category" name="category" class=" select2" placeholder="请选择学校...">
+                                    <option value="">请选择类型...</option>
+                                    <?php  $_smarty_tpl->tpl_vars['m'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['m']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['school_type']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['m']->key => $_smarty_tpl->tpl_vars['m']->value){
+$_smarty_tpl->tpl_vars['m']->_loop = true;
+?>
+                                        <option <?php if (isset($_smarty_tpl->tpl_vars['params']->value['category'])&&$_smarty_tpl->tpl_vars['params']->value['category']==$_smarty_tpl->tpl_vars['m']->value['id']){?>selected<?php }?> value="<?php echo $_smarty_tpl->tpl_vars['m']->value['id'];?>
+"><?php echo $_smarty_tpl->tpl_vars['m']->value['name'];?>
+</option>
+                                    <?php } ?>
+
+                                </select>
+                            </label>
 
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
@@ -136,7 +155,7 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                     <i class="fa fa-pencil"></i>编辑
                                 </a>
 
-                                <a data-link="/file/addcategory/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
+                                <!-- <a data-link="/file/addcategory/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 /"
                                     class="btn red ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
  ] 确认要 [++关注] 吗？">
@@ -147,7 +166,7 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                     class="btn red ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
  ] 确认要 [--关注] 吗？">
                                     <i class="fa fa-pencil"></i>-关注
-                                </a>
+                                </a> -->
 
                             
                                <!--  <a data-link="/curriculum/enable/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>

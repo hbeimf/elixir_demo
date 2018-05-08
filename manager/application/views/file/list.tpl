@@ -32,7 +32,18 @@
 
                             <label>名称163: <input value="{{$params['name']}}" name="name" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <label>code163: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
-                            <label>关注: <input {{if $params['category'] == 1}}checked{{/if}} value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label>
+                            <!-- <label>关注: <input {{if $params['category'] == 1}}checked{{/if}} value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label> -->
+
+                            <label>类型:&nbsp;&nbsp;</label>
+                                <label>
+                                <select id="category" name="category" class=" select2" placeholder="请选择学校...">
+                                    <option value="">请选择类型...</option>
+                                    {{foreach from=$school_type item=m}}
+                                        <option {{if isset($params['category']) && $params['category'] == $m['id']}}selected{{/if}} value="{{$m['id']}}">{{$m['name']}}</option>
+                                    {{/foreach}}
+
+                                </select>
+                            </label>
 
                             <!-- <label>邮箱: <input name="email" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label> -->
 
@@ -84,14 +95,14 @@
                                     <i class="fa fa-pencil"></i>编辑
                                 </a>
 
-                                <a data-link="/file/addcategory/id/{{$r['id']}}/"
+                                <!-- <a data-link="/file/addcategory/id/{{$r['id']}}/"
                                     class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [++关注] 吗？">
                                     <i class="fa fa-pencil"></i>+关注
                                 </a>
                                 <a data-link="/file/minuscategory/id/{{$r['id']}}/"
                                     class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [--关注] 吗？">
                                     <i class="fa fa-pencil"></i>-关注
-                                </a>
+                                </a> -->
 
                             
                                <!--  <a data-link="/curriculum/enable/id/{{$r['id']}}/"
