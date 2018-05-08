@@ -116,7 +116,7 @@
                                 </a>
 
                                 <a class="btn gray window-iframe"  
-                                data-link="/file/timelist/?from=iframe&code={{$r['code_sina']}}" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
+                                data-link="/file/timelist/?from=iframe&id={{$r['id']}}" data-id="window_{{$r['id']}}" data-title="线状统计图demo">
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
 

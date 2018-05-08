@@ -19,14 +19,23 @@ class FileController extends AbstractController {
 
 	// 线状统计图demo
 	public function timelistAction() {
+		$id = $this->request->getQuery('id');
+		// get code by id
+		$row = DB::table('m_gp_list_163')->where('id', $id)->first();
+		// p($row);exit;
 		$params = [
 			'from' => $this->request->getQuery('from'),
-			'code' => $this->request->getQuery('code'),
+			// 'code' => $this->request->getQuery('code'),
+			'code' => $row['code_sina'],
+			'id' => $id,
 		];
+
+		$next = DB::table('m_gp_list_163')->where('id', '>', $id)->orderBy('id', 'asc')->first();
 
 		$data = [
 			'js' => 'file_timelist',
 			'params' => $params,
+			'next' => $next['id'],
 		];
 		$this->smarty->display('file/timelist.tpl', $data);
 	}
