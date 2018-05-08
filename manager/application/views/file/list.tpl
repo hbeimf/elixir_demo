@@ -34,10 +34,10 @@
                             <label>code163: <input value="{{$params['code']}}" name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <!-- <label>关注: <input {{if $params['category'] == 1}}checked{{/if}} value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label> -->
 
-                            <label>类型:&nbsp;&nbsp;</label>
+                            <label>分类:&nbsp;&nbsp;</label>
                                 <label>
                                 <select id="category" name="category" class=" select2" placeholder="请选择学校...">
-                                    <option value="">请选择类型...</option>
+                                    <option value="">请选择分类...</option>
                                     {{foreach from=$school_type item=m}}
                                         <option {{if isset($params['category']) && $params['category'] == $m['id']}}selected{{/if}} value="{{$m['id']}}">{{$m['name']}}</option>
                                     {{/foreach}}
@@ -120,7 +120,7 @@
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
 
-                                <a class="btn gray window-iframe"  
+                                <!-- <a class="btn gray window-iframe"  
                                 data-link="/file/index/?from=iframe" data-id="window_{{$r['id']}}" data-title="柱状统计图demo">
                                     <i class="fa fa-pencil"></i>柱状统计弹窗
                                 </a>
@@ -128,7 +128,7 @@
                                 <a class="btn gray window-iframe"  
                                 data-link="/pic/list" data-id="window_{{$r['id']}}" data-title="{{$r['id']}}">
                                     <i class="fa fa-pencil"></i>弹窗list demo
-                                </a>
+                                </a> -->
 
 
                             </td>

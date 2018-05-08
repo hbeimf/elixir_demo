@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 15:51:23
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 15:55:37
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525765881,
+      1 => 1525766134,
       2 => 'file',
     ),
   ),
@@ -68,10 +68,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 " name="code" type="text" aria-controls="sample_1" class="m-wrap medium"> &nbsp;&nbsp;</label>
                             <!-- <label>关注: <input <?php if ($_smarty_tpl->tpl_vars['params']->value['category']==1){?>checked<?php }?> value="1" name="category" type="checkbox" aria-controls="sample_1" class="m-wrap"> &nbsp;&nbsp;</label> -->
 
-                            <label>类型:&nbsp;&nbsp;</label>
+                            <label>分类:&nbsp;&nbsp;</label>
                                 <label>
                                 <select id="category" name="category" class=" select2" placeholder="请选择学校...">
-                                    <option value="">请选择类型...</option>
+                                    <option value="">请选择分类...</option>
                                     <?php  $_smarty_tpl->tpl_vars['m'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['m']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['school_type']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['m']->key => $_smarty_tpl->tpl_vars['m']->value){
@@ -190,7 +190,7 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                     <i class="fa fa-pencil"></i>线状统计弹窗
                                 </a>
 
-                                <a class="btn gray window-iframe"  
+                                <!-- <a class="btn gray window-iframe"  
                                 data-link="/file/index/?from=iframe" data-id="window_<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 " data-title="柱状统计图demo">
                                     <i class="fa fa-pencil"></i>柱状统计弹窗
@@ -201,7 +201,7 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
 " data-title="<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 ">
                                     <i class="fa fa-pencil"></i>弹窗list demo
-                                </a>
+                                </a> -->
 
 
                             </td>
