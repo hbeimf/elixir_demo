@@ -10,7 +10,8 @@
             <button class="btn red btn_search" data-type="4">一年260<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <button class="btn red btn_search" data-type="6">两年520<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <button class="btn red btn_search" data-type="5">全部<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
-            <a class="btn red" href="/file/timelist/?from=iframe&id={{$next}}">Next</a>&nbsp;&nbsp;&nbsp;{{$params['id']}}
+            <a class="btn blue" href="/file/timelist/?from=iframe&id={{$pre}}">Pre</a>&nbsp;&nbsp;&nbsp;{{$params['id']}}
+            <a class="btn blue" href="/file/timelist/?from=iframe&id={{$next}}">Next</a>&nbsp;&nbsp;&nbsp;
 
             <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/{{$params['id']}}/"
                                     class="btn grey">

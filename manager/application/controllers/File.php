@@ -30,12 +30,15 @@ class FileController extends AbstractController {
 			'id' => $id,
 		];
 
+		$pre = DB::table('m_gp_list_163')->where('id', '<', $id)->orderBy('id', 'desc')->first();
 		$next = DB::table('m_gp_list_163')->where('id', '>', $id)->orderBy('id', 'asc')->first();
 
+		// p($pre);exit;
 		$data = [
 			'js' => 'file_timelist',
 			'params' => $params,
-			'next' => $next['id'],
+			'pre' => (isset($next['id']) && $next['id'] > 1) ? $pre['id'] : 1,
+			'next' => isset($next['id']) ? $next['id'] : 1,
 		];
 		$this->smarty->display('file/timelist.tpl', $data);
 	}
