@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 16:35:45
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 16:42:35
          compiled from "/erlang/elixir_demo/manager/application/views/file/timelist.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:12132360085add49e09b0743-88088751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfca36736cf9ddf57b08f659f303567c2ddd04f9' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/timelist.tpl',
-      1 => 1525768363,
+      1 => 1525768914,
       2 => 'file',
     ),
   ),
@@ -42,6 +42,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <a class="btn red" href="/file/timelist/?from=iframe&id=<?php echo $_smarty_tpl->tpl_vars['next']->value;?>
 ">Next</a>&nbsp;&nbsp;&nbsp;<?php echo $_smarty_tpl->tpl_vars['params']->value['id'];?>
 
+
+            <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/<?php echo $_smarty_tpl->tpl_vars['params']->value['id'];?>
+/"
+                                    class="btn grey">
+                                    <i class="fa fa-pencil"></i>编辑
+            </a>
 
 
             <!-- BEGIN PAGE CONTAINER-->

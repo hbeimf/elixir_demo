@@ -12,6 +12,11 @@
             <button class="btn red btn_search" data-type="5">全部<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <a class="btn red" href="/file/timelist/?from=iframe&id={{$next}}">Next</a>&nbsp;&nbsp;&nbsp;{{$params['id']}}
 
+            <a data-toggle="modal" data-target="#mod_1200" href="/file/addFile/id/{{$params['id']}}/"
+                                    class="btn grey">
+                                    <i class="fa fa-pencil"></i>编辑
+            </a>
+
 
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
