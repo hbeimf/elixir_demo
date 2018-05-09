@@ -15,10 +15,8 @@ use Thrift\Transport\TSocket;
 // include APP_PATH . '/application/library/Thriftc/call/CallService.php';
 
 class Thriftc_Call {
-
-	// http://yaf.demo.com/demo/index
-	function call($id) {
-		$msg = new \call\Message(['id' => 1, 'text' => "mike: " . $id]);
+	function call($cmd, $text) {
+		$msg = new \call\Message(['id' => $cmd, 'text' => $text]);
 		return $this->client->call($msg);
 	}
 

@@ -18,7 +18,7 @@ class Table_Logic_Code extends EloquentModel {
 		// $demo->demo();
 
 		$thrift = new Thriftc_Call();
-		$thrift->call($id);
+		$thrift->call($id, $id);
 	}
 
 	public function update_all($id) {
@@ -31,7 +31,7 @@ class Table_Logic_Code extends EloquentModel {
 		$this->download($sina_code, $code, $code1, $start);
 
 		$thrift = new Thriftc_Call();
-		$thrift->call($id);
+		$thrift->call($id, $id);
 	}
 
 	private function get_code($id) {
