@@ -12,6 +12,7 @@
    any,
    rtime,
    parser,
+   thrifts,
     stdlib
    ]},
   {env,[]},
