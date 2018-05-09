@@ -5,6 +5,7 @@
   {mod, { thrifts_app, []}},
   {applications,
    [kernel,
+   parser,
     stdlib
    ]},
   {env,[]},

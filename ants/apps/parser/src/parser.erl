@@ -86,6 +86,26 @@ three(Num) ->
 
 %  ==============================================================================
 
+go_by_id() -> 
+    go_by_id(<<"2296">>).
+go_by_id(Id) ->
+    Sql  = "select id, code_sina as code from m_gp_list_163 where id = ? limit 1",
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Id]),
+    ?LOG(Res),
+    case parse_res(Res) of 
+            {ok, []} -> 
+                ok;
+            {ok, List} ->
+                lists:foreach(fun(Row) -> 
+                    {_, Code} = lists:keyfind(<<"code">>, 1, Row),
+                    % ?LOG(Code),
+                    go(Code),
+                    ok
+                end, List)
+    end, 
+    ok.
+
+
 go() -> 
     % go("sh601229").
     Sql  = "select * from m_gp_list",
@@ -103,6 +123,7 @@ go() ->
     end, 
     ok.
 go(Code) ->
+    ?LOG(Code),
     % Sql = "SELECT code,name FROM m_gp_list where code = ?",
     % % Rows = mysql:get_assoc(Sql),
     % Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
