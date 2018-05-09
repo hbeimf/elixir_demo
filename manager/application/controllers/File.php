@@ -160,17 +160,37 @@ class FileController extends AbstractController {
 
 		$name = '';
 		if (count($history) > 0) {
-			foreach ($history as $h) {
-				$data[] = [
-					'name' => '',
-					'value' => [
-						date("Y/m/d", $h['timer_int']),
-						// $h['close_price'],
-						($category == 0) ? $h['close_price'] : $h['per'],
-					],
-				];
-				$name = $h['name'];
+			// foreach ($history as $h) {
+			// 	$data[] = [
+			// 		'name' => '',
+			// 		'value' => [
+			// 			date("Y/m/d", $h['timer_int']),
+			// 			// $h['close_price'],
+			// 			($category == 0) ? $h['close_price'] : $h['per'],
+			// 		],
+			// 	];
+			// 	$name = $h['name'];
+			// }
+
+			for ($i = 0; $i < count($history); $i++) {
+				$add1 = $history[$i]['close_price'] / $history[count($history) - 1]['close_price'];
+
+				if ($add1 > 50) {
+
+				} else {
+					$data[] = [
+						'name' => $add1,
+						'value' => [
+							date("Y/m/d", $history[$i]['timer_int']),
+							// $h['close_price'],
+							($category == 0) ? $history[$i]['close_price'] : $history[$i]['per'],
+						],
+					];
+					$name = $history[$i]['name'];
+				}
+
 			}
+
 		}
 		// $table = new Table_Gp_List();
 		// $row = $table->findByCode($code);
