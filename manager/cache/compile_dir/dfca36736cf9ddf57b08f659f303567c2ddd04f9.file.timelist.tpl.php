@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 18:20:50
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-09 16:44:29
          compiled from "/erlang/elixir_demo/manager/application/views/file/timelist.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:12132360085add49e09b0743-88088751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfca36736cf9ddf57b08f659f303567c2ddd04f9' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/timelist.tpl',
-      1 => 1525774846,
+      1 => 1525855464,
       2 => 'file',
     ),
   ),
@@ -52,6 +52,18 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                     <i class="fa fa-pencil"></i>编辑
             </a>
 
+            <a data-link="/file/addcategory/id/<?php echo $_smarty_tpl->tpl_vars['params']->value['id'];?>
+/"
+                                    class="btn grey ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
+ ] 确认要 [更新] 吗？">
+                                    <i class="fa fa-pencil"></i>更新
+                                </a>
+<a data-link="/file/minuscategory/id/<?php echo $_smarty_tpl->tpl_vars['params']->value['id'];?>
+/"
+                                    class="btn grey ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
+ ] 确认要 [init] 吗？">
+                                    <i class="fa fa-pencil"></i>init
+                                </a>
 
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">

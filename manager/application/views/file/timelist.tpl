@@ -18,6 +18,14 @@
                                     <i class="fa fa-pencil"></i>编辑
             </a>
 
+            <a data-link="/file/addcategory/id/{{$params['id']}}/"
+                                    class="btn grey ajax-delete" data-msg="[ {{$params['code']}} ] 确认要 [更新] 吗？">
+                                    <i class="fa fa-pencil"></i>更新
+                                </a>
+<a data-link="/file/minuscategory/id/{{$params['id']}}/"
+                                    class="btn grey ajax-delete" data-msg="[ {{$params['code']}} ] 确认要 [init] 吗？">
+                                    <i class="fa fa-pencil"></i>init
+                                </a>
 
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
