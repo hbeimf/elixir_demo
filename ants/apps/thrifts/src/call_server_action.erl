@@ -37,5 +37,17 @@ handle_function(call, TheMessageRecord) ->
     %% or something like that.
 
     %% send a reply per the service definition in thrift/example.thrift:
+    {reply, #'Message'{id = 1, text = <<"Thanks!">>}};
+handle_function(_, TheMessageRecord) ->
+    %% unpack these or not, whatever.  Point is it's a record:
+    % _Id = TheMessageRecord#message.id,
+    % _Msg = TheMessageRecord#message.text,
+
+    io:format("answer: ~p ~n ", [TheMessageRecord]),
+
+    %% at this point you probably want to talk to a pool of gen_servers
+    %% or something like that.
+
+    %% send a reply per the service definition in thrift/example.thrift:
     {reply, #'Message'{id = 1, text = <<"Thanks!">>}}.
 

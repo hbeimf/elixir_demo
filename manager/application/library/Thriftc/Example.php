@@ -1,11 +1,8 @@
 <?php
 
 use Thrift\Protocol\TBinaryProtocol;
-use Thrift\Transport\TSocket;
-use Thrift\Transport\THttpClient;
 use Thrift\Transport\TBufferedTransport;
-use Thrift\Exception\TException;
-
+use Thrift\Transport\TSocket;
 
 // use example\ExampleServiceClient;
 
@@ -16,9 +13,9 @@ class Thriftc_Example {
 
 	// http://yaf.demo.com/demo/index
 	function demo() {
-			  $msg = new \example\Message(['id'=> 1, 'text'=>"mike"]);
-			  $reply = $this->client->hello($msg);
-			  print_r($reply);
+		$msg = new \example\Message(['id' => 1, 'text' => "mike"]);
+		// $reply = $this->client->hello($msg);
+		// print_r($reply);
 	}
 
 	function __construct() {

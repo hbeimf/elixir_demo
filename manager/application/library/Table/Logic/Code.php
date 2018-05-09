@@ -14,6 +14,11 @@ class Table_Logic_Code extends EloquentModel {
 		$code1 = '1' . substr($sina_code, 2, 6);
 
 		$this->download($sina_code, $code, $code1, $start);
+		// $demo = new Thriftc_Example();
+		// $demo->demo();
+
+		$thrift = new Thriftc_Call();
+		$thrift->call($id);
 	}
 
 	public function update_all($id) {
@@ -24,6 +29,9 @@ class Table_Logic_Code extends EloquentModel {
 		$code1 = '1' . substr($sina_code, 2, 6);
 
 		$this->download($sina_code, $code, $code1, $start);
+
+		$thrift = new Thriftc_Call();
+		$thrift->call($id);
 	}
 
 	private function get_code($id) {
