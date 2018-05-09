@@ -95,14 +95,14 @@
                                     <i class="fa fa-pencil"></i>编辑
                                 </a>
 
-                                <!-- <a data-link="/file/addcategory/id/{{$r['id']}}/"
-                                    class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [++关注] 吗？">
-                                    <i class="fa fa-pencil"></i>+关注
+                                <a data-link="/file/addcategory/id/{{$r['id']}}/"
+                                    class="btn grey ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [更新] 吗？">
+                                    <i class="fa fa-pencil"></i>更新
                                 </a>
                                 <a data-link="/file/minuscategory/id/{{$r['id']}}/"
-                                    class="btn red ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [--关注] 吗？">
-                                    <i class="fa fa-pencil"></i>-关注
-                                </a> -->
+                                    class="btn grey ajax-delete" data-msg="[ {{$r['name_sina']}} ] 确认要 [init] 吗？">
+                                    <i class="fa fa-pencil"></i>init
+                                </a>
 
                             
                                <!--  <a data-link="/curriculum/enable/id/{{$r['id']}}/"

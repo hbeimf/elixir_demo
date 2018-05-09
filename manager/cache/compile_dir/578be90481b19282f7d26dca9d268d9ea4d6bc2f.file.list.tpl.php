@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-08 16:24:53
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-09 10:08:16
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525767812,
+      1 => 1525831694,
       2 => 'file',
     ),
   ),
@@ -155,18 +155,18 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
                                     <i class="fa fa-pencil"></i>编辑
                                 </a>
 
-                                <!-- <a data-link="/file/addcategory/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
+                                <a data-link="/file/addcategory/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 /"
-                                    class="btn red ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
- ] 确认要 [++关注] 吗？">
-                                    <i class="fa fa-pencil"></i>+关注
+                                    class="btn grey ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
+ ] 确认要 [更新] 吗？">
+                                    <i class="fa fa-pencil"></i>更新
                                 </a>
                                 <a data-link="/file/minuscategory/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>
 /"
-                                    class="btn red ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
- ] 确认要 [--关注] 吗？">
-                                    <i class="fa fa-pencil"></i>-关注
-                                </a> -->
+                                    class="btn grey ajax-delete" data-msg="[ <?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
+ ] 确认要 [init] 吗？">
+                                    <i class="fa fa-pencil"></i>init
+                                </a>
 
                             
                                <!--  <a data-link="/curriculum/enable/id/<?php echo $_smarty_tpl->tpl_vars['r']->value['id'];?>

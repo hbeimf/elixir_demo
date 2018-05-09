@@ -320,27 +320,29 @@ class FileController extends AbstractController {
 	public function addcategoryAction() {
 		$id = $this->request->getParam('id');
 		$table = new Table_Logic_Code();
-		$row = $table->where('id', '=', $id)->first()->toArray();
-		$data = ['category' => $row['category'] + 1];
+		$table->update_ten($id);
+		// $row = $table->where('id', '=', $id)->first()->toArray();
+		// $data = ['category' => $row['category'] + 1];
 
-		Table_Logic_Code::where('id', $id)->update($data);
+		// Table_Logic_Code::where('id', $id)->update($data);
 
-		$this->ajax_success('操作成功');
+		$this->ajax_success('更新成功');
 	}
 
 	public function minuscategoryAction() {
 		$id = $this->request->getParam('id');
 
 		$table = new Table_Logic_Code();
-		$row = $table->where('id', '=', $id)->first()->toArray();
-		$data = ['category' => $row['category'] - 1];
-		if ($data['category'] <= 0) {
-			$data['category'] = 0;
-		}
+		$table->update_all($id);
+		// $row = $table->where('id', '=', $id)->first()->toArray();
+		// $data = ['category' => $row['category'] - 1];
+		// if ($data['category'] <= 0) {
+		// 	$data['category'] = 0;
+		// }
 
-		Table_Logic_Code::where('id', $id)->update($data);
+		// Table_Logic_Code::where('id', $id)->update($data);
 
-		$this->ajax_success('操作成功' . $id);
+		$this->ajax_success('初始化成功' . $id);
 	}
 
 }
