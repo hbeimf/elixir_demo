@@ -30,8 +30,10 @@ class FileController extends AbstractController {
 			'id' => $id,
 		];
 
-		$pre = DB::table('m_gp_list_163')->where('id', '<', $id)->orderBy('id', 'desc')->first();
-		$next = DB::table('m_gp_list_163')->where('id', '>', $id)->orderBy('id', 'asc')->first();
+		// $pre = DB::table('m_gp_list_163')->where('id', '<', $id)->orderBy('id', 'desc')->first();
+		$pre = $this->pre($id);
+		// $next = DB::table('m_gp_list_163')->where('id', '>', $id)->orderBy('id', 'asc')->first();
+		$next = $this->next($id);
 
 		// p($pre);exit;
 		$data = [
@@ -41,6 +43,36 @@ class FileController extends AbstractController {
 			'next' => isset($next['id']) ? $next['id'] : 1,
 		];
 		$this->smarty->display('file/timelist.tpl', $data);
+	}
+
+	private function pre($id) {
+		$row = DB::table('m_gp_list_163')->where('id', '=', $id)->first();
+		$next = DB::table('m_gp_list_163')->where('id', '<', $id)
+			->where('category', '=', $row['category'])
+			->orderBy('id', 'desc')->first();
+		// return $next;
+		if (isset($next['id'])) {
+			return $next;
+		}
+		$next = DB::table('m_gp_list_163')
+			->where('category', '=', $row['category'])
+			->orderBy('id', 'desc')->first();
+		return $next;
+	}
+
+	private function next($id) {
+		$row = DB::table('m_gp_list_163')->where('id', '=', $id)->first();
+		$next = DB::table('m_gp_list_163')->where('id', '>', $id)
+			->where('category', '=', $row['category'])
+			->orderBy('id', 'asc')->first();
+		// return $next;
+		if (isset($next['id'])) {
+			return $next;
+		}
+		$next = DB::table('m_gp_list_163')
+			->where('category', '=', $row['category'])
+			->orderBy('id', 'asc')->first();
+		return $next;
 	}
 
 	// 堆积图demo
