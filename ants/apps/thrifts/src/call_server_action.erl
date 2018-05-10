@@ -53,5 +53,5 @@ handle_function(_, TheMessageRecord) ->
     %% or something like that.
 
     %% send a reply per the service definition in thrift/example.thrift:
-    {reply, #'Message'{id = 1, text = <<"Thanks!">>}}.
+    {reply, #'Message'{id = 1, text = <<"error!">>}}.
 

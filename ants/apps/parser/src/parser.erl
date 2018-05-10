@@ -188,7 +188,9 @@ add_today({{Timer,_, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code)
 
 
 get_list_by_code(Code) ->
-    Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
+    % Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
+    Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 260",
+
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
             {ok, []} -> 
