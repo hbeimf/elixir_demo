@@ -11,7 +11,7 @@
                     <div class="clearfix"></div>
                     <div class="row-fluid">
                         <div class="span6">
-                            <div id="main" style="width: 1200px;height:800px;"></div>
+                            <div id="main" style="width: 1200px;height:400px;"></div>
                         </div>
                         <div class="span6">
                         </div>

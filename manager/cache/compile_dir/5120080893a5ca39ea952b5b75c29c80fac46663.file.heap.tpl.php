@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-04-25 17:33:17
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-10 15:17:35
          compiled from "/erlang/elixir_demo/manager/application/views/file/heap.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:11733185725ade9fd9e12be9-08785505%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '5120080893a5ca39ea952b5b75c29c80fac46663' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/heap.tpl',
-      1 => 1524648794,
+      1 => 1525936653,
       2 => 'file',
     ),
   ),
@@ -39,7 +39,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     <div class="clearfix"></div>
                     <div class="row-fluid">
                         <div class="span6">
-                            <div id="main" style="width: 1200px;height:800px;"></div>
+                            <div id="main" style="width: 1200px;height:400px;"></div>
                         </div>
                         <div class="span6">
                         </div>
