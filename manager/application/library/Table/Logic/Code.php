@@ -93,8 +93,8 @@ class Table_Logic_Code extends EloquentModel {
 		if ($this->row->code_download_163 == '') {
 			$download_code = (strlen($con) > strlen($con1)) ? $code : $code1;
 			// 更新下载code
-			$data = ['code_download_163' => $download_code];
-			$this->where('id', $this->row->id)->update($data);
+			$update_row = ['code_download_163' => $download_code];
+			$this->where('id', $this->row->id)->update($update_row);
 		}
 
 		$this->parser($from_code, $data);
