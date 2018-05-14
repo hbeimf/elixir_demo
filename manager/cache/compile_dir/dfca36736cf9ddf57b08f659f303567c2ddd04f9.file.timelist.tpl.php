@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-14 18:02:45
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-14 18:07:04
          compiled from "/erlang/elixir_demo/manager/application/views/file/timelist.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:12132360085add49e09b0743-88088751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfca36736cf9ddf57b08f659f303567c2ddd04f9' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/timelist.tpl',
-      1 => 1526292137,
+      1 => 1526292420,
       2 => 'file',
     ),
   ),
@@ -32,7 +32,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <?php echo $_smarty_tpl->getSubTemplate ("include/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
 <?php }?>
-            <input type="text" name="code" value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
+            <input type="hidden" name="code" value="<?php echo $_smarty_tpl->tpl_vars['params']->value['code'];?>
 " readonly="true">
             <button class="btn red btn_search" data-type="1">一周10<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <button class="btn red btn_search" data-type="2">一月22<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
@@ -65,9 +65,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                     <i class="fa fa-pencil"></i>init
                                 </a>
 
-        <a class="btn blue" href="https://www.baidu.com/s?wd=<?php ob_start();?><?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
-<?php $_tmp1=ob_get_clean();?><?php echo $_tmp1;?>
-" target="blank">百度</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn blue" href="https://www.baidu.com/s?wd=<?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
+" target="blank">百度[<?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
+]</a>&nbsp;&nbsp;&nbsp;
         <a class="btn blue" href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a>&nbsp;&nbsp;&nbsp;
 
 

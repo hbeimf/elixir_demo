@@ -6,6 +6,8 @@ class Table_Logic_Code extends EloquentModel {
 	protected $table = 'm_gp_list_163';
 	public $timestamps = false;
 
+	private $row = null;
+
 	public function update_ten($id) {
 		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
 
@@ -35,8 +37,8 @@ class Table_Logic_Code extends EloquentModel {
 	}
 
 	private function get_code($id) {
-		$row = $this->where('id', '=', $id)->first();
-		return $row->code_sina;
+		$this->row = $this->where('id', '=', $id)->first();
+		return $this->row->code_sina;
 	}
 
 	private function parser($from_code, $data) {
@@ -87,6 +89,13 @@ class Table_Logic_Code extends EloquentModel {
 		$con1 = $this->http_get($code1, $start);
 
 		$data = (strlen($con) > strlen($con1)) ? $con : $con1;
+
+		if ($this->row->code_download_163 == '') {
+			$download_code = (strlen($con) > strlen($con1)) ? $code : $code1;
+			// 更新下载code
+			$data = ['code_download_163' => $download_code];
+			$this->where('id', $this->row->id)->update($data);
+		}
 
 		$this->parser($from_code, $data);
 	}

@@ -3,7 +3,7 @@
 {{else}}
 {{include file="include/header.tpl"}}
 {{/if}}
-            <input type="text" name="code" value="{{$params['code']}}" readonly="true">
+            <input type="hidden" name="code" value="{{$params['code']}}" readonly="true">
             <button class="btn red btn_search" data-type="1">一周10<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <button class="btn red btn_search" data-type="2">一月22<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
             <button class="btn red btn_search" data-type="3">半年130<!-- <i class="icon-plus"></i> --></button>&nbsp;&nbsp;&nbsp;
@@ -27,7 +27,7 @@
                                     <i class="fa fa-pencil"></i>init
                                 </a>
 
-        <a class="btn blue" href="https://www.baidu.com/s?wd={{{{$params['name']}}}}" target="blank">百度</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn blue" href="https://www.baidu.com/s?wd={{$params['name']}}" target="blank">百度[{{$params['name']}}]</a>&nbsp;&nbsp;&nbsp;
         <a class="btn blue" href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a>&nbsp;&nbsp;&nbsp;
 
 
