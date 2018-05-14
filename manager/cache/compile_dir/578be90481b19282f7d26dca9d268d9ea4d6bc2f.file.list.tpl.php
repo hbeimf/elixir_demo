@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-09 10:08:16
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-14 17:56:56
          compiled from "/erlang/elixir_demo/manager/application/views/file/list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15393593695ad9a3555752a8-38803636%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '578be90481b19282f7d26dca9d268d9ea4d6bc2f' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/list.tpl',
-      1 => 1525831694,
+      1 => 1526291809,
       2 => 'file',
     ),
   ),
@@ -101,6 +101,7 @@ $_smarty_tpl->tpl_vars['m']->_loop = true;
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">codesina</th>
+                            <th class="hidden-480">大盘</th>
                             <th class="hidden-480">名称sina</th>
                             <th class="hidden-480">code163</th>
                             <th class="hidden-480">名称163</th>
@@ -130,6 +131,7 @@ $_smarty_tpl->tpl_vars['r']->_loop = true;
 </td>
                             <td><?php echo $_smarty_tpl->tpl_vars['r']->value['code_sina'];?>
 </td>
+                            <td><a href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a></td>
                             <td><a href="https://www.baidu.com/s?wd=<?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
 " target="blank"><?php echo $_smarty_tpl->tpl_vars['r']->value['name_sina'];?>
 </a></td>

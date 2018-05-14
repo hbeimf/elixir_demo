@@ -27,6 +27,10 @@
                                     <i class="fa fa-pencil"></i>init
                                 </a>
 
+        <a class="btn blue" href="https://www.baidu.com/s?wd={{{{$params['name']}}}}" target="blank">百度</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn blue" href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a>&nbsp;&nbsp;&nbsp;
+
+
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
                 <div id="dashboard">

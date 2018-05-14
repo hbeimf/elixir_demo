@@ -61,6 +61,7 @@
                             <!-- <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th> -->
                             <th class="hidden-480">ID</th>
                             <th class="hidden-480">codesina</th>
+                            <th class="hidden-480">大盘</th>
                             <th class="hidden-480">名称sina</th>
                             <th class="hidden-480">code163</th>
                             <th class="hidden-480">名称163</th>
@@ -80,6 +81,7 @@
                             <!-- <td><input type="checkbox" class="checkboxes" value="{{$r['id']}}" /></td> -->
                             <td>{{$r['id']}}</td>
                             <td>{{$r['code_sina']}}</td>
+                            <td><a href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a></td>
                             <td><a href="https://www.baidu.com/s?wd={{$r['name_sina']}}" target="blank">{{$r['name_sina']}}</a></td>
                             <td>{{$r['code_163']}}</td>
                             <td><a href="https://www.baidu.com/s?wd={{$r['name_163']}}" target="blank">{{$r['name_163']}}</a></td>

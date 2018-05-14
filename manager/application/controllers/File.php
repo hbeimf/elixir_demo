@@ -27,6 +27,7 @@ class FileController extends AbstractController {
 			'from' => $this->request->getQuery('from'),
 			// 'code' => $this->request->getQuery('code'),
 			'code' => $row['code_sina'],
+			'name' => $row['name_sina'],
 			'id' => $id,
 		];
 

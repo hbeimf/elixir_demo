@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2018-05-09 16:44:29
+<?php /* Smarty version Smarty-3.1.8, created on 2018-05-14 18:02:45
          compiled from "/erlang/elixir_demo/manager/application/views/file/timelist.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:12132360085add49e09b0743-88088751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfca36736cf9ddf57b08f659f303567c2ddd04f9' => 
     array (
       0 => '/erlang/elixir_demo/manager/application/views/file/timelist.tpl',
-      1 => 1525855464,
+      1 => 1526292137,
       2 => 'file',
     ),
   ),
@@ -64,6 +64,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
  ] 确认要 [init] 吗？">
                                     <i class="fa fa-pencil"></i>init
                                 </a>
+
+        <a class="btn blue" href="https://www.baidu.com/s?wd=<?php ob_start();?><?php echo $_smarty_tpl->tpl_vars['params']->value['name'];?>
+<?php $_tmp1=ob_get_clean();?><?php echo $_tmp1;?>
+" target="blank">百度</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn blue" href="https://www.baidu.com/s?wd=上证指数" target="blank">上证指数</a>&nbsp;&nbsp;&nbsp;
+
 
             <!-- BEGIN PAGE CONTAINER-->
             <div class="container-fluid">
