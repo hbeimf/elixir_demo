@@ -3,6 +3,33 @@
 use Illuminate\Database\Capsule\Manager as DB;
 
 class ApiController extends ApiBaseController {
+	public function addcategoryAction() {
+		$id = $this->request->getParam('id');
+		$table = new Table_Logic_Code();
+		$table->update_ten($id);
+		// $row = $table->where('id', '=', $id)->first()->toArray();
+		// $data = ['category' => $row['category'] + 1];
+
+		// Table_Logic_Code::where('id', $id)->update($data);
+
+		$this->ajax_success('更新成功');
+	}
+
+	public function minuscategoryAction() {
+		$id = $this->request->getParam('id');
+
+		$table = new Table_Logic_Code();
+		$table->update_all($id);
+		// $row = $table->where('id', '=', $id)->first()->toArray();
+		// $data = ['category' => $row['category'] - 1];
+		// if ($data['category'] <= 0) {
+		// 	$data['category'] = 0;
+		// }
+
+		// Table_Logic_Code::where('id', $id)->update($data);
+
+		$this->ajax_success('初始化成功' . $id);
+	}
 
 	// 生成二维码demo
 	//http://htgl.innoplay.cn/api/code/?school_name=测试机构&contract_num=10000&mac=00:01:6C:06:A6:29&token=57f20f883e
