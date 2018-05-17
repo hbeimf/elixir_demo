@@ -208,19 +208,19 @@ class FileController extends AbstractController {
 			for ($i = 0; $i < count($history); $i++) {
 				$add1 = $history[$i]['close_price'] / $history[count($history) - 1]['close_price'];
 
-				if ($add1 > 50) {
+				// if ($add1 > 50) {
 
-				} else {
-					$data[] = [
-						'name' => $add1,
-						'value' => [
-							date("Y/m/d", $history[$i]['timer_int']),
-							// $h['close_price'],
-							($category == 0) ? $history[$i]['close_price'] : $history[$i]['per'],
-						],
-					];
-					$name = $history[$i]['name'];
-				}
+				// } else {
+				$data[] = [
+					'name' => $add1,
+					'value' => [
+						date("Y/m/d", $history[$i]['timer_int']),
+						// $h['close_price'],
+						($category == 0) ? $history[$i]['close_price'] : $history[$i]['per'],
+					],
+				];
+				$name = $history[$i]['name'];
+				// }
 
 			}
 

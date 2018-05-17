@@ -12,10 +12,10 @@ class Table_Logic_Code extends EloquentModel {
 		$start = date("Ymd", time() - 24 * 60 * 60 * 10);
 
 		$sina_code = $this->get_code($id);
-		$code = '0' . substr($sina_code, 2, 6);
-		$code1 = '1' . substr($sina_code, 2, 6);
+		// $code = '0' . substr($sina_code, 2, 6);
+		// $code1 = '1' . substr($sina_code, 2, 6);
 
-		$this->download($sina_code, $code, $code1, $start);
+		$this->download($sina_code, $start);
 		// $demo = new Thriftc_Example();
 		// $demo->demo();
 
@@ -27,10 +27,10 @@ class Table_Logic_Code extends EloquentModel {
 		$start = '20000101';
 
 		$sina_code = $this->get_code($id);
-		$code = '0' . substr($sina_code, 2, 6);
-		$code1 = '1' . substr($sina_code, 2, 6);
+		// $code = '0' . substr($sina_code, 2, 6);
+		// $code1 = '1' . substr($sina_code, 2, 6);
 
-		$this->download($sina_code, $code, $code1, $start);
+		$this->download($sina_code, $start);
 
 		$thrift = new Thriftc_Call();
 		$thrift->call(10000, $id);
@@ -39,6 +39,7 @@ class Table_Logic_Code extends EloquentModel {
 	private function get_code($id) {
 		$this->row = $this->where('id', '=', $id)->first();
 		return $this->row->code_sina;
+		// return $this->code_download_163;
 	}
 
 	private function parser($from_code, $data) {
@@ -84,18 +85,20 @@ class Table_Logic_Code extends EloquentModel {
 
 	}
 
-	private function download($from_code, $code, $code1, $start) {
-		$con = $this->http_get($code, $start);
-		$con1 = $this->http_get($code1, $start);
+	private function download($from_code, $start) {
+		// $con = $this->http_get($code, $start);
+		// $con1 = $this->http_get($code1, $start);
 
-		$data = (strlen($con) > strlen($con1)) ? $con : $con1;
+		// $data = (strlen($con) > strlen($con1)) ? $con : $con1;
 
-		if ($this->row->code_download_163 == '') {
-			$download_code = (strlen($con) > strlen($con1)) ? $code : $code1;
-			// 更新下载code
-			$update_row = ['code_download_163' => $download_code];
-			$this->where('id', $this->row->id)->update($update_row);
-		}
+		$data = $this->http_get($this->row->code_download_163, $start);
+
+		// if ($this->row->code_download_163 == '') {
+		// 	$download_code = (strlen($con) > strlen($con1)) ? $code : $code1;
+		// 	// 更新下载code
+		// 	$update_row = ['code_download_163' => $download_code];
+		// 	$this->where('id', $this->row->id)->update($update_row);
+		// }
 
 		$this->parser($from_code, $data);
 	}
