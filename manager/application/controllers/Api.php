@@ -15,8 +15,11 @@ class ApiController extends ApiBaseController {
 		$this->ajax_success('更新成功');
 	}
 
-	public function minuscategoryAction() {
-		$id = $this->request->getParam('id');
+	// http://manager.demo.com/api/initdata?token=57f20f883e&id=2
+	public function initdataAction() {
+		$id = $this->request->getQuery('id');
+
+		// var_dump($id);exit;
 
 		$table = new Table_Logic_Code();
 		$table->update_all($id);
@@ -28,7 +31,8 @@ class ApiController extends ApiBaseController {
 
 		// Table_Logic_Code::where('id', $id)->update($data);
 
-		$this->ajax_success('初始化成功' . $id);
+		// $this->ajax_success('初始化成功' . $id);
+		echo "ok";
 	}
 
 	// 生成二维码demo
