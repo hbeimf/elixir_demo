@@ -300,7 +300,9 @@ class FileController extends AbstractController {
 			$table_user->orderBy('b.price', $params['order_by']);
 		}
 
-		$table_user->orderBy('m_gp_list_163.id', 'asc');
+		// $table_user->orderBy('m_gp_list_163.id', 'asc');
+
+		$table_user->orderBy('b.turnover_rate', 'desc');
 
 		$count = $table_user->count();
 		$users = $table_user
