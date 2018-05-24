@@ -3,35 +3,30 @@
 use Illuminate\Database\Capsule\Manager as DB;
 
 class ApiController extends ApiBaseController {
-	public function addcategoryAction() {
-		$id = $this->request->getParam('id');
-		$table = new Table_Logic_Code();
-		$table->update_ten($id);
-		// $row = $table->where('id', '=', $id)->first()->toArray();
-		// $data = ['category' => $row['category'] + 1];
+	// public function addcategoryAction() {
+	// 	$id = $this->request->getParam('id');
+	// 	$table = new Table_Logic_Code();
+	// 	$table->update_ten($id);
+	// 	// $row = $table->where('id', '=', $id)->first()->toArray();
+	// 	// $data = ['category' => $row['category'] + 1];
 
-		// Table_Logic_Code::where('id', $id)->update($data);
+	// 	// Table_Logic_Code::where('id', $id)->update($data);
 
-		$this->ajax_success('更新成功');
-	}
+	// 	$this->ajax_success('更新成功');
+	// }
 
-	// http://manager.demo.com/api/initdata?token=57f20f883e&id=2
+	// http://manager.demo.com/api/initdata?token=57f20f883e&id=2&type=all
 	public function initdataAction() {
 		$id = $this->request->getQuery('id');
-
-		// var_dump($id);exit;
+		$type = $this->request->getQuery('type');
 
 		$table = new Table_Logic_Code();
-		$table->update_all($id);
-		// $row = $table->where('id', '=', $id)->first()->toArray();
-		// $data = ['category' => $row['category'] - 1];
-		// if ($data['category'] <= 0) {
-		// 	$data['category'] = 0;
-		// }
+		if ($type == 'all') {
+			$table->update_all($id);
+		} else {
+			$table->update_ten($id);
+		}
 
-		// Table_Logic_Code::where('id', $id)->update($data);
-
-		// $this->ajax_success('初始化成功' . $id);
 		echo "ok";
 	}
 
