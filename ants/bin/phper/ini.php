@@ -53,7 +53,8 @@ class get_data {
 		$all = count($data);
 		foreach ($data as $v) {
 			// $url = "http://manager.demo.com/file/addcategory/id/{$v['id']}";
-			$url = "http://manager.demo.com/file/minuscategory/id/{$v['id']}/";
+			// $url = "http://manager.demo.com/file/minuscategory/id/{$v['id']}/";
+			$url = "http://manager.demo.com/api/initdata?token=57f20f883e&id={$v['id']}&type=all";
 
 			$r = file_get_contents($url);
 
