@@ -32,8 +32,8 @@ CREATE TABLE `m_all` (
   `rise_and_fall_num` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '涨跌额',
   `rise_and_fall_percent` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '涨跌幅',
   `turnover_rate` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '换手率',
-  `volume` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
-  `transaction_amount` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
+  `volume` DOUBLE(15,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
+  `transaction_amount` DOUBLE(15,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_time` (`from_code`,`timer`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7388022 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
@@ -56,8 +56,8 @@ CREATE TABLE `m_today` (
   `rise_and_fall_num` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '涨跌额',
   `rise_and_fall_percent` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '涨跌幅',
   `turnover_rate` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '换手率',
-  `volume` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
-  `transaction_amount` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
+  `volume` DOUBLE(15,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
+  `transaction_amount` DOUBLE(15,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_from_code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';

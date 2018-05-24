@@ -161,15 +161,32 @@ go(Code) ->
 
 add_today({{Timer,_, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
     ?LOG({<<"add:">>, Code, Timer}),
+
+    L = get_today_status(Code),
+    {_, Open_price} = lists:keyfind(<<"open_price">>, 1, L),
+    {_, Yesterday_close_price} = lists:keyfind(<<"yesterday_close_price">>, 1, L),
+    {_, Close_price} = lists:keyfind(<<"close_price">>, 1, L),
+    {_, Today_top_price} = lists:keyfind(<<"today_top_price">>, 1, L),
+    {_, Today_bottom_price} = lists:keyfind(<<"today_bottom_price">>, 1, L),
+    {_, Rise_and_fall_num} = lists:keyfind(<<"rise_and_fall_num">>, 1, L),
+    {_, Rise_and_fall_percent} = lists:keyfind(<<"rise_and_fall_percent">>, 1, L),
+    {_, Turnover_rate} = lists:keyfind(<<"turnover_rate">>, 1, L),
+    {_, Volume} = lists:keyfind(<<"volume">>, 1, L),
+    {_, Transaction_amount} = lists:keyfind(<<"transaction_amount">>, 1, L),
+
     History = lists:foldl(fun({Id, Start, End, Num}, Res) -> 
         [[{<<"id">>, Id}, {<<"start">>, Start}, {<<"end">>, End}, {<<"num">>, Num}]|Res]
     end, [], HistoryRelativePrice),
-    Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
+    % Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
+    % Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
+    Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price, rise_and_fall_num, rise_and_fall_percent, turnover_rate, volume, transaction_amount) values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)",
+    
+    ?LOG({Open_price, Yesterday_close_price, Close_price, Today_top_price, Today_bottom_price, Rise_and_fall_num, Rise_and_fall_percent, Turnover_rate, Volume, Transaction_amount}),
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History), Open_price, Yesterday_close_price, Close_price, Today_top_price, Today_bottom_price, Rise_and_fall_num, Rise_and_fall_percent, Turnover_rate, Volume, Transaction_amount]),
+
     ?LOG(Res),
     % ?LOG(HistoryRelativePrice),
     ok.
-
 
 % CREATE TABLE `m_today` (
 %   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -179,12 +196,33 @@ add_today({{Timer,_, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code)
 %   `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
 %   `current_relative_price` int(11) NOT NULL DEFAULT '0' COMMENT '当前相对价位',
 %   `history_relative_price` text COLLATE utf8_unicode_ci COMMENT '历史相对价位',
+%   `open_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日开盘价',
+%   `yesterday_close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '昨日收盘价',
+%   `close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '当前价格',
+%   `today_top_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最高价',
+%   `today_bottom_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最低价',
+%   `rise_and_fall_num` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '涨跌额',
+%   `rise_and_fall_percent` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '涨跌幅',
+%   `turnover_rate` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '换手率',
+%   `volume` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
+%   `transaction_amount` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
 %   PRIMARY KEY (`id`),
 %   UNIQUE KEY `index_from_code` (`code`)
-% ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';
-
+% ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today'
 
 % CREATE UNIQUE INDEX index_from_code ON m_all (from_code);
+
+get_today_status(Code) ->
+     Sql = "select * from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 1",
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
+    case parse_res(Res) of 
+            {ok, []} -> 
+                ?LOG("null"),
+                [];
+            {ok, [L|_]} -> 
+                    % ?LOG(List),
+                    L
+    end.     
 
 
 get_list_by_code(Code) ->
