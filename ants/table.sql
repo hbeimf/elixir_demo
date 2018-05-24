@@ -38,6 +38,31 @@ CREATE TABLE `m_all` (
   UNIQUE KEY `code_time` (`from_code`,`timer`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7388022 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_all';
 
+
+CREATE TABLE `m_today` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `code` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'code',
+  `timer` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '字符串时间',
+  `timer_int` int(11) NOT NULL DEFAULT '0' COMMENT '时间截',
+  `price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '收盘价',
+  `current_relative_price` int(11) NOT NULL DEFAULT '0' COMMENT '当前相对价位',
+  `history_relative_price` text COLLATE utf8_unicode_ci COMMENT '历史相对价位',
+
+  `open_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日开盘价',
+  `yesterday_close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '昨日收盘价',
+  `close_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '当前价格',
+  `today_top_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最高价',
+  `today_bottom_price` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '今日最低价',
+  `rise_and_fall_num` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '涨跌额',
+  `rise_and_fall_percent` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '涨跌幅',
+  `turnover_rate` float(10,4) NOT NULL DEFAULT '0.0000' COMMENT '换手率',
+  `volume` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交量',
+  `transaction_amount` float(10,3) NOT NULL DEFAULT '0.000' COMMENT '成交金额',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_from_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='m_today';
+
+
 -- 日期,股票代码,名称,
 -- 2018-05-07,'600000,浦发银行,
 
