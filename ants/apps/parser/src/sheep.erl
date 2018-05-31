@@ -12,16 +12,14 @@ go_by_id(Id) ->
     ?LOG(Res),
     case parse_res(Res) of 
             {ok, []} -> 
-                ok;
+                0;
             {ok, List} ->
                 lists:foreach(fun(Row) -> 
                     {_, Code} = lists:keyfind(<<"code">>, 1, Row),
                     % ?LOG(Code),
-                    go(Code),
-                    ok
+                    go(Code)
                 end, List)
-    end, 
-    ok.
+    end.
 
 go(Code) ->
     	% ?LOG(Code),
@@ -42,7 +40,7 @@ go(Code) ->
 get_p(Code) ->
     % Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
     % Sql = "select timer, timer_int, close_price as price, rise_and_fall_percent from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 260",
-    Sql = "select rise_and_fall_percent from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 10",
+    Sql = "select rise_and_fall_percent from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 5",
 
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 

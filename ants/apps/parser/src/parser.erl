@@ -162,6 +162,8 @@ go(Code) ->
 add_today({{Timer,_, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code) -> 
     ?LOG({<<"add:">>, Code, Timer}),
 
+    RiseAndFallPercentTen = sheep:get_p(Code),
+
     L = get_today_status(Code),
     {_, Open_price} = lists:keyfind(<<"open_price">>, 1, L),
     {_, Yesterday_close_price} = lists:keyfind(<<"yesterday_close_price">>, 1, L),
@@ -179,10 +181,10 @@ add_today({{Timer,_, Price}, CurrentRelativePrice , HistoryRelativePrice}, Code)
     end, [], HistoryRelativePrice),
     % Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price) values (?, ?, ?, ?, ?, ?)",
     % Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History)]),
-    Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price, rise_and_fall_num, rise_and_fall_percent, turnover_rate, volume, transaction_amount) values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)",
+    Sql = "replace into m_today (code, timer, timer_int, price, current_relative_price, history_relative_price, open_price, yesterday_close_price, close_price, today_top_price, today_bottom_price, rise_and_fall_num, rise_and_fall_percent, rise_and_fall_percent_ten, turnover_rate, volume, transaction_amount) values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?)",
     
     ?LOG({Open_price, Yesterday_close_price, Close_price, Today_top_price, Today_bottom_price, Rise_and_fall_num, Rise_and_fall_percent, Turnover_rate, Volume, Transaction_amount}),
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History), Open_price, Yesterday_close_price, Close_price, Today_top_price, Today_bottom_price, Rise_and_fall_num, Rise_and_fall_percent, Turnover_rate, Volume, Transaction_amount]),
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Timer, 0, Price, CurrentRelativePrice, jsx:encode(History), Open_price, Yesterday_close_price, Close_price, Today_top_price, Today_bottom_price, Rise_and_fall_num, Rise_and_fall_percent, RiseAndFallPercentTen, Turnover_rate, Volume, Transaction_amount]),
 
     ?LOG(Res),
     % ?LOG(HistoryRelativePrice),
