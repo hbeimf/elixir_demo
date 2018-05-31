@@ -41,7 +41,7 @@ handle_function(call, {TheMessageRecord}) ->
     parser:go_by_id(TheMessageRecord#'Message'.text),
     %% send a reply per the service definition in thrift/example.thrift:
     {reply, #'Message'{id = TheMessageRecord#'Message'.id, text = <<"ok">>}};
-handle_function(_, TheMessageRecord) ->
+handle_function(_, _TheMessageRecord) ->
     %% unpack these or not, whatever.  Point is it's a record:
     % _Id = TheMessageRecord#message.id,
     % _Msg = TheMessageRecord#message.text,
