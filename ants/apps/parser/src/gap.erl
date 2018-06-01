@@ -24,6 +24,8 @@ go_by_id(Id) ->
     end, 
     ok.
 
+go() -> 
+	go(<<"sz000963">>).
 go(Code) ->
     ?LOG(Code),
     % Sql = "SELECT code,name FROM m_gp_list where code = ?",
@@ -38,9 +40,10 @@ go(Code) ->
     %                 ?LOG(Code),
                     % <<_Head:16, C/binary>> = Code,
                     List = get_list_by_code(Code),
-                    ?LOG(List),
+                    % ?LOG(List),
                     GapGroup = gap(List),
-                    ?LOG(GapGroup),
+                    % ?LOG(GapGroup),
+             	print_gap(GapGroup),
                     % Add = 0.05,
                     % case parse_list(List, Add) of 
                     %     {error, _} -> 
@@ -54,6 +57,23 @@ go(Code) ->
     % end,
     % % end, Rows),
     % ok.
+
+
+print_gap([]) -> 
+	ok;
+print_gap(Gaps) -> 
+	R = lists:foldl(fun(Gap, Reply) -> 
+		% ?LOG({sum(Gap), Gap})
+		[sum(Gap)|Reply]
+	end, [], Gaps),
+	?LOG(lists:sort(R)),
+	ok.
+
+sum(Gap) ->
+	Sum = lists:foldl(fun({_, _, V}, S) -> 
+		S+V
+	end, 0, Gap),
+	glib:to_float(glib:three(Sum)). 
 
 gap([]) ->
 	[]; 
@@ -78,7 +98,7 @@ gap(Gap, {_, _, P} = T) ->
 
 get_list_by_code(Code) ->
     % Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
-    Sql = "select timer, timer_int, rise_and_fall_percent as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 20",
+    Sql = "select timer, timer_int, rise_and_fall_percent as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 520",
 
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
     case parse_res(Res) of 
