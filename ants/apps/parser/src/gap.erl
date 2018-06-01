@@ -27,18 +27,51 @@
 go() -> 
 	go(200).
 go(Days) -> 
-	go(<<"sz000963">>, Days).
-go(Code, Days) ->
+	go(Days, 3).
+go(Days, Point) -> 
+	go(<<"sz000963">>, Days, Point).
+go(Code, Days, Point) ->
 	?LOG(Code),
 	List = get_list_by_code(Code, Days),
+	% ?LOG(List),
 	GapGroup = gap(List),
 	print_gap(Code, GapGroup),
+	print_point(List, Point),
+	print_point(List, -1 * Point),
+
 	ok.  
+
+print_point([], _) -> 
+	ok;
+print_point(List, Val) when Val < 0 ->
+	R = lists:foldl(fun({_, _, P}, Reply) -> 
+		case P < Val of 
+			true -> 
+				Reply+1;
+			_ -> 
+				Reply
+		end
+	end, 0, List),	
+	?LOG({Val, R}),
+	ok;
+print_point(List, Val) ->
+	R = lists:foldl(fun({_, _, P}, Reply) -> 
+		case P > Val of 
+			true -> 
+				Reply+1;
+			_ -> 
+				Reply
+		end
+	end, 0, List),	
+	?LOG({Val, R}),
+	ok.
+
+
 
 % 打印连续的上涨，下跌gap
 print_gap(_, []) -> 
 	ok;
-print_gap(Code, Gaps) -> 
+print_gap(_Code, Gaps) -> 
 	R = lists:foldl(fun(Gap, Reply) -> 
 		[sum(Gap)|Reply]
 	end, [], Gaps),
