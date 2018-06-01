@@ -5,65 +5,39 @@
 
 
 
-test() -> 
-    go_by_id(<<"435">>).
-go_by_id(Id) ->
-    Sql  = "select id, code_sina as code from m_gp_list_163 where id = ? limit 1",
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Id]),
-    ?LOG(Res),
-    case parse_res(Res) of 
-            {ok, []} -> 
-                ok;
-            {ok, List} ->
-                lists:foreach(fun(Row) -> 
-                    {_, Code} = lists:keyfind(<<"code">>, 1, Row),
-                    % ?LOG(Code),
-                    go(Code),
-                    ok
-                end, List)
-    end, 
-    ok.
+% test() -> 
+%     go_by_id(<<"435">>).
+% go_by_id(Id) ->
+%     Sql  = "select id, code_sina as code from m_gp_list_163 where id = ? limit 1",
+%     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Id]),
+%     ?LOG(Res),
+%     case parse_res(Res) of 
+%             {ok, []} -> 
+%                 ok;
+%             {ok, List} ->
+%                 lists:foreach(fun(Row) -> 
+%                     {_, Code} = lists:keyfind(<<"code">>, 1, Row),
+%                     % ?LOG(Code),
+%                     go(Code),
+%                     ok
+%                 end, List)
+%     end, 
+%     ok.
 
 go() -> 
 	go(<<"sz000963">>).
 go(Code) ->
-    ?LOG(Code),
-    % Sql = "SELECT code,name FROM m_gp_list where code = ?",
-    % % Rows = mysql:get_assoc(Sql),
-    % Res = mysql_poolboy:query(mysqlc:pool(), Sql, [FromCode]),
-    % % ?LOG(Res),
-    % case parse_res(Res) of 
-    %         {ok, []} -> 
-    %             ok;
-    %         {ok, [Row]} -> 
-    %                 {_, Code} = lists:keyfind(<<"code">>, 1, Row),
-    %                 ?LOG(Code),
-                    % <<_Head:16, C/binary>> = Code,
-                    List = get_list_by_code(Code),
-                    % ?LOG(List),
-                    GapGroup = gap(List),
-                    % ?LOG(GapGroup),
-             	print_gap(GapGroup),
-                    % Add = 0.05,
-                    % case parse_list(List, Add) of 
-                    %     {error, _} -> 
-                    %         ok;
-                    %     ParserRes -> 
-                    %         % ?LOG(ParserRes),
-                    %         add_today(ParserRes, Code),
-                    %         ok
-                    % end,
-                    ok.  
-    % end,
-    % % end, Rows),
-    % ok.
+	?LOG(Code),
+	List = get_list_by_code(Code),
+	GapGroup = gap(List),
+	print_gap(GapGroup),
+	ok.  
 
 
 print_gap([]) -> 
 	ok;
 print_gap(Gaps) -> 
 	R = lists:foldl(fun(Gap, Reply) -> 
-		% ?LOG({sum(Gap), Gap})
 		[sum(Gap)|Reply]
 	end, [], Gaps),
 	?LOG(lists:sort(R)),
