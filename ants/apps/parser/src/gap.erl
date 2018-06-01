@@ -31,7 +31,7 @@ go(Days) ->
 go(Days, Point) ->
 	go(<<"sz000963">>, Days, Point).
 go(Code, Days, Point) ->
-	?LOG(Code),
+	% ?LOG(Code),
 	List = get_list_by_code(Code, Days),
 	% ?LOG(List),
 	%% 持续波动区间
@@ -41,6 +41,7 @@ go(Code, Days, Point) ->
 	% print_point(List, Point),
 	% print_point(List, -1 * Point),
 	%% 后续进展
+	?LOG("============================================================="),
 	print_group_point(List, -1 * Point),
 	?LOG("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"),
 	print_group_point(List, Point),
