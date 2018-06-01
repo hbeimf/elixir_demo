@@ -25,10 +25,12 @@
 %     ok.
 
 go() -> 
-	go(<<"sz000963">>).
-go(Code) ->
+	go(200).
+go(Days) -> 
+	go(<<"sz000963">>, Days).
+go(Code, Days) ->
 	?LOG(Code),
-	List = get_list_by_code(Code),
+	List = get_list_by_code(Code, Days),
 	GapGroup = gap(List),
 	print_gap(Code, GapGroup),
 	ok.  
@@ -40,7 +42,7 @@ print_gap(Code, Gaps) ->
 	R = lists:foldl(fun(Gap, Reply) -> 
 		[sum(Gap)|Reply]
 	end, [], Gaps),
-	?LOG({Code, lists:sort(R)}),
+	?LOG(lists:sort(R)),
 	ok.
 
 sum(Gap) ->
@@ -70,11 +72,11 @@ gap(Gap, {_, _, P} = T) ->
 			[[T]|Gap]
 	end.
 
-get_list_by_code(Code) ->
+get_list_by_code(Code, Days) ->
     % Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
-    Sql = "select timer, timer_int, rise_and_fall_percent as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit 520",
+    Sql = "select timer, timer_int, rise_and_fall_percent as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit ?",
 
-    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code]),
+    Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Days]),
     case parse_res(Res) of 
             {ok, []} -> 
                 ?LOG("null"),
