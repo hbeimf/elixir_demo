@@ -35,13 +35,15 @@ go(Code, Days, Point) ->
 	List = get_list_by_code(Code, Days),
 	% ?LOG(List),
 	%% 持续波动区间
-	GapGroup = gap(List),
-	print_gap(Code, GapGroup),
-	%% 出现的次数
-	print_point(List, Point),
-	print_point(List, -1 * Point),
+	% GapGroup = gap(List),
+	% print_gap(Code, GapGroup),
+	% %% 出现的次数
+	% print_point(List, Point),
+	% print_point(List, -1 * Point),
 	%% 后续进展
 	print_group_point(List, -1 * Point),
+	?LOG("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"),
+	print_group_point(List, Point),
 
 	ok.
 
@@ -49,7 +51,7 @@ go(Code, Days, Point) ->
 %% 分组，按点数来分组
 print_group_point([], _) ->
 	ok;
-print_group_point(List, Point) when Point < 0 ->
+print_group_point(List, Point) ->
 	Gs = lists:foldr(fun(T, Reply) ->
 		group_point(T, Reply, Point)
 	end, [], List),
@@ -59,34 +61,49 @@ print_group_point(List, Point) when Point < 0 ->
 		?LOG(G1),
 		ok
 	end, lists:reverse(Gs)),
-	ok;
-print_group_point(List, Point) ->
+% 	ok;
+% print_group_point(List, Point) ->
 
 	ok.
 
-group_point({_, _, P1} = T, [], Point) when Point < 0 ->
-	% [[T]];
-	case P1 =< Point of 
-		true -> 
-			[[T]];
-		_ -> 
-			[]
-	end;
-group_point({_, _, P1} = T, Group, Point) when Point < 0 ->
+group_point({_, _, P1, _} = T, [], Point) ->
+	% case P1 =< Point of 
+	% 	true -> 
+	% 		[[T]];
+	% 	_ -> 
+	% 		[]
+	% end;
+	[[T]];
+group_point({_, _, P1, _} = T, Group, Point) when Point < 0 ->
 	[LastGroup|OtherGroup] = Group,
 	case P1 =< Point of
 		false ->
-			case erlang:length(LastGroup) > 10 of 
-				true -> 
-					Group;
-				_ -> 
-					[[T|LastGroup]|OtherGroup]
-			end;
+			% case erlang:length(LastGroup) > 10 of 
+			% 	true -> 
+			% 		Group;
+			% 	_ -> 
+			% 		[[T|LastGroup]|OtherGroup]
+			% end;
+
+			[[T|LastGroup]|OtherGroup];
 		_ ->
 			[[T]|Group]
 	end;
-group_point(T, _, Point) ->
-	[].
+group_point({_, _, P1, _} = T, Group, Point) ->
+	[LastGroup|OtherGroup] = Group,
+	case P1 >= Point of
+		false ->
+			% case erlang:length(LastGroup) > 10 of 
+			% 	true -> 
+			% 		Group;
+			% 	_ -> 
+			% 		[[T|LastGroup]|OtherGroup]
+			% end;
+
+			[[T|LastGroup]|OtherGroup];
+		_ ->
+			[[T]|Group]
+	end.
 
 
 
@@ -158,7 +175,7 @@ gap(Gap, {_, _, P} = T) ->
 
 get_list_by_code(Code, Days) ->
     % Sql = "select timer, timer_int, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc",
-    Sql = "select timer, timer_int, rise_and_fall_percent as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit ?",
+    Sql = "select timer, timer_int, rise_and_fall_percent as p, close_price as price from m_all where from_code = ? and close_price > 0 order by timer_int desc limit ?",
 
     Res = mysql_poolboy:query(mysqlc:pool(), Sql, [Code, Days]),
     case parse_res(Res) of
@@ -174,9 +191,10 @@ get_list_by_code_tolist(List) ->
     lists:foldl(fun(L, ReplyList) ->
         {_, Time} = lists:keyfind(<<"timer">>, 1, L),
         {_, TimeInt} = lists:keyfind(<<"timer_int">>, 1, L),
+        {_, RiseAndFallPercent} = lists:keyfind(<<"p">>, 1, L),
         {_, ClosePrice} = lists:keyfind(<<"price">>, 1, L),
 
-        [{Time, TimeInt, ClosePrice}|ReplyList]
+        [{Time, TimeInt, RiseAndFallPercent, ClosePrice}|ReplyList]
     end, [], List).
 
 
