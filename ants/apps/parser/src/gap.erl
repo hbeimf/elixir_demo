@@ -30,17 +30,17 @@ go(Code) ->
 	?LOG(Code),
 	List = get_list_by_code(Code),
 	GapGroup = gap(List),
-	print_gap(GapGroup),
+	print_gap(Code, GapGroup),
 	ok.  
 
-
-print_gap([]) -> 
+% 打印连续的上涨，下跌gap
+print_gap(_, []) -> 
 	ok;
-print_gap(Gaps) -> 
+print_gap(Code, Gaps) -> 
 	R = lists:foldl(fun(Gap, Reply) -> 
 		[sum(Gap)|Reply]
 	end, [], Gaps),
-	?LOG(lists:sort(R)),
+	?LOG({Code, lists:sort(R)}),
 	ok.
 
 sum(Gap) ->
