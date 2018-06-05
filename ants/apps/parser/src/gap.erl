@@ -30,6 +30,10 @@ go(Days) ->
 	go(Days, 3).
 go(Days, Point) ->
 	go(<<"sz000963">>, Days, Point).
+
+	% go(<<"sh600660">>, Days, Point).
+
+	% go(<<"sz000858">>, Days, Point).
 go(Code, Days, Point) ->
 	% ?LOG(Code),
 	List = get_list_by_code(Code, Days),
