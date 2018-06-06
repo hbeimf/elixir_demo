@@ -47,8 +47,8 @@ go(Code, Days, Point) ->
 	%% 后续进展
 	?LOG("-----------------------------------------------------------------------------------------------------"),
 	print_group_point(List, -1 * Point),
-	?LOG("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"),
-	print_group_point(List, Point),
+	% ?LOG("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"),
+	% print_group_point(List, Point),
 
 	ok.
 
@@ -64,12 +64,24 @@ print_group_point(List, Point) ->
 	lists:foreach(fun(G) -> 
 		G1 = lists:reverse(G),
 		?LOG(G1),
+		print_three(G1),
 		ok
 	end, lists:reverse(Gs)),
-% 	ok;
-% print_group_point(List, Point) ->
-
 	ok.
+
+
+print_three([]) -> 
+	ok;
+print_three(List) ->
+	[_|Tail] = List,
+	R = lists:foldl(fun({_, _, Point, _}, Reply) -> 
+		Point + Reply
+	end, 0, Tail),
+	?LOG(R),
+	ok.
+
+
+
 
 group_point({_, _, P1, _} = T, [], Point) ->
 	% case P1 =< Point of 
