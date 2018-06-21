@@ -1,0 +1,14 @@
+-name api_slave@127.0.0.1
+
+-setcookie api_cookie
+
++K true
++A30
+
++swt low 
++sbwt none 
++P 1000000 
+-smp enable 
++S 16 
++sub true
+

@@ -1,0 +1,188 @@
+package framework.msg;
+
+//客户端登录
+//协议号: 1001
+message Login {
+	required int32 user_id = 1; // 客户 id， 由登录接口返回 
+	required string token = 2; // 由登录接口返回 
+}
+
+//客户端登录回复 
+//协议号: 1002
+message LoginReply {
+	required int32 error_type = 1; // 错误类型，1：登录成功， 2：客户已在别的终端登录, 3:登录失败
+	required string msg = 2; //  错误描述
+}
+
+//心跳包 
+//协议号: 1003
+message Heartbeat {
+	required int32 num = 1; 
+}
+
+// 获取在线学生 
+// 协议号:  1005
+// 获取在线学生, {未上课的在线学生}
+// 协议号:  1021
+message GetOnlineStudent {
+	required int32 school_id = 1; //学校id号， 由激活接口返回 
+}
+
+// 获取在线学生返回 
+// 协议号: 1006
+// 获取在线学生, {未上课的在线学生}
+// 协议号: 1022
+message GetOnlineStudentReply {
+	// repeated StudentId student = 1; // 在线学生详情
+	repeated StudentInfo student = 1; // 在线学生详情
+}
+
+// 开始广播教学前，老师学生建立临时教室 
+//协议号:  1007
+// 删除临时教室里的学生, 比如添加错误的学生
+//协议号:  1009
+message CreateClassroom {
+	required int32 teacher_id = 1; //老师的user_id
+	repeated StudentId students = 2; // 临时教室内包括的学生id号
+}
+
+// 学生 user_id 
+message StudentId {
+	required int32 user_id = 1; // 学生的 user_id 	
+}
+
+// 学生详情 
+message StudentInfo {
+	required int32 user_id = 1; // 学生的 user_id 
+	required string name = 2; // 学生的 名称 
+	required string url = 3; // 学生的 图像链接 
+}
+
+// 通用广播消息
+// 协议号：1011
+// 服务器将广播消息 BroadcastMsgPayload 广播到教室里的每个学生， 协议号: 1012
+message BroadcastMsg{
+	required int32 teacher_id = 1; //老师的user_id
+	required BroadcastMsgPayload payload = 2; // 消息载荷
+}
+
+// 通用广播消息载荷
+message BroadcastMsgPayload {
+	required int32 protocol_id = 1; //消息子协议号
+	optional bytes data = 2; // 具体消息载荷，字节类型
+	optional string data1 = 3; // 具体消息载荷，字符串类型
+}
+
+
+
+// 1、测评数据：
+// -- 所在机构、机构名称、
+// ++ 学生姓名、课程名称、
+// ++ 课程步骤、测评曲目、
+// -- 测评开始时间、测评结束时间、
+// ++测评分数
+// ================================
+// 老师开始测评 
+// 协议号：1013
+// 回复号： 1014
+message StartEvaluation {
+	required int32 teacher_id = 1; //老师的user_id
+	required int32 curriculum_id = 2; //课程 id
+	required int32 curriculum_step_id = 3; //课程步骤 id
+	required string music_name = 4; // 测评曲目
+}
+
+// 开始测评回复
+// 回复号： 1014
+// 重新测评回复
+// 回复号： 1034
+message StartEvaluationReply {
+	required int32 evaluation_id = 1; //测评 id
+}
+
+// 部分学生重新测评
+// 协议号： 1033
+// 回复号：1034
+message StartEvaluationAgain {
+	required int32 evaluation_id = 1; //测评 id
+	repeated StudentId students = 2; // 要重新测评学生的信息列表
+}
+
+// 重新测评回复
+// 回复号： 1034
+// message StartEvaluationAgainReply {
+// 	required int32 evaluation_id = 1; //测评 id
+// }
+
+// 学生上报测评分数
+// 协议号：1015
+// 回复号:  1016
+message ReportEvaluationScore {
+	required int32 user_id = 1; //测评学生的user_id
+	required int32 score = 2; //测评学生获得的分数
+	required int32 curriculum_id = 3; //课程 id
+	required int32 curriculum_step_id = 4; //课程步骤 id
+	required string music_name = 5; // 测评曲目
+}
+
+// 测评分数回复 
+// 回复号:  1016
+message ReportEvaluationScoreReply {
+	required int32 user_id = 1; //测评学生的user_id
+	required int32 score = 2; //测评学生获得的分数
+	required int32 curriculum_id = 3; //课程 id
+	required int32 curriculum_step_id = 4; //课程步骤 id
+	required string music_name = 5; // 测评曲目
+	required string name = 6; // 学生的 名称 
+	required string url = 7; // 学生的 图像链接 
+}
+
+//老师获取学生测评分数列表
+// 协议号：1031
+// 回复号：1032
+message GetEvaluationScore {
+	required int32 evaluation_id = 1; //测评 id
+}
+
+//老师获取学生测评分数列表回复 
+// 回复号：1032
+message GetEvaluationReply {
+	repeated ReportEvaluationScoreReply score = 1; // 学生上报的测评分数
+}
+
+// 获取临时教室在线学生 
+// 协议号:  1019
+message GetClassOnlineStudent {
+	required int32 school_id = 1; //学校id号， 由激活接口返回 
+	required int32 teacher_id = 2; //老师的user_id
+}
+
+// 获取临时教室在线学生返回 
+// 协议号: 1020
+message GetClassOnlineStudentReply {
+	// repeated StudentId student = 1; // 在线学生详情
+	repeated StudentInfo student = 1; // 在线学生详情
+
+}
+
+// 下课
+// 协议号: 1023
+message ClassIsOver {
+	required int32 teacher_id = 1; //老师的user_id
+}
+
+// 是否群控中
+// 协议号: 1027
+message IsGroupControl {
+	required int32 teacher_id = 1; //老师的user_id
+	required int32 status = 2; //是否在群控, 1：在群控中， 0: 不在群控中
+}
+
+// 锁屏
+// 协议号: 1029
+message LockScreen {
+	required int32 teacher_id = 1; //老师的user_id
+	required int32 status = 2; //状态 , 1：锁屏， 2: 解锁屏
+}
+
+

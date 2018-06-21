@@ -1,0 +1,20 @@
+{application, webs,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { webs_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    mysqlc,
+    redisc,
+    jsx,
+    cowboy
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.

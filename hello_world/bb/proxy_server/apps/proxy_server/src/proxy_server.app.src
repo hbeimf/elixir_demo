@@ -1,0 +1,23 @@
+{application, proxy_server,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { proxy_server_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    mysqlc,
+    redisc,
+    rconf,
+    table,
+    ranch,
+    sys_config,
+    glib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
