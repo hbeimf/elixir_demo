@@ -3,19 +3,35 @@ hex.pm
 
 安装万金油： =================================
 
+```
+	https://elixir-lang.org/install.html
 
-https://elixir-lang.org/install.html
+	wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb 
+	sudo dpkg -i erlang-solutions_1.0_all.deb
+	sudo apt-get update
+	sudo apt-get install elixir
 
-wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb 
-sudo dpkg -i erlang-solutions_1.0_all.deb
-sudo apt-get update
-sudo apt-get install elixir
+	$ elixir -v
+	Erlang/OTP 18 [erts-7.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
 
-$ elixir -v
-Erlang/OTP 18 [erts-7.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+	Elixir 1.5.2
+```
 
-Elixir 1.5.2
 
+```
+	https://blog.csdn.net/xiangxianghehe/article/details/78870176
+
+	wget https://github.com/elixir-lang/elixir/releases/download/v1.5.3/Precompiled.zip
+	mkdir -p /usr/local/elixir_1.5.3
+	cp Precompiled.zip /usr/local/elixir_1.5.3
+	cd /usr/local/elixir_1.5.3
+	unzip Precompiled.zip
+
+	vim /etc/profile
+
+	export ELIXIR_HOME=/usr/local/elixir_1.5.3
+	export PATH="$PATH:$ELIXIR_HOME/bin"
+```
 
 
 
