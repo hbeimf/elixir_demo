@@ -28,7 +28,14 @@ start_link() ->
 
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    {ok, { {one_for_all, 0, 1}, []} }.
+    {ok, Pools} = application:get_env(example, pools),
+    PoolSpecs = lists:map(fun({Name, SizeArgs, WorkerArgs}) ->
+        PoolArgs = [{name, {local, Name}},
+            		{worker_module, example_worker}] ++ SizeArgs,
+        poolboy:child_spec(Name, PoolArgs, WorkerArgs)
+    end, Pools),
+    {ok, {{one_for_one, 10, 10}, PoolSpecs}}.
+
 
 %%====================================================================
 %% Internal functions
