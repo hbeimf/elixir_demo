@@ -1,0 +1,61 @@
+syntax="proto3";
+
+package HALL;
+
+message Msg{
+    uint32 action = 1;
+    bytes  msgBody = 2;
+}
+
+message GameListReq{  //申请获取游戏列表 action=2001
+   string channel_id = 1;
+}
+
+message GameListRes{  //游戏列表    action=2002
+   repeated Game gameList = 1;
+}
+
+message Game{
+    int32 id = 1;
+    string name = 2;
+    string intro = 3;
+    string config = 4;
+    int32 game_screen = 5;
+    string introduce = 6;
+    string pic_small = 7;
+    string pic_big = 8;
+    int32 flag = 9;
+}
+
+message ChangeUserIconReq{  //申请修改用户头像        action=2003
+    int32 head_id = 2;
+}
+
+message ChangeUserIconRes{  //修改用户头像成功        action=2004
+    int32 code = 1; //错误码 0：成功， 非0错误
+    string uid = 2;
+}
+
+
+message CommonStatus {  //通用信息 action=2005
+    int32 code = 1;
+    string msg = 2;
+}
+
+message VerifyReq{    //请求认证 action=2006
+    string identity = 1; //用户身份
+    string channel_id = 2;
+}
+
+message VerifyRes{          //请求认证 action=2007
+    string id = 1;
+    string username = 2;
+    string nickname = 3;
+    string channel_id = 4;
+    string platform = 5;
+    string icon = 6;
+    float  gold = 7;
+    float  valid_gold = 8;
+    string create_time = 9;
+    string invite_code = 10;
+}

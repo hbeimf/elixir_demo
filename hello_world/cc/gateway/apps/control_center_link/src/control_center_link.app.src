@@ -1,0 +1,20 @@
+{application, control_center_link,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { control_center_link_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    crypto,
+    sys_config,
+    table,
+    ssl
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.

@@ -1,0 +1,22 @@
+{application, gateway,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { gateway_app, []}},
+  {applications,
+   [kernel,
+   ws_server,
+   glib,
+   control_center_link,
+   game_server_client,
+   table,
+   redisc,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
