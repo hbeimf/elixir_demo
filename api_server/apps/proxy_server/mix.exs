@@ -36,7 +36,7 @@ defmodule ProxyServer.Mixfile do
       {:mysqlc, path: "../../erlang_apps/mysqlc"},
       {:redisc, path: "../../erlang_apps/redisc"},
       {:pb, path: "../../erlang_apps/pb"},
-      {:thrifts, path: "../../erlang_apps/thrifts"},
+      # {:thrifts, path: "../../erlang_apps/thrifts"},
       {:table, path: "../../erlang_apps/table"}
       # {:sync, "~> 0.1.3"}
     ]

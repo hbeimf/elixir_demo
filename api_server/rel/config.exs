@@ -70,7 +70,7 @@ release :api_server do
     pb: :permanent,
     sys_config: :permanent,
     table: :permanent,
-    thrift: :permanent,
+    # thrift: :permanent,
     proxy_server: :permanent,
     web_server: :permanent
   ]
